@@ -1,9 +1,12 @@
-
 extends CharacterBody3D
 
-const SPEED := 4.5
-const GRAVITY := 20.0
+const SPEED := 3.0
+const RUN_SPEED := 5.5
+const DOUBLE_TAP_TIME := 300 # milliseconds
+const KILL_SPEED_SCALE := 7.0
 const JUMP_VELOCITY := 7.0
+const GRAVITY := 20.0
+const MAX_FALL_SPEED := 30.0
 
 @onready var sprite: AnimatedSprite3D = $Sprite
 
@@ -18,18 +21,27 @@ var is_killing := false
 
 
 func _ready() -> void:
+	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
+	floor_snap_length = 0.5
 	sprite.animation_finished.connect(_on_animation_finished)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+
+	# Gravitasi
+	if not is_on_floor():
+		velocity.y = maxf(velocity.y - GRAVITY * delta, -MAX_FALL_SPEED)
+	elif velocity.y < 0.0:
+		velocity.y = 0.0
 
 	# KILL menggunakan tombol Enter
 	if Input.is_action_just_pressed("kill") and not is_killing:
 		_play_kill()
 
-	# Hentikan gerakan selama animasi kill
+	# Hentikan gerakan horizontal selama animasi kill (gravitasi tetap jalan)
 	if is_killing:
-		velocity = Vector3.ZERO
+		velocity.x = 0.0
+		velocity.z = 0.0
 		move_and_slide()
 		return
 
@@ -59,7 +71,6 @@ func _physics_process(_delta: float) -> void:
 	else:
 		dir = Vector3(input.x, 0.0, input.y)
 
-<<<<<<<<< Temporary merge branch 1
 	# Tentukan running
 	var is_running := (
 		running_action != ""
@@ -67,20 +78,10 @@ func _physics_process(_delta: float) -> void:
 		and input != Vector2.ZERO
 	)
 
-	# Kecepatan player
 	var current_speed := RUN_SPEED if is_running else SPEED
 
 	velocity.x = dir.x * current_speed
 	velocity.z = dir.z * current_speed
-=========
-	velocity.x = dir.x * SPEED
-	velocity.z = dir.z * SPEED
-
-	if not is_on_floor():
-		velocity.y -= GRAVITY * delta
-	elif Input.is_action_just_pressed("jump"):
-		velocity.y = JUMP_VELOCITY
->>>>>>>>> Temporary merge branch 2
 
 	move_and_slide()
 
@@ -102,7 +103,6 @@ func _check_double_tap() -> void:
 
 			last_tap_time[action] = current_time
 
-	# Running berhenti ketika tombol dilepaskan
 	if running_action != "" and not Input.is_action_pressed(running_action):
 		running_action = ""
 
@@ -110,14 +110,12 @@ func _check_double_tap() -> void:
 func _update_animation(input: Vector2, is_running: bool) -> void:
 	var moving := input != Vector2.ZERO
 
-	# Menentukan arah karakter
 	if moving:
 		if absf(input.x) > absf(input.y):
 			facing = "east" if input.x > 0.0 else "west"
 		else:
 			facing = "south" if input.y > 0.0 else "north"
 
-	# Menentukan animasi
 	var action := "idle_"
 
 	if moving:
@@ -138,11 +136,7 @@ func _play_kill() -> void:
 	if sprite.sprite_frames.has_animation(animation_name):
 		is_killing = true
 		running_action = ""
-
-		# Percepat animasi kill
 		sprite.speed_scale = KILL_SPEED_SCALE
-
-		# Mainkan kill dari awal
 		sprite.play(animation_name)
 	else:
 		push_warning("Animasi tidak ditemukan: " + animation_name)
@@ -151,11 +145,8 @@ func _play_kill() -> void:
 func _on_animation_finished() -> void:
 	if is_killing:
 		is_killing = false
-
-		# Kembalikan kecepatan animasi normal
 		sprite.speed_scale = 1.0
 
-		# Kembali ke idle sesuai arah terakhir
 		var idle_animation := "idle_" + facing
 
 		if sprite.sprite_frames.has_animation(idle_animation):
