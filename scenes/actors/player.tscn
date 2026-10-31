@@ -833,7 +833,8 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Player" type="CharacterBody3D" unique_id=285961488 groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=20799117 groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33, 0)
 script = ExtResource("1_ru62r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1768893229]
@@ -844,6 +845,7 @@ shape = SubResource("CapsuleShape3D_nin75")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18475807, 0)
 shaded = true
 alpha_cut = 1
-sprite_frames = SubResource("SpriteFrames_14cdr")
-animation = &"walking_north"
-frame_progress = 0.6495644
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_a4roe")
+animation = &"walk_side"
+frame_progress = 0.7188932
