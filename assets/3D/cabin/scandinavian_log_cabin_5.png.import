@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctfn5n4ey3bod"
+uid="uid://bhjrk67kiy36x"
 path.s3tc="res://.godot/imported/scandinavian_log_cabin_5.png-d0febd8a41c58afde281effffac9a9ee.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -30,7 +30,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/scandinavian_log_cabin_5.png"
+roughness/src_normal="res://assets/3D/cabin/scandinavian_log_cabin_5.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
