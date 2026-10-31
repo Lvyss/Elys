@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://dcudaxi0tt3i4" path="res://assets/Shader/ground_shader.gdshader" id="1_4t824"]
 [ext_resource type="Script" uid="uid://x3dllu6sk8ow" path="res://scripts/camera_follow.gd" id="1_7shv6"]
 [ext_resource type="PackedScene" uid="uid://cdjwmb2hr45nj" path="res://scenes/actors/Goblin.tscn" id="1_sau74"]
-[ext_resource type="PackedScene" uid="uid://c7e6vaoynde0s" path="res://scenes/actors/player.tscn" id="2_bubnm"]
+[ext_resource type="PackedScene" uid="uid://3ai1ixkg0qse" path="res://scenes/actors/player.tscn" id="2_bubnm"]
 [ext_resource type="Texture2D" uid="uid://ce3ls6iq1rx55" path="res://assets/Texture/Ground/dirt_tile.png" id="2_rrinj"]
 [ext_resource type="Texture2D" uid="uid://cg3ufnil76md" path="res://assets/Texture/Ground/grass_tile (1).png" id="3_sau74"]
 [ext_resource type="Texture2D" uid="uid://cbmjj1xlnv2co" path="res://assets/Texture/Ground/path_mask.png" id="4_bubnm"]
@@ -708,8 +708,8 @@ size = Vector3(1, 4, 13.991089)
 [node name="Goblin" parent="." unique_id=20799117 instance=ExtResource("1_sau74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.74683, 0.65, -2.5953126)
 
-[node name="Player" parent="." unique_id=932688938 instance=ExtResource("2_bubnm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7775683, 0)
+[node name="Player" parent="." unique_id=285961488 instance=ExtResource("2_bubnm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40033472, 0)
 
 [node name="Ground" type="MeshInstance3D" parent="." unique_id=1806017241]
 mesh = SubResource("PlaneMesh_a4roe")
@@ -2742,7 +2742,7 @@ visible = false
 [node name="stump_old2" parent="Props/Stump_01" unique_id=643201272 instance=ExtResource("12_rvlne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.29488164)
 
-[node name="stump_old" parent="Props/Stump_01/stump_old2" index="0" unique_id=1189771038]
+[node name="stump_old" parent="Props/Stump_01/stump_old2" index="0" unique_id=1157660705]
 material_override = ExtResource("13_53mqb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Stump_01" unique_id=1079219214]
