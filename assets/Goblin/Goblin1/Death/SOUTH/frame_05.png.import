@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://coltra8wpcb17"
-path="res://.godot/imported/frame_05.png-65596318c6c6e206b658acae5bf341d0.ctex"
+path="res://.godot/imported/frame_05.png-32bbef9b29b2523fd537abc0efb1394a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goblin/Goblin1/Death/Death/SOUTH/frame_05.png"
-dest_files=["res://.godot/imported/frame_05.png-65596318c6c6e206b658acae5bf341d0.ctex"]
+source_file="res://assets/Goblin/Goblin1/Death/SOUTH/frame_05.png"
+dest_files=["res://.godot/imported/frame_05.png-32bbef9b29b2523fd537abc0efb1394a.ctex"]
 
 [params]
 
