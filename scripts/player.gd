@@ -1,10 +1,8 @@
 
 extends CharacterBody3D
 
-const SPEED := 3.0
-const RUN_SPEED := 5.5
-const DOUBLE_TAP_TIME := 300 # milliseconds
-const KILL_SPEED_SCALE := 7.0
+const SPEED := 4.5
+const GRAVITY := 20.0
 const JUMP_VELOCITY := 7.0
 
 @onready var sprite: AnimatedSprite3D = $Sprite
@@ -61,6 +59,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		dir = Vector3(input.x, 0.0, input.y)
 
+<<<<<<<<< Temporary merge branch 1
 	# Tentukan running
 	var is_running := (
 		running_action != ""
@@ -73,6 +72,15 @@ func _physics_process(_delta: float) -> void:
 
 	velocity.x = dir.x * current_speed
 	velocity.z = dir.z * current_speed
+=========
+	velocity.x = dir.x * SPEED
+	velocity.z = dir.z * SPEED
+
+	if not is_on_floor():
+		velocity.y -= GRAVITY * delta
+	elif Input.is_action_just_pressed("jump"):
+		velocity.y = JUMP_VELOCITY
+>>>>>>>>> Temporary merge branch 2
 
 	move_and_slide()
 
