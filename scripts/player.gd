@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 const SPEED := 4.5
+const GRAVITY := 20.0
+const JUMP_VELOCITY := 7.0
 
 @onready var sprite: AnimatedSprite3D = $Sprite
 
@@ -25,6 +27,12 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x = dir.x * SPEED
 	velocity.z = dir.z * SPEED
+
+	if not is_on_floor():
+		velocity.y -= GRAVITY * delta
+	elif Input.is_action_just_pressed("jump"):
+		velocity.y = JUMP_VELOCITY
+
 	move_and_slide()
 
 	_update_animation(input)
