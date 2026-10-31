@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://fslr51r3t4dl"
+path="res://.godot/imported/ground_pathCross.obj-bce14dd24336ada0dad1f7f94c1c7384.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ground_pathCross.obj-bce14dd24336ada0dad1f7f94c1c7384.mesh"]
+
+source_file="res://assets/Keney/Kit/Models/OBJ format/ground_pathCross.obj"
+dest_files=["res://.godot/imported/ground_pathCross.obj-bce14dd24336ada0dad1f7f94c1c7384.mesh", "res://.godot/imported/ground_pathCross.obj-bce14dd24336ada0dad1f7f94c1c7384.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

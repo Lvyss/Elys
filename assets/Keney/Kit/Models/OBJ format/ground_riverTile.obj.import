@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cx6uax2aq4lw4"
+path="res://.godot/imported/ground_riverTile.obj-9c48d19d6b4d98829e2442cf171864fb.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ground_riverTile.obj-9c48d19d6b4d98829e2442cf171864fb.mesh"]
+
+source_file="res://assets/Keney/Kit/Models/OBJ format/ground_riverTile.obj"
+dest_files=["res://.godot/imported/ground_riverTile.obj-9c48d19d6b4d98829e2442cf171864fb.mesh", "res://.godot/imported/ground_riverTile.obj-9c48d19d6b4d98829e2442cf171864fb.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

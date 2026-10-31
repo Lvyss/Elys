@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bewnsqpohfvw4"]
+
+[ext_resource type="PackedScene" uid="uid://b6dpte11m1hte" path="res://assets/Keney/Models/GLTF format/tree_pineDefaultB.glb" id="1_fyyn7"]
+
+[node name="TreeBig" type="Node3D" unique_id=436304424]
+
+[node name="tree_pineDefaultB2" parent="." unique_id=338627608 instance=ExtResource("1_fyyn7")]
+transform = Transform3D(9, 0, 0, 0, 12, 0, 0, 0, 9, 0, 0.6, 0)

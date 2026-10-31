@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://ck36a5qd0fskj"]
+
+[ext_resource type="Texture2D" uid="uid://b6w62bmgywjoh" path="res://assets/Texture/bark_256.png" id="1_7m2ep"]
+[ext_resource type="Texture2D" uid="uid://wut8i8mjiyuo" path="res://assets/Materials/Bark014_1K-JPG_NormalGL.jpg" id="2_vikml"]
+[ext_resource type="Texture2D" uid="uid://femxnnyyegtn" path="res://assets/Materials/Bark014_1K-JPG_Roughness.jpg" id="3_x0401"]
+
+[resource]
+albedo_color = Color(0.627451, 0.5019608, 0.3764706, 1)
+albedo_texture = ExtResource("1_7m2ep")
+roughness_texture = ExtResource("3_x0401")
+normal_enabled = true
+normal_scale = 12.6
+normal_texture = ExtResource("2_vikml")
+uv1_triplanar = true
