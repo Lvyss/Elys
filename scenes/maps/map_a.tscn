@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://dcudaxi0tt3i4" path="res://assets/Shader/ground_shader.gdshader" id="1_4t824"]
 [ext_resource type="Script" uid="uid://x3dllu6sk8ow" path="res://scripts/camera_follow.gd" id="1_7shv6"]
 [ext_resource type="PackedScene" uid="uid://cdjwmb2hr45nj" path="res://scenes/actors/Goblin.tscn" id="1_sau74"]
-[ext_resource type="PackedScene" uid="uid://3ai1ixkg0qse" path="res://assets/Player/Inhale_deeply_by_slowly_expanding_the_chest_and_li/south/player.tscn" id="2_bubnm"]
+[ext_resource type="PackedScene" uid="uid://3ai1ixkg0qse" path="res://scenes/actors/player1.tscn" id="2_bubnm"]
 [ext_resource type="Texture2D" uid="uid://ce3ls6iq1rx55" path="res://assets/Texture/Ground/dirt_tile.png" id="2_rrinj"]
 [ext_resource type="Texture2D" uid="uid://cg3ufnil76md" path="res://assets/Texture/Ground/grass_tile (1).png" id="3_sau74"]
 [ext_resource type="Texture2D" uid="uid://cbmjj1xlnv2co" path="res://assets/Texture/Ground/path_mask.png" id="4_bubnm"]
