@@ -1,183 +1,359 @@
 [gd_scene format=3 uid="uid://cdjwmb2hr45nj"]
 
 [ext_resource type="Script" uid="uid://t6jhkjy1po6x" path="res://scripts/goblin.gd" id="1_hk2ld"]
-[ext_resource type="Texture2D" uid="uid://bpsvr724cycfn" path="res://assets/Goblin/Orc/Death/Death-Sheet.png" id="2_hk2ld"]
-[ext_resource type="Texture2D" uid="uid://pifqpvnvfmer" path="res://assets/Goblin/Orc/Idle/Idle-Sheet.png" id="3_er6hd"]
-[ext_resource type="Texture2D" uid="uid://c5hyb8mnkad8k" path="res://assets/Goblin/Orc/Run/Run-Sheet.png" id="4_em2di"]
+[ext_resource type="Texture2D" uid="uid://2uiqqgvdtymr" path="res://assets/Goblin/Orc/Attack/EAST/frame_01.png" id="2_g8l21"]
+[ext_resource type="Texture2D" uid="uid://cc445paa8nhwk" path="res://assets/Goblin/Orc/Attack/EAST/frame_02.png" id="3_ax77v"]
+[ext_resource type="Texture2D" uid="uid://dy6gwu483grlq" path="res://assets/Goblin/Orc/Attack/EAST/frame_03.png" id="4_yw4hc"]
+[ext_resource type="Texture2D" uid="uid://0jmlvrh28esq" path="res://assets/Goblin/Orc/Attack/EAST/frame_04.png" id="5_j1vi8"]
+[ext_resource type="Texture2D" uid="uid://ctqsisjmqp08" path="res://assets/Goblin/Orc/Attack/EAST/frame_05.png" id="6_sauoy"]
+[ext_resource type="Texture2D" uid="uid://d0povkt3fkjrs" path="res://assets/Goblin/Orc/Attack/EAST/frame_06.png" id="7_qljer"]
+[ext_resource type="Texture2D" uid="uid://fufqmverc4pd" path="res://assets/Goblin/Orc/Attack/NORTH/frame_01.png" id="8_8u8h4"]
+[ext_resource type="Texture2D" uid="uid://lp2nnk03w4m6" path="res://assets/Goblin/Orc/Attack/NORTH/frame_02.png" id="9_bavri"]
+[ext_resource type="Texture2D" uid="uid://dmpnatnaswq7n" path="res://assets/Goblin/Orc/Attack/NORTH/frame_03.png" id="10_u0rk0"]
+[ext_resource type="Texture2D" uid="uid://bbyleyio0skam" path="res://assets/Goblin/Orc/Attack/NORTH/frame_04.png" id="11_p52sy"]
+[ext_resource type="Texture2D" uid="uid://d2jv7w5pmildn" path="res://assets/Goblin/Orc/Attack/NORTH/frame_05.png" id="12_wvaoq"]
+[ext_resource type="Texture2D" uid="uid://cpcf6bu0wp52m" path="res://assets/Goblin/Orc/Attack/NORTH/frame_06.png" id="13_m0b1j"]
+[ext_resource type="Texture2D" uid="uid://bt47mu3djcf1j" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_01.png" id="14_u63kx"]
+[ext_resource type="Texture2D" uid="uid://hkmw812m5q5q" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_02.png" id="15_etbiw"]
+[ext_resource type="Texture2D" uid="uid://4suempj6odqg" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_03.png" id="16_88jd6"]
+[ext_resource type="Texture2D" uid="uid://dktxllkhhx8a7" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_04.png" id="17_7nydt"]
+[ext_resource type="Texture2D" uid="uid://10wvbxjly6hv" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_05.png" id="18_yx4dt"]
+[ext_resource type="Texture2D" uid="uid://c25nmtee5yh63" path="res://assets/Goblin/Orc/Attack/SOUTH/frame_06.png" id="19_i6rlg"]
+[ext_resource type="Texture2D" uid="uid://b6tcebtfin7at" path="res://assets/Goblin/Orc/Attack/WEST/frame_01.png" id="20_lvgv4"]
+[ext_resource type="Texture2D" uid="uid://djeybfj6dtg47" path="res://assets/Goblin/Orc/Attack/WEST/frame_02.png" id="21_rkn8q"]
+[ext_resource type="Texture2D" uid="uid://cwlld28vfymcr" path="res://assets/Goblin/Orc/Attack/WEST/frame_03.png" id="22_kv571"]
+[ext_resource type="Texture2D" uid="uid://dlbk8m1lssmci" path="res://assets/Goblin/Orc/Attack/WEST/frame_04.png" id="23_do1fl"]
+[ext_resource type="Texture2D" uid="uid://dfgbig6qbxac" path="res://assets/Goblin/Orc/Attack/WEST/frame_05.png" id="24_pxw77"]
+[ext_resource type="Texture2D" uid="uid://mr7vbm17jmiy" path="res://assets/Goblin/Orc/Attack/WEST/frame_06.png" id="25_ymvvd"]
+[ext_resource type="Texture2D" uid="uid://npclvvumc5r3" path="res://assets/Goblin/Orc/Death/EAST/frame_01.png" id="26_e8fpw"]
+[ext_resource type="Texture2D" uid="uid://cyjgh24s3wwa3" path="res://assets/Goblin/Orc/Death/EAST/frame_02.png" id="27_mhqar"]
+[ext_resource type="Texture2D" uid="uid://ddrno2dqu47ja" path="res://assets/Goblin/Orc/Death/EAST/frame_03.png" id="28_n7ypd"]
+[ext_resource type="Texture2D" uid="uid://opum7c6pusx0" path="res://assets/Goblin/Orc/Death/EAST/frame_04.png" id="29_vdl6p"]
+[ext_resource type="Texture2D" uid="uid://kcx2i076x36i" path="res://assets/Goblin/Orc/Death/EAST/frame_05.png" id="30_xxcoe"]
+[ext_resource type="Texture2D" uid="uid://bgnqisfir4h1h" path="res://assets/Goblin/Orc/Death/EAST/frame_06.png" id="31_6peql"]
+[ext_resource type="Texture2D" uid="uid://br1kcn54ip8qm" path="res://assets/Goblin/Orc/Death/EAST/frame_07.png" id="32_dvtqt"]
+[ext_resource type="Texture2D" uid="uid://cthbfyuwi3lcu" path="res://assets/Goblin/Orc/Death/EAST/frame_08.png" id="33_r6oe5"]
+[ext_resource type="Texture2D" uid="uid://b6ly4wxglar3d" path="res://assets/Goblin/Orc/Death/NORTH/frame_01.png" id="34_movqj"]
+[ext_resource type="Texture2D" uid="uid://bmcy1u3f8s4ix" path="res://assets/Goblin/Orc/Death/NORTH/frame_02.png" id="35_sfkkp"]
+[ext_resource type="Texture2D" uid="uid://dym5ipt4ku35l" path="res://assets/Goblin/Orc/Death/NORTH/frame_03.png" id="36_a7bkm"]
+[ext_resource type="Texture2D" uid="uid://chrii4lpmhkc3" path="res://assets/Goblin/Orc/Death/NORTH/frame_04.png" id="37_23neb"]
+[ext_resource type="Texture2D" uid="uid://ccdin3x72j6t3" path="res://assets/Goblin/Orc/Death/NORTH/frame_05.png" id="38_mvqtm"]
+[ext_resource type="Texture2D" uid="uid://b8wjjnfs8u0n0" path="res://assets/Goblin/Orc/Death/NORTH/frame_06.png" id="39_m55io"]
+[ext_resource type="Texture2D" uid="uid://chwh8lvnrb8eq" path="res://assets/Goblin/Orc/Death/NORTH/frame_07.png" id="40_becli"]
+[ext_resource type="Texture2D" uid="uid://dov2d8uhjjrx0" path="res://assets/Goblin/Orc/Death/NORTH/frame_08.png" id="41_xcthj"]
+[ext_resource type="Texture2D" uid="uid://4g844ssokseb" path="res://assets/Goblin/Orc/Death/SOUTH/frame_01.png" id="42_l8phq"]
+[ext_resource type="Texture2D" uid="uid://csm112eumrnms" path="res://assets/Goblin/Orc/Death/SOUTH/frame_02.png" id="43_s3tyb"]
+[ext_resource type="Texture2D" uid="uid://dkycgpe71v0ms" path="res://assets/Goblin/Orc/Death/SOUTH/frame_03.png" id="44_kmjai"]
+[ext_resource type="Texture2D" uid="uid://prxhu7bduqgg" path="res://assets/Goblin/Orc/Death/SOUTH/frame_04.png" id="45_64g6x"]
+[ext_resource type="Texture2D" uid="uid://fvm3nodfi5f6" path="res://assets/Goblin/Orc/Death/SOUTH/frame_05.png" id="46_5vr14"]
+[ext_resource type="Texture2D" uid="uid://2t75q6p1b4q0" path="res://assets/Goblin/Orc/Death/SOUTH/frame_06.png" id="47_jjhr8"]
+[ext_resource type="Texture2D" uid="uid://bgnk01750g4f3" path="res://assets/Goblin/Orc/Death/SOUTH/frame_07.png" id="48_y0xe4"]
+[ext_resource type="Texture2D" uid="uid://chv00ixq1rpmk" path="res://assets/Goblin/Orc/Death/SOUTH/frame_08.png" id="49_cmyrm"]
+[ext_resource type="Texture2D" uid="uid://c3yscvrh43bho" path="res://assets/Goblin/Orc/Death/WEST/frame_01.png" id="50_qf5jn"]
+[ext_resource type="Texture2D" uid="uid://cqsdmdsaykmei" path="res://assets/Goblin/Orc/Death/WEST/frame_02.png" id="51_m2app"]
+[ext_resource type="Texture2D" uid="uid://vqeobuvbmqes" path="res://assets/Goblin/Orc/Death/WEST/frame_03.png" id="52_30g1g"]
+[ext_resource type="Texture2D" uid="uid://y1lcrhhpfjrw" path="res://assets/Goblin/Orc/Death/WEST/frame_04.png" id="53_l00i5"]
+[ext_resource type="Texture2D" uid="uid://ccnkafhtcqcfi" path="res://assets/Goblin/Orc/Death/WEST/frame_05.png" id="54_umoaf"]
+[ext_resource type="Texture2D" uid="uid://nuu4m0nhearj" path="res://assets/Goblin/Orc/Death/WEST/frame_06.png" id="55_hcxys"]
+[ext_resource type="Texture2D" uid="uid://b3gtaagobi6e0" path="res://assets/Goblin/Orc/Death/WEST/frame_07.png" id="56_3w5b1"]
+[ext_resource type="Texture2D" uid="uid://c6735brcwutqh" path="res://assets/Goblin/Orc/Death/WEST/frame_08.png" id="57_v88dx"]
+[ext_resource type="Texture2D" uid="uid://da7hj8enulswk" path="res://assets/Goblin/Orc/Walk/EAST/frame_01.png" id="58_pgef2"]
+[ext_resource type="Texture2D" uid="uid://dtf66afuggnmv" path="res://assets/Goblin/Orc/Walk/EAST/frame_02.png" id="59_w00qu"]
+[ext_resource type="Texture2D" uid="uid://cc2rjlin4n2ij" path="res://assets/Goblin/Orc/Walk/EAST/frame_03.png" id="60_p2h15"]
+[ext_resource type="Texture2D" uid="uid://cga7suafv8gum" path="res://assets/Goblin/Orc/Walk/EAST/frame_04.png" id="61_4ok8v"]
+[ext_resource type="Texture2D" uid="uid://bgoyxku2p7vn6" path="res://assets/Goblin/Orc/Walk/NORTH/frame_01.png" id="62_s3ijk"]
+[ext_resource type="Texture2D" uid="uid://bnrc566i56a0u" path="res://assets/Goblin/Orc/Walk/NORTH/frame_02.png" id="63_yxyyj"]
+[ext_resource type="Texture2D" uid="uid://d0duhvphlqv1m" path="res://assets/Goblin/Orc/Walk/NORTH/frame_03.png" id="64_6jteq"]
+[ext_resource type="Texture2D" uid="uid://b7d1d5bnn8kv7" path="res://assets/Goblin/Orc/Walk/NORTH/frame_04.png" id="65_wt815"]
+[ext_resource type="Texture2D" uid="uid://ky8gvtobvln1" path="res://assets/Goblin/Orc/Walk/SOUTH/frame_01.png" id="66_sprjv"]
+[ext_resource type="Texture2D" uid="uid://bmtabpsj0akse" path="res://assets/Goblin/Orc/Walk/SOUTH/frame_02.png" id="67_20oq0"]
+[ext_resource type="Texture2D" uid="uid://b6joogfmuhs28" path="res://assets/Goblin/Orc/Walk/SOUTH/frame_03.png" id="68_xbh5g"]
+[ext_resource type="Texture2D" uid="uid://b4208umy7vhjr" path="res://assets/Goblin/Orc/Walk/SOUTH/frame_04.png" id="69_u1l42"]
+[ext_resource type="Texture2D" uid="uid://coe76aygtbvm3" path="res://assets/Goblin/Orc/Walk/WEST/frame_01.png" id="70_ory2x"]
+[ext_resource type="Texture2D" uid="uid://d7dfkfemf62u" path="res://assets/Goblin/Orc/Walk/WEST/frame_02.png" id="71_i3fqn"]
+[ext_resource type="Texture2D" uid="uid://cii41cl6wx8ts" path="res://assets/Goblin/Orc/Walk/WEST/frame_03.png" id="72_gk3g3"]
+[ext_resource type="Texture2D" uid="uid://na6irvt1qkdt" path="res://assets/Goblin/Orc/Walk/WEST/frame_04.png" id="73_la1wb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a4roe"]
 radius = 0.171875
 height = 0.45427734
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b8gn1"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_17qnd"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8cqq3"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hj1cq"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rrmjy"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s7q3f"]
-atlas = ExtResource("2_hk2ld")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rlkwg"]
-atlas = ExtResource("3_er6hd")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ytb82"]
-atlas = ExtResource("3_er6hd")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7dc36"]
-atlas = ExtResource("3_er6hd")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jeqtn"]
-atlas = ExtResource("3_er6hd")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7p6pl"]
-atlas = ExtResource("4_em2di")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vbu44"]
-atlas = ExtResource("4_em2di")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w10co"]
-atlas = ExtResource("4_em2di")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q07ya"]
-atlas = ExtResource("4_em2di")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5hs1w"]
-atlas = ExtResource("4_em2di")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l2po7"]
-atlas = ExtResource("4_em2di")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hk2ld"]
-atlas = ExtResource("4_em2di")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_er6hd"]
-atlas = ExtResource("4_em2di")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_em2di"]
-atlas = ExtResource("4_em2di")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n5esa"]
-atlas = ExtResource("4_em2di")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jy3ib"]
-atlas = ExtResource("4_em2di")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ogmkm"]
-atlas = ExtResource("4_em2di")
-region = Rect2(320, 0, 64, 64)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_a4roe"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b8gn1")
+"texture": ExtResource("2_g8l21")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_17qnd")
+"texture": ExtResource("3_ax77v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8cqq3")
+"texture": ExtResource("4_yw4hc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hj1cq")
+"texture": ExtResource("5_j1vi8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rrmjy")
+"texture": ExtResource("6_sauoy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s7q3f")
+"texture": ExtResource("7_qljer")
 }],
 "loop": 1,
-"name": &"death",
+"name": &"attack_east",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_8u8h4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_bavri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_u0rk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_p52sy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wvaoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_m0b1j")
+}],
+"loop": 1,
+"name": &"attack_north",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_u63kx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_etbiw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_88jd6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_7nydt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_yx4dt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_i6rlg")
+}],
+"loop": 1,
+"name": &"attack_south",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_lvgv4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_rkn8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_kv571")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_do1fl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_pxw77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_ymvvd")
+}],
+"loop": 1,
+"name": &"attack_west",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_e8fpw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_mhqar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_n7ypd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_vdl6p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_xxcoe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_6peql")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_dvtqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_r6oe5")
+}],
+"loop": 1,
+"name": &"death_east",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rlkwg")
+"texture": ExtResource("34_movqj")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ytb82")
+"texture": ExtResource("35_sfkkp")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7dc36")
+"texture": ExtResource("36_a7bkm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jeqtn")
+"texture": ExtResource("37_23neb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_mvqtm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_m55io")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_becli")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_xcthj")
 }],
 "loop": 1,
-"name": &"idle",
+"name": &"death_north",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7p6pl")
+"texture": ExtResource("42_l8phq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vbu44")
+"texture": ExtResource("43_s3tyb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w10co")
+"texture": ExtResource("44_kmjai")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q07ya")
+"texture": ExtResource("45_64g6x")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5hs1w")
+"texture": ExtResource("46_5vr14")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l2po7")
+"texture": ExtResource("47_jjhr8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hk2ld")
+"texture": ExtResource("48_y0xe4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_er6hd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_em2di")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n5esa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jy3ib")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ogmkm")
+"texture": ExtResource("49_cmyrm")
 }],
 "loop": 1,
-"name": &"run",
+"name": &"death_south",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("50_qf5jn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_m2app")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_30g1g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_l00i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_umoaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_hcxys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_3w5b1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_v88dx")
+}],
+"loop": 0,
+"name": &"death_west",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("58_pgef2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_w00qu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_p2h15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_4ok8v")
+}],
+"loop": 1,
+"name": &"walk_east",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("62_s3ijk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_yxyyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_6jteq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_wt815")
+}],
+"loop": 1,
+"name": &"walk_north",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("66_sprjv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_20oq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_xbh5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_u1l42")
+}],
+"loop": 1,
+"name": &"walk_south",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("70_ory2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_i3fqn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_gk3g3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_la1wb")
+}],
+"loop": 1,
+"name": &"walk_west",
 "speed": 5.0
 }]
 
@@ -191,13 +367,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42098632, 0)
 shape = SubResource("CapsuleShape3D_a4roe")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="." unique_id=1412088231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8168201, 0)
 pixel_size = 0.02
 billboard = 2
 shaded = true
 alpha_cut = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_a4roe")
-animation = &"idle"
+animation = &"death_south"
+frame_progress = 0.1742327
 
 [node name="IdleTimer" type="Timer" parent="." unique_id=112720898]
 one_shot = true
