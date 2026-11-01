@@ -1,0 +1,1172 @@
+[gd_scene format=3 uid="uid://3ai1ixkg0qse"]
+
+[ext_resource type="Script" uid="uid://cyp6445lqlpef" path="res://scripts/player.gd" id="1_ru62r"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_000.png" id="2_6fpki"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_001.png" id="3_2qmnp"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_002.png" id="4_3lfi1"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_003.png" id="5_yy3lj"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_004.png" id="6_fl6si"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_005.png" id="7_bjv4l"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_006.png" id="8_02khk"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_007.png" id="9_wjdj4"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_008.png" id="10_34ins"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_009.png" id="11_g17xf"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_010.png" id="12_npnh2"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_011.png" id="13_65vv8"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_012.png" id="14_mojh8"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_013.png" id="15_0vb7u"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_014.png" id="16_2nry4"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_015.png" id="17_so0uu"]
+[ext_resource type="Texture2D" path="res://assets/Player/idle/east/frame_016.png" id="18_4smsp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nin75"]
+radius = 0.34179688
+height = 1.2641602
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5n2p0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oytki"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cfehh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6iabg"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_oilsk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_obq23"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5dfle"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3o3ks"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pqffj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bdqw0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gu14e"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ial8d"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8kfvi"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1m7tj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l3ndt"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eesqy"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7hi3t"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lxjhc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qtplv"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wnmig"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_g455t"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l8cir"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7k22o"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q1gvw"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nx0rl"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1s1ex"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_st5i3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0c3yt"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rx12x"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8nly0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_14cdr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"dash_east",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"dash_north",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"dash_south",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"dash_west",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"death_east",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"death_north",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"death_south",
+"speed": 10.01
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"death_west",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6fpki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2qmnp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3lfi1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yy3lj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_fl6si")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bjv4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_02khk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wjdj4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_34ins")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_g17xf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_npnh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_65vv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mojh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_0vb7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2nry4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_so0uu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_4smsp")
+}],
+"loop": 0,
+"name": &"idle_east",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"idle_north",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"idle_south",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"idle_west",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"jump_east",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"jump_north",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"jump_south",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"jump_west",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"kill_east",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"kill_north",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"kill_south",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"kill_west",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"running_east",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"running_north",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"running_south",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 1,
+"name": &"running_west",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_5n2p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_oytki")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_cfehh")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_6iabg")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_oilsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_obq23")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_5dfle")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_3o3ks")
+}],
+"loop": 1,
+"name": &"walking_east",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_pqffj")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_bdqw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_gu14e")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_ial8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_8kfvi")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_1m7tj")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_l3ndt")
+}],
+"loop": 1,
+"name": &"walking_north",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_eesqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_7hi3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_lxjhc")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_qtplv")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_wnmig")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_g455t")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_l8cir")
+}],
+"loop": 1,
+"name": &"walking_south",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_7k22o")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_q1gvw")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_nx0rl")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_1s1ex")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_st5i3")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_0c3yt")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_rx12x")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_8nly0")
+}],
+"loop": 1,
+"name": &"walking_west",
+"speed": 8.0
+}]
+
+[node name="Player" type="CharacterBody3D" unique_id=285961488 groups=["player"]]
+script = ExtResource("1_ru62r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1768893229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1081543, 0)
+shape = SubResource("CapsuleShape3D_nin75")
+
+[node name="Sprite" type="AnimatedSprite3D" parent="." unique_id=688057244]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18475807, 0)
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_14cdr")
+animation = &"dash_west"
