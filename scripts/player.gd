@@ -2,126 +2,136 @@ extends CharacterBody3D
 
 const SPEED := 3.0
 const RUN_SPEED := 5.5
-const DOUBLE_TAP_TIME := 300 # milliseconds
-const KILL_SPEED_SCALE := 7.0
 const JUMP_VELOCITY := 7.0
-const GRAVITY := 20.0
-const MAX_FALL_SPEED := 30.0
+const DASH_SPEED := 10.0
+const DASH_DURATION := 0.18
+const KILL_SPEED_SCALE := 7.0
 
 @onready var sprite: AnimatedSprite3D = $Sprite
 
 var facing := "south"
-
-# Running
-var last_tap_time: Dictionary = {}
-var running_action := ""
-
-# Kill
 var is_killing := false
+var is_dashing := false
+var dash_timer := 0.0
+var dash_direction := Vector3.ZERO
 
 
 func _ready() -> void:
-	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
-	floor_snap_length = 0.5
 	sprite.animation_finished.connect(_on_animation_finished)
 
 
 func _physics_process(delta: float) -> void:
-
-	# Gravitasi
-	if not is_on_floor():
-		velocity.y = maxf(velocity.y - GRAVITY * delta, -MAX_FALL_SPEED)
-	elif velocity.y < 0.0:
-		velocity.y = 0.0
-
-	# KILL menggunakan tombol Enter
-	if Input.is_action_just_pressed("kill") and not is_killing:
-		_play_kill()
-
-	# Hentikan gerakan horizontal selama animasi kill (gravitasi tetap jalan)
 	if is_killing:
-		velocity.x = 0.0
-		velocity.z = 0.0
+		velocity = Vector3.ZERO
 		move_and_slide()
 		return
 
-	# Jump menggunakan tombol Space
+	# Klik kanan: kill
+	if Input.is_action_just_pressed("kill"):
+		_play_kill()
+
+		if is_killing:
+			velocity.x = 0.0
+			velocity.z = 0.0
+			move_and_slide()
+			return
+
+	# Gravitasi
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Space: lompat
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-	# Deteksi double tap WASD
-	_check_double_tap()
-
+	# Baca input WASD
 	var input := Input.get_vector("left", "right", "up", "down")
+	var direction := _get_camera_relative_direction(input)
 
-	# Arah gerak mengikuti kamera
-	var cam := get_viewport().get_camera_3d()
-	var dir := Vector3.ZERO
+	_update_facing(input)
 
-	if cam:
-		var forward := -cam.global_transform.basis.z
-		forward.y = 0.0
-		forward = forward.normalized()
+	# Klik kiri: dash
+	if Input.is_action_just_pressed("dash") and not is_dashing:
+		_start_dash(direction)
 
-		var right := cam.global_transform.basis.x
-		right.y = 0.0
-		right = right.normalized()
+	# Gerakan dash atau jalan/lari
+	if is_dashing:
+		dash_timer -= delta
+		velocity.x = dash_direction.x * DASH_SPEED
+		velocity.z = dash_direction.z * DASH_SPEED
 
-		dir = right * input.x + forward * -input.y
+		if dash_timer <= 0.0:
+			is_dashing = false
 	else:
-		dir = Vector3(input.x, 0.0, input.y)
+		var is_running := Input.is_key_pressed(KEY_SHIFT) and input != Vector2.ZERO
+		var current_speed := RUN_SPEED if is_running else SPEED
 
-	# Tentukan running
-	var is_running := (
-		running_action != ""
-		and Input.is_action_pressed(running_action)
-		and input != Vector2.ZERO
-	)
-
-	var current_speed := RUN_SPEED if is_running else SPEED
-
-	velocity.x = dir.x * current_speed
-	velocity.z = dir.z * current_speed
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
 
 	move_and_slide()
-
-	_update_animation(input, is_running)
-
-
-func _check_double_tap() -> void:
-	var actions := ["left", "right", "up", "down"]
-
-	for action in actions:
-		if Input.is_action_just_pressed(action):
-			var current_time := Time.get_ticks_msec()
-			var previous_time: int = last_tap_time.get(action, -10000)
-
-			if current_time - previous_time <= DOUBLE_TAP_TIME:
-				running_action = action
-			else:
-				running_action = ""
-
-			last_tap_time[action] = current_time
-
-	if running_action != "" and not Input.is_action_pressed(running_action):
-		running_action = ""
+	_update_animation(input)
 
 
-func _update_animation(input: Vector2, is_running: bool) -> void:
-	var moving := input != Vector2.ZERO
+func _get_camera_relative_direction(input: Vector2) -> Vector3:
+	var camera := get_viewport().get_camera_3d()
 
-	if moving:
-		if absf(input.x) > absf(input.y):
-			facing = "east" if input.x > 0.0 else "west"
+	if camera == null:
+		return Vector3(input.x, 0.0, input.y).normalized()
+
+	var forward := -camera.global_transform.basis.z
+	forward.y = 0.0
+	forward = forward.normalized()
+
+	var right := camera.global_transform.basis.x
+	right.y = 0.0
+	right = right.normalized()
+
+	return (right * input.x + forward * -input.y).normalized()
+
+
+func _update_facing(input: Vector2) -> void:
+	if input == Vector2.ZERO:
+		return
+
+	if absf(input.x) > absf(input.y):
+		facing = "east" if input.x > 0.0 else "west"
+	else:
+		facing = "south" if input.y > 0.0 else "north"
+
+
+func _start_dash(direction: Vector3) -> void:
+	if direction == Vector3.ZERO:
+		match facing:
+			"north":
+				dash_direction = Vector3(0.0, 0.0, -1.0)
+			"south":
+				dash_direction = Vector3(0.0, 0.0, 1.0)
+			"east":
+				dash_direction = Vector3(1.0, 0.0, 0.0)
+			"west":
+				dash_direction = Vector3(-1.0, 0.0, 0.0)
+	else:
+		dash_direction = direction
+
+	is_dashing = true
+	dash_timer = DASH_DURATION
+
+
+func _update_animation(input: Vector2) -> void:
+	var animation_prefix := "idle_"
+
+	if is_dashing:
+		animation_prefix = "dash_"
+	elif not is_on_floor():
+		animation_prefix = "jump_"
+	elif input != Vector2.ZERO:
+		if Input.is_key_pressed(KEY_SHIFT):
+			animation_prefix = "running_"
 		else:
-			facing = "south" if input.y > 0.0 else "north"
+			animation_prefix = "walking_"
 
-	var action := "idle_"
-
-	if moving:
-		action = "running_" if is_running else "walking_"
-
-	var animation_name := action + facing
+	var animation_name := animation_prefix + facing
 
 	if sprite.sprite_frames.has_animation(animation_name):
 		if sprite.animation != animation_name:
@@ -135,7 +145,7 @@ func _play_kill() -> void:
 
 	if sprite.sprite_frames.has_animation(animation_name):
 		is_killing = true
-		running_action = ""
+		is_dashing = false
 		sprite.speed_scale = KILL_SPEED_SCALE
 		sprite.play(animation_name)
 	else:
@@ -148,6 +158,5 @@ func _on_animation_finished() -> void:
 		sprite.speed_scale = 1.0
 
 		var idle_animation := "idle_" + facing
-
 		if sprite.sprite_frames.has_animation(idle_animation):
 			sprite.play(idle_animation)

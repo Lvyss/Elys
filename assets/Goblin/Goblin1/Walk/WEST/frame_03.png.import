@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8gjj772cjhlp"
-path="res://.godot/imported/frame_03.png-83eae04d69f65911e42f4dcf55279101.ctex"
+uid="uid://1lf1htl1t7kq"
+path="res://.godot/imported/frame_03.png-63e944943a6b65a18bd7d31362008fc7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goblin/Goblin1/Walk/WEST/frame_03.png"
-dest_files=["res://.godot/imported/frame_03.png-83eae04d69f65911e42f4dcf55279101.ctex"]
+source_file="res://assets/Goblin/Goblin1/WALK/WEST/frame_03.png"
+dest_files=["res://.godot/imported/frame_03.png-63e944943a6b65a18bd7d31362008fc7.ctex"]
 
 [params]
 

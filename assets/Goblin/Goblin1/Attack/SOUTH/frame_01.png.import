@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w0r08hh4d6ku"
-path="res://.godot/imported/frame_01.png-bb018cb799d6a8b25fb325d65dc7e59d.ctex"
+uid="uid://s80qlpww4afn"
+path.s3tc="res://.godot/imported/frame_01.png-7b384258e2fc85ec1e7a10373f7b01fa.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://assets/Goblin/Goblin1/Attack/SOUTH/frame_01.png"
-dest_files=["res://.godot/imported/frame_01.png-bb018cb799d6a8b25fb325d65dc7e59d.ctex"]
+source_file="res://assets/Goblin/Goblin1/ATTACK/SOUTH/frame_01.png"
+dest_files=["res://.godot/imported/frame_01.png-7b384258e2fc85ec1e7a10373f7b01fa.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

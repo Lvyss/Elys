@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbu36r83ihx0f"
-path="res://.godot/imported/frame_06.png-1fc1914681474349d33485df50596ba6.ctex"
+uid="uid://b6310s7etxbug"
+path="res://.godot/imported/frame_06.png-8b794c8ff9b6949d58e7f15a5b90f6cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goblin/Goblin1/Attack/EAST/frame_06.png"
-dest_files=["res://.godot/imported/frame_06.png-1fc1914681474349d33485df50596ba6.ctex"]
+source_file="res://assets/Goblin/Goblin1/ATTACK/EAST/frame_06.png"
+dest_files=["res://.godot/imported/frame_06.png-8b794c8ff9b6949d58e7f15a5b90f6cb.ctex"]
 
 [params]
 

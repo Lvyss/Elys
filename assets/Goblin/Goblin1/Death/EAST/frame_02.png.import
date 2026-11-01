@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1r2egall7ti0"
-path="res://.godot/imported/frame_02.png-f4f64d51b11d47cef1cf21da984a1121.ctex"
+uid="uid://bxtqsw71e7an4"
+path="res://.godot/imported/frame_02.png-512217146a00f603e7488eba685dd104.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Goblin/Goblin1/Death/EAST/frame_02.png"
-dest_files=["res://.godot/imported/frame_02.png-f4f64d51b11d47cef1cf21da984a1121.ctex"]
+source_file="res://assets/Goblin/Goblin1/DEATH/EAST/frame_02.png"
+dest_files=["res://.godot/imported/frame_02.png-512217146a00f603e7488eba685dd104.ctex"]
 
 [params]
 

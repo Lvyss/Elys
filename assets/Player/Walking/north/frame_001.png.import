@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nr6pb0lkt0v0"
-path="res://.godot/imported/frame_001.png-8d65b6454297f77eea595c710f54d64a.ctex"
+uid="uid://cqu04vt4l62nk"
+path="res://.godot/imported/frame_001.png-bce2b1d34865375e95a88341db8e21b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Player/walking/north/frame_001.png"
-dest_files=["res://.godot/imported/frame_001.png-8d65b6454297f77eea595c710f54d64a.ctex"]
+source_file="res://assets/Player/Walking/north/frame_001.png"
+dest_files=["res://.godot/imported/frame_001.png-bce2b1d34865375e95a88341db8e21b9.ctex"]
 
 [params]
 
