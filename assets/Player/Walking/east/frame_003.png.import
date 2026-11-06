@@ -2,20 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g7vx7280y55w"
-path="res://.godot/imported/frame_003.png-bd8c2b2f8db2c989e6f994873b206dab.ctex"
+uid="uid://b5tmprkb2633t"
+path.s3tc="res://.godot/imported/frame_003.png-bc714b5a8960d9a4402baebee10b9392.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://assets/Player/walking/east/frame_003.png"
-dest_files=["res://.godot/imported/frame_003.png-bd8c2b2f8db2c989e6f994873b206dab.ctex"]
+source_file="res://assets/Player/Walking/East/frame_003.png"
+dest_files=["res://.godot/imported/frame_003.png-bc714b5a8960d9a4402baebee10b9392.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -23,7 +24,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -37,4 +38,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

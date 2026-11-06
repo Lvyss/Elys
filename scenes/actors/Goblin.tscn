@@ -1,75 +1,141 @@
 [gd_scene format=3 uid="uid://cdjwmb2hr45nj"]
 
 [ext_resource type="Script" uid="uid://t6jhkjy1po6x" path="res://scripts/goblin.gd" id="1_hk2ld"]
-[ext_resource type="Texture2D" uid="uid://dx4ofd4joar5q" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_01.png" id="2_b8gn1"]
-[ext_resource type="Texture2D" uid="uid://bklrix3a6y6uf" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_02.png" id="3_17qnd"]
-[ext_resource type="Texture2D" uid="uid://da8k0arjw0nvl" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_03.png" id="4_8cqq3"]
-[ext_resource type="Texture2D" uid="uid://ddp0xoqvl735t" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_04.png" id="5_hj1cq"]
-[ext_resource type="Texture2D" uid="uid://p4lc6n21eo3j" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_05.png" id="6_rrmjy"]
-[ext_resource type="Texture2D" uid="uid://dcqna1q6aplyk" path="res://assets/Goblin/Goblin1/Attack/NORTH/frame_06.png" id="7_s7q3f"]
+[ext_resource type="Texture2D" uid="uid://b5rlpqxuipnjs" path="res://assets/Goblin/Goblin1/Death/Death-Sheet.png" id="2_a2i0c"]
+[ext_resource type="Texture2D" uid="uid://dk3ne8n7tjp7g" path="res://assets/Goblin/Goblin1/Idle/Idle-Sheet.png" id="3_hk2ld"]
+[ext_resource type="Texture2D" uid="uid://dilwc1tgrmbij" path="res://assets/Goblin/Goblin1/Run/Run-Sheet.png" id="4_hk2ld"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a4roe"]
-radius = 0.171875
+radius = 0.11767578
 height = 0.45427734
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_er6hd"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_em2di"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8gn1"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_17qnd"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cqq3"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hj1cq"]
+atlas = ExtResource("2_a2i0c")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrmjy"]
+atlas = ExtResource("3_hk2ld")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7q3f"]
+atlas = ExtResource("3_hk2ld")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlkwg"]
+atlas = ExtResource("3_hk2ld")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytb82"]
+atlas = ExtResource("3_hk2ld")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dc36"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeqtn"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p6pl"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbu44"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w10co"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q07ya"]
+atlas = ExtResource("4_hk2ld")
+region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a4roe"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_er6hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_em2di")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8gn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_17qnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cqq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hj1cq")
+}],
 "loop": 1,
-"name": &"attack_east",
+"name": &"death",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_b8gn1")
+"texture": SubResource("AtlasTexture_rrmjy")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_17qnd")
+"texture": SubResource("AtlasTexture_s7q3f")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_8cqq3")
+"texture": SubResource("AtlasTexture_rlkwg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_hj1cq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_rrmjy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_s7q3f")
+"texture": SubResource("AtlasTexture_ytb82")
 }],
 "loop": 1,
-"name": &"attack_north",
+"name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
-"loop": 1,
-"name": &"attack_south",
-"speed": 5.0
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dc36")
 }, {
-"frames": [],
-"loop": 1,
-"name": &"attack_west",
-"speed": 5.0
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeqtn")
 }, {
-"frames": [],
-"loop": 1,
-"name": &"idle_east",
-"speed": 5.0
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p6pl")
 }, {
-"frames": [],
-"loop": 1,
-"name": &"idle_north",
-"speed": 5.0
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbu44")
 }, {
-"frames": [],
-"loop": 1,
-"name": &"idle_south",
-"speed": 5.0
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w10co")
 }, {
-"frames": [],
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q07ya")
+}],
 "loop": 1,
-"name": &"idle_west",
+"name": &"run",
 "speed": 5.0
 }]
 
@@ -83,14 +149,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42098632, 0)
 shape = SubResource("CapsuleShape3D_a4roe")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="." unique_id=1412088231]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+transform = Transform3D(0.78, 0, 0, 0, 0.78, 0, 0, 0, 0.78, 0.0010946989, -0.38758314, 0)
 pixel_size = 0.02
 billboard = 2
 shaded = true
 alpha_cut = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_a4roe")
-animation = &"attack_north"
+animation = &"idle"
 
 [node name="IdleTimer" type="Timer" parent="." unique_id=112720898]
 one_shot = true
