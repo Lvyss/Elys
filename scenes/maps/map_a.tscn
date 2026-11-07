@@ -12,8 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bv8cuelsig52" path="res://assets/3D/cabin/scandinavian_log_cabin.glb" id="9_0jdf7"]
 [ext_resource type="Script" uid="uid://dg2aw45br65u3" path="res://scripts/cabin.gd" id="9_7y82y"]
 [ext_resource type="PackedScene" uid="uid://bewnsqpohfvw4" path="res://scenes/props/tree_big.tscn" id="9_lidhw"]
-[ext_resource type="PackedScene" uid="uid://dmf5hp3ekd1wx" path="res://scenes/props/rock.tscn" id="10_4hglb"]
-[ext_resource type="PackedScene" uid="uid://cmpmxipwpq4ul" path="res://scenes/props/bush.tscn" id="11_24nxt"]
 [ext_resource type="Script" uid="uid://fy57v6cr56ob" path="res://scripts/door_trigger.gd" id="11_fjqwi"]
 [ext_resource type="Script" uid="uid://dpgsm7sj4p4lu" path="res://scripts/interior_trigger.gd" id="12_hki64"]
 [ext_resource type="PackedScene" uid="uid://vq0ea158idfu" path="res://assets/Keney/Kit/Models/GLTF format/stump_old.glb" id="12_rvlne"]
@@ -53,6 +51,12 @@
 [ext_resource type="PackedScene" uid="uid://dtm403f3o024p" path="res://assets/Keney/Kit/Models/GLTF format/stone_tallJ.glb" id="48_wrblc"]
 [ext_resource type="PackedScene" uid="uid://carn1mfm6erq0" path="res://assets/Keney/Kit/Models/GLTF format/stone_tallG.glb" id="49_um0pl"]
 [ext_resource type="PackedScene" uid="uid://cokebhq0tk6ac" path="res://assets/Keney/Kit/Models/GLTF format/stone_tallB.glb" id="50_iqb7m"]
+[ext_resource type="Script" uid="uid://buf8ee4o24syy" path="res://enemy_spawner.gd" id="53_wispr"]
+[ext_resource type="Resource" uid="uid://bvktpfnwoqgfw" path="res://scenes/actors/goblin_lv1.tres" id="55_86hoq"]
+[ext_resource type="Resource" uid="uid://gfks5kg0rfhr" path="res://scenes/actors/goblin_lv2.tres" id="56_5wbrk"]
+[ext_resource type="Shader" uid="uid://bpbf6a4tvkek3" path="res://assets/Shader/outer_darkness.gdshader" id="57_86hoq"]
+[ext_resource type="Resource" uid="uid://ctyyvrbym2ep4" path="res://scenes/actors/goblin_lv3.tres" id="57_nkvse"]
+[ext_resource type="Script" uid="uid://cots43a3odsct" path="res://occlusion_fader.gd" id="58_5wbrk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7shv6"]
 render_priority = 0
@@ -79,8 +83,12 @@ size = Vector2(80, 80)
 size = Vector3(80, 1, 80)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lidhw"]
-sky_top_color = Color(0.11764706, 0.23529412, 0.44705883, 1)
-sky_horizon_color = Color(0.5294118, 0.80784315, 0.92156863, 1)
+sky_top_color = Color(0.1612, 0.32177997, 0.62, 1)
+sky_horizon_color = Color(0.045599997, 0.070253335, 0.08, 1)
+sky_curve = 0.025613377
+ground_bottom_color = Color(0.0627451, 0.0627451, 0.13333334, 1)
+ground_horizon_color = Color(0.10980392, 0.101960786, 0.2, 1)
+ground_curve = 0.024622869
 
 [sub_resource type="Sky" id="Sky_suk6e"]
 sky_material = SubResource("ProceduralSkyMaterial_lidhw")
@@ -781,12 +789,30 @@ size = Vector3(1, 4, 18)
 [sub_resource type="BoxShape3D" id="BoxShape3D_3pamo"]
 size = Vector3(1, 4, 13.991089)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wbrk"]
+render_priority = 0
+shader = ExtResource("57_86hoq")
+shader_parameter/center = Vector2(0, 0)
+shader_parameter/half_size = Vector2(8.5, 8.5)
+shader_parameter/fade_width = 7.0
+shader_parameter/far_width = 14.0
+shader_parameter/max_dark = 0.93
+shader_parameter/end_dark = 0.9
+shader_parameter/mist_color = Color(0.3, 0.26, 0.38, 1)
+shader_parameter/deep_color = Color(0.07, 0.07, 0.14, 1)
+shader_parameter/drift_amount = 1.8
+shader_parameter/drift_speed = 0.2
+shader_parameter/fade_start = 4.0
+shader_parameter/fade_end = 16.0
+shader_parameter/top_strength = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_a4roe"]
+material = SubResource("ShaderMaterial_5wbrk")
+size = Vector2(2, 2)
+
 [node name="MapA" type="Node3D" unique_id=2036741634]
 
 [node name="Player" parent="." unique_id=285961488 instance=ExtResource("1_qg2xq")]
-
-[node name="Goblin" parent="." unique_id=20799117 instance=ExtResource("2_qfbl7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.651, 0, 5.781)
 
 [node name="Ground" type="MeshInstance3D" parent="." unique_id=1806017241]
 mesh = SubResource("PlaneMesh_a4roe")
@@ -1280,334 +1306,6 @@ transform = Transform3D(-0.21558107, 0, -1.0064896, 0, 1.0293186, 0, 1.0064896, 
 
 [node name="@Node3D@58379" parent="Boundary/TreesEast" unique_id=829834292 instance=ExtResource("9_lidhw")]
 transform = Transform3D(0.83507085, 0, 0.33604705, 0, 0.90015054, 0, -0.33604705, 0, 0.83507085, 17.000969, 0, -7.8665023)
-
-[node name="RocksNorth" type="Node3D" parent="Boundary" unique_id=304413498]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Rock" parent="Boundary/RocksNorth" unique_id=2000589768 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.20640317, 0, -1.729203, 0, 1.7414778, 0, 1.729203, 0, -0.20640317, 11.204956, 0, -11.291646)
-
-[node name="@Node3D@44093" parent="Boundary/RocksNorth" unique_id=1764698317 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.07703039, 0, 1.9549552, 0, 1.9564723, 0, -1.9549552, 0, -0.07703039, -0.20956993, 0, -10.52932)
-
-[node name="@Node3D@44094" parent="Boundary/RocksNorth" unique_id=195640617 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.38415134, 0, -2.4376056, 0, 2.46769, 0, 2.4376056, 0, -0.38415134, 3.2146873, 0, -9.954189)
-
-[node name="@Node3D@44095" parent="Boundary/RocksNorth" unique_id=1790310801 instance=ExtResource("10_4hglb")]
-transform = Transform3D(2.0845728, 0, -1.1279683, 0, 2.3701806, 0, 1.1279683, 0, 2.0845728, -11.098187, 0, -9.896445)
-
-[node name="@Node3D@44096" parent="Boundary/RocksNorth" unique_id=877909996 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-2.0523884, 0, 0.99361837, 0, 2.2802577, 0, -0.99361837, 0, -2.0523884, -12.074813, 0, -11.56881)
-
-[node name="@Node3D@44097" parent="Boundary/RocksNorth" unique_id=837438618 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.9400258, 0, 1.7164705, 0, 1.957018, 0, -1.7164705, 0, -0.9400258, 13.884922, 0, -9.944782)
-
-[node name="@Node3D@44098" parent="Boundary/RocksNorth" unique_id=1833064327 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-2.2310348, 0, -0.64094144, 0, 2.321276, 0, 0.64094144, 0, -2.2310348, -9.246099, 0, -11.153461)
-
-[node name="@Node3D@44099" parent="Boundary/RocksNorth" unique_id=1507743887 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-1.7747769, 0, 1.0071343, 0, 2.0406256, 0, -1.0071343, 0, -1.7747769, -0.3888502, 0, -11.762475)
-
-[node name="@Node3D@44100" parent="Boundary/RocksNorth" unique_id=1112166520 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.7699667, 0, 1.5746254, 0, 2.369014, 0, -1.5746254, 0, 1.7699667, -0.37218857, 0, -11.363843)
-
-[node name="@Node3D@44101" parent="Boundary/RocksNorth" unique_id=1286437425 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.7413377, 0, -1.4734783, 0, 1.6494606, 0, 1.4734783, 0, -0.7413377, 10.161186, 0, -9.823994)
-
-[node name="@Node3D@44102" parent="Boundary/RocksNorth" unique_id=1724602943 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-1.1478899, 0, -1.6338012, 0, 1.9967368, 0, 1.6338012, 0, -1.1478899, 2.3261127, 0, -10.643001)
-
-[node name="@Node3D@44103" parent="Boundary/RocksNorth" unique_id=1269032476 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.318042, 0, -1.2257059, 0, 1.7998861, 0, 1.2257059, 0, 1.318042, 4.8994637, 0, -11.77745)
-
-[node name="@Node3D@44104" parent="Boundary/RocksNorth" unique_id=441022705 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.28306806, 0, -2.1734042, 0, 2.1917603, 0, 2.1734042, 0, -0.28306806, 7.447136, 0, -11.563945)
-
-[node name="@Node3D@44105" parent="Boundary/RocksNorth" unique_id=2017925061 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-2.3392725, 0, -0.30767107, 0, 2.3594189, 0, 0.30767107, 0, -2.3392725, 6.4210396, 0, -11.322748)
-
-[node name="RocksWest" type="Node3D" parent="Boundary" unique_id=2027236818]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Rock" parent="Boundary/RocksWest" unique_id=522446751 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.34641084, 0, 1.7506181, 0, 1.7845627, 0, -1.7506181, 0, -0.34641084, -10.766293, 0, 2.6907282)
-
-[node name="@Node3D@74274" parent="Boundary/RocksWest" unique_id=503521597 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.39592603, 0, -0.9790863, 0, 1.0561095, 0, 0.9790863, 0, 0.39592603, -10.122624, 0, 1.1137152)
-
-[node name="@Node3D@74275" parent="Boundary/RocksWest" unique_id=1897158371 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.1483872, 0, -0.10194959, 0, 1.1529037, 0, 0.10194959, 0, 1.1483872, -10.732575, 0, -0.69472504)
-
-[node name="@Node3D@74276" parent="Boundary/RocksWest" unique_id=326061719 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.1703637, 0, -0.19507653, 0, 1.18651, 0, 0.19507653, 0, 1.1703637, -11.612251, 0, 0.123716354)
-
-[node name="@Node3D@74277" parent="Boundary/RocksWest" unique_id=213079662 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.47121012, 0, -1.5916076, 0, 1.6598957, 0, 1.5916076, 0, 0.47121012, -11.260744, 0, 1.9023285)
-
-[node name="@Node3D@74278" parent="Boundary/RocksWest" unique_id=149940992 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.6552473, 0, -0.0042989473, 0, 1.6552529, 0, 0.0042989473, 0, 1.6552473, -10.686187, 0, 1.5340767)
-
-[node name="RocksEast" type="Node3D" parent="Boundary" unique_id=537652366]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Rock" parent="Boundary/RocksEast" unique_id=611957517 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.5181841, 0, -1.6101716, 0, 1.6914985, 0, 1.6101716, 0, 0.5181841, 11.799687, 0, 4.7434893)
-
-[node name="@Node3D@48729" parent="Boundary/RocksEast" unique_id=500179392 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.49633816, 0, -1.4939349, 0, 1.5742277, 0, 1.4939349, 0, 0.49633816, 10.820776, 0, -2.8980274)
-
-[node name="@Node3D@48730" parent="Boundary/RocksEast" unique_id=1509630102 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.0315534, 0, -0.6842523, 0, 1.2378625, 0, 0.6842523, 0, 1.0315534, 9.808483, 0, 0.14334297)
-
-[node name="@Node3D@48731" parent="Boundary/RocksEast" unique_id=428114264 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.38343015, 0, -1.7400723, 0, 1.7818165, 0, 1.7400723, 0, -0.38343015, 10.05668, 0, -0.32563877)
-
-[node name="@Node3D@48732" parent="Boundary/RocksEast" unique_id=240435337 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.0966105, 0, -0.8797972, 0, 1.4059153, 0, 0.8797972, 0, 1.0966105, 11.355176, 0, -8.6663265)
-
-[node name="@Node3D@48733" parent="Boundary/RocksEast" unique_id=1710455610 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-1.1608646, 0, -0.67139393, 0, 1.3410356, 0, 0.67139393, 0, -1.1608646, 11.908519, 0, -5.5193224)
-
-[node name="EdgeNorth" type="Node3D" parent="Boundary" unique_id=1881774755]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="@Node3D@68757" parent="Boundary/EdgeNorth" unique_id=1850890537 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.22672942, 0, 0.77795357, 0, 0.81031966, 0, -0.77795357, 0, -0.22672942, 6.532398, 0, -9.426487)
-
-[node name="@Node3D@68758" parent="Boundary/EdgeNorth" unique_id=1883001852 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.5549896, 0, -0.9836652, 0, 1.1294293, 0, 0.9836652, 0, 0.5549896, -8.115121, 0, -9.331536)
-
-[node name="@Node3D@68759" parent="Boundary/EdgeNorth" unique_id=870158386 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.3425481, 0, 0.88571465, 0, 0.94964707, 0, -0.88571465, 0, -0.3425481, 5.6461344, 0, -9.235843)
-
-[node name="@Node3D@68760" parent="Boundary/EdgeNorth" unique_id=1556093599 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.07218237, 0, -0.88605905, 0, 0.88899434, 0, 0.88605905, 0, 0.07218237, 7.375391, 0, -8.946022)
-
-[node name="@Node3D@68761" parent="Boundary/EdgeNorth" unique_id=221228400 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.8540791, 0, 0.94712317, 0, 1.2753406, 0, -0.94712317, 0, 0.8540791, 0.52672386, 0, -9.793563)
-
-[node name="@Node3D@68762" parent="Boundary/EdgeNorth" unique_id=1161988505 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.26686275, 0, -1.2557865, 0, 1.2838285, 0, 1.2557865, 0, -0.26686275, 8.335291, 0, -9.675423)
-
-[node name="@Node3D@68763" parent="Boundary/EdgeNorth" unique_id=1230304782 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.9085286, 0, 0.35332778, 0, 0.97481525, 0, -0.35332778, 0, 0.9085286, -3.6852245, 0, -8.975067)
-
-[node name="@Node3D@68764" parent="Boundary/EdgeNorth" unique_id=1235354292 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.05035509, 0, -0.9009369, 0, 0.90234303, 0, 0.9009369, 0, 0.05035509, -6.613893, 0, -9.756067)
-
-[node name="@Node3D@68765" parent="Boundary/EdgeNorth" unique_id=1918467914 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.21110971, 0, 0.91651565, 0, 0.94051486, 0, -0.91651565, 0, -0.21110971, 0.40979767, 0, -9.449227)
-
-[node name="@Node3D@68766" parent="Boundary/EdgeNorth" unique_id=17669564 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.73006356, 0, 0.41384327, 0, 0.83920145, 0, -0.41384327, 0, -0.73006356, -4.839186, 0, -9.008608)
-
-[node name="@Node3D@68767" parent="Boundary/EdgeNorth" unique_id=559355650 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.95059276, 0, 0.5443597, 0, 1.0954242, 0, -0.5443597, 0, -0.95059276, -4.726349, 0, -9.221756)
-
-[node name="@Node3D@68768" parent="Boundary/EdgeNorth" unique_id=1513864622 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.60538936, 0, 0.6050512, 0, 0.8559108, 0, -0.6050512, 0, 0.60538936, -0.051151276, 0, -9.573299)
-
-[node name="@Node3D@68769" parent="Boundary/EdgeNorth" unique_id=1763203468 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.56565535, 0, 1.1029633, 0, 1.2395539, 0, -1.1029633, 0, 0.56565535, 2.3473787, 0, -8.698517)
-
-[node name="@Node3D@68770" parent="Boundary/EdgeNorth" unique_id=1286928864 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.88830465, 0, -0.4114123, 0, 0.9789511, 0, 0.4114123, 0, 0.88830465, -3.5778065, 0, -9.906474)
-
-[node name="EdgeWest" type="Node3D" parent="Boundary" unique_id=1893184157]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Bush" parent="Boundary/EdgeWest" unique_id=1007250286 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.9327737, 0, 0.0015045671, 0, 0.93277496, 0, -0.0015045671, 0, 0.9327737, -8.740613, 0, -1.5962591)
-
-[node name="@Node3D@69531" parent="Boundary/EdgeWest" unique_id=1225861537 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.8491832, 0, 0.2542973, 0, 0.8864419, 0, -0.2542973, 0, 0.8491832, -9.005578, 0, -7.02067)
-
-[node name="@Node3D@69532" parent="Boundary/EdgeWest" unique_id=1275401548 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.073714994, 0, 1.0197017, 0, 1.0223627, 0, -1.0197017, 0, 0.073714994, -9.976055, 0, -6.385564)
-
-[node name="@Node3D@69533" parent="Boundary/EdgeWest" unique_id=499901834 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.5672788, 0, 1.017583, 0, 1.1650238, 0, -1.017583, 0, -0.5672788, -8.969667, 0, 1.7481413)
-
-[node name="@Node3D@69534" parent="Boundary/EdgeWest" unique_id=1765228908 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.5093256, 0, 1.0853404, 0, 1.1989063, 0, -1.0853404, 0, 0.5093256, -8.688779, 0, -8.529229)
-
-[node name="@Node3D@69535" parent="Boundary/EdgeWest" unique_id=891007882 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.79523534, 0, 0.95213896, 0, 1.2405515, 0, -0.95213896, 0, 0.79523534, -9.636989, 0, -8.020554)
-
-[node name="@Node3D@69536" parent="Boundary/EdgeWest" unique_id=1270460585 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.8424, 0, 0.366994, 0, 0.91887015, 0, -0.366994, 0, -0.8424, -9.484917, 0, -0.84924793)
-
-[node name="@Node3D@69537" parent="Boundary/EdgeWest" unique_id=1574506370 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.70341074, 0, -0.64914984, 0, 0.95717406, 0, 0.64914984, 0, 0.70341074, -8.958134, 0, 6.62307)
-
-[node name="@Node3D@69538" parent="Boundary/EdgeWest" unique_id=1601843459 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.49511245, 0, -0.6843744, 0, 0.84469205, 0, 0.6843744, 0, -0.49511245, -9.009966, 0, 5.0744963)
-
-[node name="@Node3D@69539" parent="Boundary/EdgeWest" unique_id=131473536 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.95003575, 0, -0.4048031, 0, 1.0326827, 0, 0.4048031, 0, 0.95003575, -8.97028, 0, 6.249319)
-
-[node name="@Node3D@69540" parent="Boundary/EdgeWest" unique_id=1573416194 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.2372838, 0, 0.80473703, 0, 0.8389906, 0, -0.80473703, 0, 0.2372838, -8.979536, 0, -1.2857566)
-
-[node name="@Node3D@69541" parent="Boundary/EdgeWest" unique_id=152211901 instance=ExtResource("11_24nxt")]
-transform = Transform3D(1.2088176, 0, -0.0675074, 0, 1.2107011, 0, 0.0675074, 0, 1.2088176, -9.701484, 0, -3.4435415)
-
-[node name="@Node3D@69542" parent="Boundary/EdgeWest" unique_id=1498046238 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.8532523, 0, -0.18734218, 0, 0.8735769, 0, 0.18734218, 0, 0.8532523, -9.584493, 0, -7.6236315)
-
-[node name="@Node3D@69543" parent="Boundary/EdgeWest" unique_id=279978722 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.9142322, 0, 0.3237541, 0, 0.96986455, 0, -0.3237541, 0, -0.9142322, -9.2007675, 0, 3.533865)
-
-[node name="EdgeEast" type="Node3D" parent="Boundary" unique_id=160011866]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Bush" parent="Boundary/EdgeEast" unique_id=1839237869 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-1.0506071, 0, 0.1356134, 0, 1.0593234, 0, -0.1356134, 0, -1.0506071, 8.686965, 0, -2.5524511)
-
-[node name="@Node3D@70269" parent="Boundary/EdgeEast" unique_id=2086158010 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-1.1501496, 0, -0.34857932, 0, 1.2018118, 0, 0.34857932, 0, -1.1501496, 8.7365675, 0, 2.2727585)
-
-[node name="@Node3D@70270" parent="Boundary/EdgeEast" unique_id=507832728 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.91287065, 0, 0.58025527, 0, 1.0816787, 0, -0.58025527, 0, 0.91287065, 9.844696, 0, -8.769339)
-
-[node name="@Node3D@70271" parent="Boundary/EdgeEast" unique_id=248391068 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.87411916, 0, -0.65885776, 0, 1.0946131, 0, 0.65885776, 0, -0.87411916, 8.824566, 0, 2.9143095)
-
-[node name="@Node3D@70272" parent="Boundary/EdgeEast" unique_id=1291968787 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.8643492, 0, 0.9523517, 0, 1.2861078, 0, -0.9523517, 0, 0.8643492, 9.649898, 0, 3.2667027)
-
-[node name="@Node3D@70273" parent="Boundary/EdgeEast" unique_id=542486346 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.60342735, 0, 1.0636866, 0, 1.2229284, 0, -1.0636866, 0, 0.60342735, 9.1420555, 0, -2.8828592)
-
-[node name="@Node3D@70274" parent="Boundary/EdgeEast" unique_id=887029031 instance=ExtResource("11_24nxt")]
-transform = Transform3D(1.031454, 0, -0.17803136, 0, 1.0467055, 0, 0.17803136, 0, 1.031454, 9.583202, 0, -3.4144878)
-
-[node name="@Node3D@70275" parent="Boundary/EdgeEast" unique_id=277047138 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.47967237, 0, -0.8569112, 0, 0.9820297, 0, 0.8569112, 0, -0.47967237, 9.241789, 0, 4.4257765)
-
-[node name="@Node3D@70276" parent="Boundary/EdgeEast" unique_id=341910574 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.9493295, 0, 0.7897036, 0, 1.2348515, 0, -0.7897036, 0, 0.9493295, 9.841005, 0, -2.0326037)
-
-[node name="@Node3D@70277" parent="Boundary/EdgeEast" unique_id=524313372 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.9531161, 0, 0.6358543, 0, 1.1457491, 0, -0.6358543, 0, -0.9531161, 8.744871, 0, -4.6473074)
-
-[node name="@Node3D@70278" parent="Boundary/EdgeEast" unique_id=448428170 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.6286343, 0, -0.9031051, 0, 1.1003544, 0, 0.9031051, 0, 0.6286343, 8.82454, 0, -5.08598)
-
-[node name="@Node3D@70279" parent="Boundary/EdgeEast" unique_id=966926225 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.67955285, 0, 0.76016575, 0, 1.0196294, 0, -0.76016575, 0, -0.67955285, 8.945617, 0, 6.692953)
-
-[node name="@Node3D@70280" parent="Boundary/EdgeEast" unique_id=1614421618 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-1.2753067, 0, 0.13917127, 0, 1.2828779, 0, -0.13917127, 0, -1.2753067, 8.616461, 0, 6.508089)
-
-[node name="@Node3D@70281" parent="Boundary/EdgeEast" unique_id=1495516682 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.18870589, 0, 1.2514243, 0, 1.2655721, 0, -1.2514243, 0, 0.18870589, 8.666925, 0, -4.524206)
-
-[node name="EdgeSouthWest" type="Node3D" parent="Boundary" unique_id=1445827377]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="@Node3D@72051" parent="Boundary/EdgeSouthWest" unique_id=403322393 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.7060223, 0, 0.7705755, 0, 1.0451096, 0, -0.7705755, 0, -0.7060223, -2.5263267, 0, 9.535021)
-
-[node name="@Node3D@72052" parent="Boundary/EdgeSouthWest" unique_id=2113592476 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.21035531, 0, -0.96863306, 0, 0.99121106, 0, 0.96863306, 0, -0.21035531, -6.7851133, 0, 9.652109)
-
-[node name="@Node3D@72053" parent="Boundary/EdgeSouthWest" unique_id=192073952 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.90691656, 0, -0.053758442, 0, 0.9085084, 0, 0.053758442, 0, 0.90691656, -3.9260588, 0, 10.182456)
-
-[node name="@Node3D@72054" parent="Boundary/EdgeSouthWest" unique_id=1462749707 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.035455227, 0, 1.1724777, 0, 1.1730137, 0, -1.1724777, 0, 0.035455227, -2.8700914, 0, 9.184157)
-
-[node name="@Node3D@72055" parent="Boundary/EdgeSouthWest" unique_id=1110286197 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-1.268827, 0, -0.25042632, 0, 1.293304, 0, 0.25042632, 0, -1.268827, -5.1241174, 0, 9.294626)
-
-[node name="@Node3D@72056" parent="Boundary/EdgeSouthWest" unique_id=559623051 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.77875876, 0, 0.3367175, 0, 0.8484361, 0, -0.3367175, 0, 0.77875876, -7.317151, 0, 9.683133)
-
-[node name="@Node3D@72057" parent="Boundary/EdgeSouthWest" unique_id=1504274292 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.8715657, 0, 0.28381166, 0, 0.9166111, 0, -0.28381166, 0, 0.8715657, -8.300526, 0, 8.627491)
-
-[node name="@Node3D@72058" parent="Boundary/EdgeSouthWest" unique_id=148750767 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.94762367, 0, 0.099291846, 0, 0.95281136, 0, -0.099291846, 0, -0.94762367, -8.254371, 0, 9.434585)
-
-[node name="EdgeSouthEast" type="Node3D" parent="Boundary" unique_id=515250643]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Bush" parent="Boundary/EdgeSouthEast" unique_id=47995546 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.53331506, 0, -0.9627353, 0, 1.1005836, 0, 0.9627353, 0, -0.53331506, 5.8070774, 0, 8.728609)
-
-[node name="@Node3D@71766" parent="Boundary/EdgeSouthEast" unique_id=1009130214 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.1581764, 0, 1.1269164, 0, 1.1379633, 0, -1.1269164, 0, 0.1581764, 7.807102, 0, 9.602768)
-
-[node name="@Node3D@71767" parent="Boundary/EdgeSouthEast" unique_id=1952577461 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.6347772, 0, 0.64627934, 0, 0.9058803, 0, -0.64627934, 0, 0.6347772, 8.910997, 0, 8.810611)
-
-[node name="@Node3D@71768" parent="Boundary/EdgeSouthEast" unique_id=2092899867 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.9374612, 0, -0.6970076, 0, 1.1681837, 0, 0.6970076, 0, 0.9374612, 6.94511, 0, 9.087234)
-
-[node name="@Node3D@71769" parent="Boundary/EdgeSouthEast" unique_id=1753459945 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.96669245, 0, -0.103043035, 0, 0.9721688, 0, 0.103043035, 0, 0.96669245, 3.9429832, 0, 9.313744)
-
-[node name="@Node3D@71770" parent="Boundary/EdgeSouthEast" unique_id=1249714672 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.0060270247, 0, -1.1079497, 0, 1.1079661, 0, 1.1079497, 0, -0.0060270247, 9.926791, 0, 9.341645)
-
-[node name="@Node3D@71771" parent="Boundary/EdgeSouthEast" unique_id=1566337290 instance=ExtResource("11_24nxt")]
-transform = Transform3D(-0.9793867, 0, 0.28450954, 0, 1.0198745, 0, -0.28450954, 0, -0.9793867, 8.07471, 0, 10.088821)
-
-[node name="@Node3D@71772" parent="Boundary/EdgeSouthEast" unique_id=1984953727 instance=ExtResource("11_24nxt")]
-transform = Transform3D(0.49695742, 0, 0.7844128, 0, 0.928585, 0, -0.7844128, 0, 0.49695742, 9.672305, 0, 9.755091)
-
-[node name="RocksSouthWest" type="Node3D" parent="Boundary" unique_id=1960659248]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="@Node3D@73376" parent="Boundary/RocksSouthWest" unique_id=1659106784 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.89345247, 0, -0.64568263, 0, 1.1023445, 0, 0.64568263, 0, 0.89345247, -9.253424, 0, 12.12121)
-
-[node name="@Node3D@73377" parent="Boundary/RocksSouthWest" unique_id=163808080 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.7809143, 0, 0.2431112, 0, 0.8178815, 0, -0.2431112, 0, 0.7809143, -5.1964846, 0, 12.26705)
-
-[node name="@Node3D@73378" parent="Boundary/RocksSouthWest" unique_id=140708170 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.8909526, 0, 0.23332432, 0, 0.9209977, 0, -0.23332432, 0, 0.8909526, -4.5080385, 0, 11.146088)
-
-[node name="@Node3D@73379" parent="Boundary/RocksSouthWest" unique_id=969187803 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-1.1817056, 0, -0.2024156, 0, 1.1989163, 0, 0.2024156, 0, -1.1817056, -9.182991, 0, 11.737634)
-
-[node name="@Node3D@73380" parent="Boundary/RocksSouthWest" unique_id=517693118 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.7588535, 0, -0.68954724, 0, 1.0253458, 0, 0.68954724, 0, -0.7588535, -8.45402, 0, 12.873655)
-
-[node name="@Node3D@73381" parent="Boundary/RocksSouthWest" unique_id=1994116084 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.39884698, 0, -0.80082333, 0, 0.894649, 0, 0.80082333, 0, -0.39884698, -9.598881, 0, 11.1480465)
-
-[node name="RocksSouthEast" type="Node3D" parent="Boundary" unique_id=1854935328]
-visible = false
-script = ExtResource("8_kv08b")
-
-[node name="Rock" parent="Boundary/RocksSouthEast" unique_id=559662044 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.104319565, 0, 0.78948, 0, 0.7963424, 0, -0.78948, 0, 0.104319565, 7.6492543, 0, 11.846238)
-
-[node name="@Node3D@73699" parent="Boundary/RocksSouthEast" unique_id=1471624103 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.5961613, 0, -0.91143423, 0, 1.0890917, 0, 0.91143423, 0, 0.5961613, 9.205986, 0, 12.375244)
-
-[node name="@Node3D@73700" parent="Boundary/RocksSouthEast" unique_id=1992792852 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.723742, 0, -0.20081678, 0, 0.7510858, 0, 0.20081678, 0, -0.723742, 13.364509, 0, 11.164043)
-
-[node name="@Node3D@73701" parent="Boundary/RocksSouthEast" unique_id=1315753846 instance=ExtResource("10_4hglb")]
-transform = Transform3D(-0.7922991, 0, 0.7320816, 0, 1.0787406, 0, -0.7320816, 0, -0.7922991, 11.655726, 0, 12.92595)
-
-[node name="@Node3D@73702" parent="Boundary/RocksSouthEast" unique_id=2145575917 instance=ExtResource("10_4hglb")]
-transform = Transform3D(1.1568655, 0, -0.48042744, 0, 1.2526565, 0, 0.48042744, 0, 1.1568655, 3.4306145, 0, 11.461723)
-
-[node name="@Node3D@73703" parent="Boundary/RocksSouthEast" unique_id=606305732 instance=ExtResource("10_4hglb")]
-transform = Transform3D(0.5925937, 0, 0.50796705, 0, 0.78051126, 0, -0.50796705, 0, 0.5925937, 4.5336323, 0, 10.267727)
 
 [node name="Cliffs" type="Node3D" parent="Boundary" unique_id=508351976]
 script = ExtResource("13_pa2lm")
@@ -3020,6 +2718,21 @@ shape = SubResource("BoxShape3D_chhbs")
 [node name="WallEast" type="CollisionShape3D" parent="Walls" unique_id=1963822677]
 transform = Transform3D(0.62499994, 0, 0, 0, 1.0599998, 0, 0, 0, 1.37, 16.584202, 2.0007281, -0.67998815)
 shape = SubResource("BoxShape3D_3pamo")
+
+[node name="Enemies" type="Node3D" parent="." unique_id=1108799623]
+script = ExtResource("53_wispr")
+goblin_scene = ExtResource("2_qfbl7")
+stats_lv1 = ExtResource("55_86hoq")
+stats_lv2 = ExtResource("56_5wbrk")
+stats_boss = ExtResource("57_nkvse")
+
+[node name="OcclusionFader" type="Node3D" parent="." unique_id=1712883400 node_paths=PackedStringArray("roots")]
+script = ExtResource("58_5wbrk")
+roots = [NodePath("../Boundary")]
+
+[node name="OuterDarkness" type="MeshInstance3D" parent="." unique_id=1667094158]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_a4roe")
 
 [editable path="Landmarks/Cabin/Sketchfab_Scene"]
 [editable path="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene"]

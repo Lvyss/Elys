@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GoblinStats" format=3 uid="uid://ctyyvrbym2ep4"]
+
+[ext_resource type="Script" uid="uid://dwd0xge4beaxe" path="res://goblin_stats.gd" id="1_0lvj0"]
+[ext_resource type="SpriteFrames" uid="uid://ptxtkx18kcbf" path="res://scenes/actors/goblin_frames3.tres" id="2_0lvj0"]
+
+[resource]
+script = ExtResource("1_0lvj0")
+sprite_frames = ExtResource("2_0lvj0")
+size_scale = 2.0
+max_hp = 200
+damage = 15
+chase_speed = 3.5
+detect_range = 5.0
+lose_range = 5.0
+metadata/_custom_type_script = "uid://dwd0xge4beaxe"

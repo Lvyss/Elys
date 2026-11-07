@@ -1,143 +1,11 @@
 [gd_scene format=3 uid="uid://cdjwmb2hr45nj"]
 
 [ext_resource type="Script" uid="uid://t6jhkjy1po6x" path="res://scripts/goblin.gd" id="1_hk2ld"]
-[ext_resource type="Texture2D" uid="uid://b5rlpqxuipnjs" path="res://assets/Goblin/Goblin1/Death/Death-Sheet.png" id="2_a2i0c"]
-[ext_resource type="Texture2D" uid="uid://dk3ne8n7tjp7g" path="res://assets/Goblin/Goblin1/Idle/Idle-Sheet.png" id="3_hk2ld"]
-[ext_resource type="Texture2D" uid="uid://dilwc1tgrmbij" path="res://assets/Goblin/Goblin1/Run/Run-Sheet.png" id="4_hk2ld"]
+[ext_resource type="SpriteFrames" uid="uid://ptxtkx18kcbf" path="res://scenes/actors/goblin_frames3.tres" id="2_g23lq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a4roe"]
 radius = 0.11767578
 height = 0.45427734
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_er6hd"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_em2di"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b8gn1"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_17qnd"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8cqq3"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hj1cq"]
-atlas = ExtResource("2_a2i0c")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rrmjy"]
-atlas = ExtResource("3_hk2ld")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_s7q3f"]
-atlas = ExtResource("3_hk2ld")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rlkwg"]
-atlas = ExtResource("3_hk2ld")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ytb82"]
-atlas = ExtResource("3_hk2ld")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7dc36"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jeqtn"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7p6pl"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vbu44"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w10co"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q07ya"]
-atlas = ExtResource("4_hk2ld")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_a4roe"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_er6hd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_em2di")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b8gn1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_17qnd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8cqq3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hj1cq")
-}],
-"loop": 1,
-"name": &"death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rrmjy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_s7q3f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rlkwg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ytb82")
-}],
-"loop": 1,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7dc36")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jeqtn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7p6pl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vbu44")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w10co")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q07ya")
-}],
-"loop": 1,
-"name": &"run",
-"speed": 5.0
-}]
 
 [node name="Goblin" type="CharacterBody3D" unique_id=20799117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
@@ -149,14 +17,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.42098632, 0)
 shape = SubResource("CapsuleShape3D_a4roe")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="." unique_id=1412088231]
-transform = Transform3D(0.78, 0, 0, 0, 0.78, 0, 0, 0, 0.78, 0.0010946989, -0.38758314, 0)
+transform = Transform3D(0.78, 0, 0, 0, 0.78, 0, 0, 0, 0.78, 0.001, -0.45, 0)
 pixel_size = 0.02
 billboard = 2
 shaded = true
 alpha_cut = 1
 texture_filter = 0
-sprite_frames = SubResource("SpriteFrames_a4roe")
-animation = &"idle"
+sprite_frames = ExtResource("2_g23lq")
+animation = &"idle_down"
 
 [node name="IdleTimer" type="Timer" parent="." unique_id=112720898]
 one_shot = true

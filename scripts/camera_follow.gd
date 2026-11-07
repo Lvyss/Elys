@@ -2,7 +2,7 @@ extends Camera3D
 
 @export var follow_speed := 10.0
 @export var mouse_sensitivity := 0.003
-@export var min_pitch_deg := -35.0   # negatif = kamera di bawah hero, mendongak ke atas
+@export var min_pitch_deg := -35.0   # negatif = kamera di bawah hero, mendongak
 @export var max_pitch_deg := 70.0    # paling tinggi (hampir dari atas)
 @export var min_distance := 4.0
 @export var max_distance := 16.0
@@ -12,14 +12,25 @@ extends Camera3D
 @export var min_cam_height := 0.4    # kamera tidak boleh lebih rendah dari ini
 @export var close_distance := 1.5    # jarak minimum kalau sangat mendongak
 
+@export_group("Anti Tertutup")
+@export var use_pull_in := false                  # true = kamera ditarik maju saat tertutup
+@export_flags_3d_physics var occluder_mask := 1   # layer yang menahan kamera
+@export var cam_radius := 0.35                    # tebal "bola" kamera
+@export var min_occlusion_distance := 1.2         # paling dekat ke hero saat ditarik
+@export var pull_in_speed := 25.0                 # maju cepat
+@export var release_speed := 3.0                  # mundur pelan
+
 var target: Node3D
 var yaw := 0.0
 var pitch := 0.0
 var distance := 10.0          # jarak yang diinginkan (diatur scroll)
-var current_distance := 10.0  # jarak sebenarnya setelah dibatasi tanah
+var current_distance := 10.0  # jarak sebenarnya setelah dibatasi
 var focus := Vector3.ZERO
+var _shape := SphereShape3D.new()
+
 
 func _ready() -> void:
+	_shape.radius = cam_radius
 	target = get_tree().get_first_node_in_group("player") as Node3D
 	if target == null:
 		return
@@ -31,6 +42,7 @@ func _ready() -> void:
 	yaw = atan2(offset.x, offset.z)
 	pitch = asin(offset.y / distance)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -50,25 +62,57 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			get_tree().quit()
 
+
 func _process(delta: float) -> void:
 	if target == null:
 		return
 	var goal := target.global_position + Vector3(0, look_height, 0)
 	focus = focus.lerp(goal, 1.0 - exp(-follow_speed * delta))
 
-	# Batasi jarak supaya kamera tidak tembus tanah
+	# 1) Batas tanah: kamera tidak boleh tembus lantai
 	var allowed := distance
 	var s := sin(pitch)
 	if s < 0.0:
 		var room := focus.y - (ground_height + min_cam_height)
 		allowed = minf(distance, maxf(room / -s, close_distance))
 
-	# Halus: jarak mendekat atau menjauh tidak loncat
-	current_distance = lerpf(current_distance, allowed, 1.0 - exp(-12.0 * delta))
+	var dir := Vector3(
+		cos(pitch) * sin(yaw),
+		sin(pitch),
+		cos(pitch) * cos(yaw))
 
-	var offset := Vector3(
-		current_distance * cos(pitch) * sin(yaw),
-		current_distance * sin(pitch),
-		current_distance * cos(pitch) * cos(yaw))
-	global_position = focus + offset
+	# 2) Anti tertutup (opsional, default mati)
+	if use_pull_in:
+		allowed = _limit_by_obstacles(dir, allowed)
+
+	# Halus: maju cepat, mundur pelan
+	var speed := 12.0
+	if use_pull_in:
+		speed = pull_in_speed if allowed < current_distance else release_speed
+	current_distance = lerpf(current_distance, allowed, 1.0 - exp(-speed * delta))
+
+	global_position = focus + dir * current_distance
 	global_rotation = Vector3(-pitch, yaw, 0.0)
+
+
+func _limit_by_obstacles(dir: Vector3, wanted: float) -> float:
+	var q := PhysicsShapeQueryParameters3D.new()
+	q.shape = _shape
+	q.transform = Transform3D(Basis.IDENTITY, focus)
+	q.motion = dir * wanted
+	q.collision_mask = occluder_mask
+
+	# jangan tabrak hero dan musuh sendiri
+	var skip: Array[RID] = []
+	if target is CollisionObject3D:
+		skip.append(target.get_rid())
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if e is CollisionObject3D:
+			skip.append(e.get_rid())
+	q.exclude = skip
+
+	var result := get_world_3d().direct_space_state.cast_motion(q)
+	if result.is_empty():
+		return wanted
+	var safe_fraction: float = result[0]
+	return clampf(wanted * safe_fraction, minf(min_occlusion_distance, wanted), wanted)
