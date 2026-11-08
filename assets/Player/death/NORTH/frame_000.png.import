@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1iy2e4dube1w"
-path.s3tc="res://.godot/imported/frame_000.png-d49c826f5ded365a3f533f9c4204eac5.s3tc.ctex"
+path.s3tc="res://.godot/imported/frame_000.png-537750a5440a4f1b98f3b7d7f4a5e1ab.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/Death/North/frame_000.png"
-dest_files=["res://.godot/imported/frame_000.png-d49c826f5ded365a3f533f9c4204eac5.s3tc.ctex"]
+source_file="res://assets/Player/death/NORTH/frame_000.png"
+dest_files=["res://.godot/imported/frame_000.png-537750a5440a4f1b98f3b7d7f4a5e1ab.s3tc.ctex"]
 
 [params]
 
