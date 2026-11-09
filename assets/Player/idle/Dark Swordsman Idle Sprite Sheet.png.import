@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbpnyu75kr30j"
-path="res://.godot/imported/Dark Swordsman Idle Sprite Sheet.png-92e0be7036af36705bf813ae620a29b8.ctex"
+path="res://.godot/imported/Dark Swordsman Idle Sprite Sheet.png-210d4436b85fdf67298b8ca196f0f120.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Player/idle/Dark Swordsman Idle Sprite Sheet.png"
-dest_files=["res://.godot/imported/Dark Swordsman Idle Sprite Sheet.png-92e0be7036af36705bf813ae620a29b8.ctex"]
+source_file="res://assets/Player/Idle/Dark Swordsman Idle Sprite Sheet.png"
+dest_files=["res://.godot/imported/Dark Swordsman Idle Sprite Sheet.png-210d4436b85fdf67298b8ca196f0f120.ctex"]
 
 [params]
 

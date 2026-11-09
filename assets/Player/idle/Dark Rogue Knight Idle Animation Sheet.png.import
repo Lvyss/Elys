@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dfk4x3x7nw7lo"
-path.s3tc="res://.godot/imported/Dark Rogue Knight Idle Animation Sheet.png-1ead077791597248adcd4cb551dc2abc.s3tc.ctex"
+path.s3tc="res://.godot/imported/Dark Rogue Knight Idle Animation Sheet.png-6e549644cf2bb64be9aa0297fbfb7039.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/idle/Dark Rogue Knight Idle Animation Sheet.png"
-dest_files=["res://.godot/imported/Dark Rogue Knight Idle Animation Sheet.png-1ead077791597248adcd4cb551dc2abc.s3tc.ctex"]
+source_file="res://assets/Player/Idle/Dark Rogue Knight Idle Animation Sheet.png"
+dest_files=["res://.godot/imported/Dark Rogue Knight Idle Animation Sheet.png-6e549644cf2bb64be9aa0297fbfb7039.s3tc.ctex"]
 
 [params]
 
