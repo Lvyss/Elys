@@ -3,14 +3,13 @@ extends Control
 @onready var start_button: Button = $Start
 @onready var about_button: Button = $About
 @onready var quit_button: Button = $Quit
+@onready var bgm: AudioStreamPlayer = $BGM # Tambahan untuk lagu
 
 const HOVER_COLOR := Color(1.25, 1.25, 1.25)
 const PULSE_FACTOR := 0.94
 const PRESS_FACTOR := 0.88
 const PULSE_TIME := 0.3
 
-# Bagian rect tombol yang DIBUANG dari tiap sisi (0.0 - 0.5).
-# x = kiri/kanan, y = atas/bawah. Perbesar angkanya kalau area masih kelebihan.
 const HIT_MARGIN := Vector2(0.13, 0.27)
 
 var _buttons: Array[Button] = []
@@ -30,19 +29,21 @@ func _ready() -> void:
 	for btn in _buttons:
 		_base_scale[btn] = btn.scale
 
-		# Pivot ke tengah + imbangi posisi supaya tombol tidak bergeser
 		btn.pivot_offset = btn.size / 2.0
 		btn.position -= btn.pivot_offset * (Vector2.ONE - btn.scale)
 
-		# Mouse ditangani script kita, bukan oleh rect tombol yang kebesaran
 		btn.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		btn.focus_mode = Control.FOCUS_NONE
+		
+	# Pastikan lagu berputar (jaga-jaga jika Autoplay tidak aktif)
+	if not bgm.playing:
+		bgm.play()
 
 
 # --- DETEKSI HOVER (hitbox kecil) ---
 
 func _is_over(btn: Button) -> bool:
-	var p := btn.get_local_mouse_position()   # sudah memperhitungkan scale & pivot
+	var p := btn.get_local_mouse_position()
 	var m := btn.size * HIT_MARGIN
 	return Rect2(m, btn.size - m * 2.0).has_point(p)
 
@@ -122,13 +123,29 @@ func _play_click(btn: Button) -> Tween:
 	return s
 
 
+# --- FUNGSI FADE OUT MUSIK ---
+func _fade_out_music(duration: float = 1.0) -> void:
+	var tween = create_tween()
+	# Memudarkan volume dari volume awal ke -80db (sunyi)
+	tween.tween_property(bgm, "volume_db", -80.0, duration)
+	await tween.finished
+	bgm.stop()
+
+
 # --- AKSI TOMBOL ---
 
 func _on_start_pressed() -> void:
 	_locked = true
-	await _play_click(start_button).finished
+	_play_click(start_button)
+	
+	# 1. Mulai pudarkan lagu selama 5 detik (TANPA await)
+	var music_tween = create_tween()
+	music_tween.tween_property(bgm, "volume_db", -80.0, 5.0)
+	
+	# 2. Langsung panggil pindah scene!
+	# Layar akan mulai menghitam (0.8 detik), lalu pindah.
+	# Lagu akan terus memudar di background selama proses ini.
 	await SceneTransition.change_scene("res://scenes/maps/loading_screen2.tscn")
-
 
 func _on_about_pressed() -> void:
 	_play_click(about_button)
@@ -137,5 +154,6 @@ func _on_about_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	_locked = true
-	await _play_click(quit_button).finished
+	_play_click(quit_button)
+	await _fade_out_music(5.0) # Musik mati mulus sebelum game keluar
 	get_tree().quit()

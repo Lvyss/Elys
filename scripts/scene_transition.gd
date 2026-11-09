@@ -7,7 +7,7 @@ var overlay: ColorRect
 
 func _ready() -> void:
 	layer = 100
-	process_mode = Node.PROCESS_MODE_ALWAYS  # tetap jalan walau game di-pause
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 	overlay = ColorRect.new()
 	overlay.color = Color(0, 0, 0, 0)
@@ -21,7 +21,6 @@ func change_scene(scene_path: String) -> void:
 		return
 	is_transitioning = true
 
-	# Blok input selama transisi
 	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	var fade_out := create_tween()
@@ -36,7 +35,7 @@ func change_scene(scene_path: String) -> void:
 		is_transitioning = false
 		return
 
-	# Tunggu scene baru benar-benar terpasang (+ _ready selesai) dan tergambar
+	# Tunggu 3 frame agar scene baru siap
 	await get_tree().process_frame
 	await get_tree().process_frame
 	await get_tree().process_frame
@@ -51,3 +50,6 @@ func fade_in() -> void:
 	var fade := create_tween()
 	fade.tween_property(overlay, "color:a", 0.0, fade_duration * 1.3)
 	await fade.finished
+	
+	# FAILSAFE MUTLAK: Paksa warna jadi 0 (transparan) setelah selesai
+	overlay.color.a = 0.0 

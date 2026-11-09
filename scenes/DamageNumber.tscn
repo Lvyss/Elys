@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://crurkeb2qh1ov"]
+
+[ext_resource type="Script" uid="uid://c78j236xkpcnd" path="res://scripts/damage_number.gd" id="1_aie4f"]
+
+[node name="DamageNumber" type="Label3D" unique_id=1809070601]
+pixel_size = 0.002
+billboard = 1
+no_depth_test = true
+outline_size = 8
+script = ExtResource("1_aie4f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1836041064]

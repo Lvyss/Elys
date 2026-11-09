@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b15jkmkvykghg" path="res://assets/Screen/BUTTON START.png" id="2_b4i3a"]
 [ext_resource type="Texture2D" uid="uid://qe4v3h4tgrvl" path="res://assets/Screen/BUTTON ABOUT.png" id="3_5c1gu"]
 [ext_resource type="Texture2D" uid="uid://c3l3l1mrgh6ob" path="res://assets/Screen/BUTTON QUIT.png" id="4_ddjto"]
+[ext_resource type="AudioStream" uid="uid://cfjvi21k3oejc" path="res://assets/Sound/menu.mp3" id="6_awsrp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x064y"]
 
@@ -103,3 +104,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_a85lo")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_2gck5")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0sxhj")
 icon = ExtResource("4_ddjto")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=715132820]
+stream = ExtResource("6_awsrp")
+autoplay = true

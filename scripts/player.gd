@@ -30,6 +30,8 @@ const ANIM_LOOP := {
 	"death": false,
 }
 
+const DAMAGE_NUMBER_SCENE = preload("res://scenes/DamageNumber.tscn")
+
 @export var max_hp := 100
 
 @onready var sprite: AnimatedSprite3D = $Sprite
@@ -247,6 +249,43 @@ func _do_hit() -> void:
 		if dist <= ATTACK_RANGE and (dist < 0.01 or to.normalized().dot(attack_direction) > 0.3):
 			if e.has_method("take_damage"):
 				e.take_damage(ATTACK_DAMAGE)
+				
+				# Kirim node 'e' (musuh), bukan cuma posisinya
+				_spawn_damage_number(e, ATTACK_DAMAGE)
+
+# Perhatikan parameter pertamanya sekarang 'enemy_node' bukan 'enemy_pos'
+func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
+	var dmg_num = DAMAGE_NUMBER_SCENE.instantiate()
+	dmg_num.text = str(damage_amount)
+	
+	enemy_node.add_child(dmg_num)
+	
+	# 1. DETEKSI TINGGI MUSUH OTOMATIS
+	var enemy_height := 1.0 # Nilai default jika musuh tidak punya Mesh3D
+	for child in enemy_node.get_children():
+		if child is MeshInstance3D:
+			# Ambil ukuran tinggi (Y) dari bentuk 3D musuh
+			enemy_height = child.get_aabb().size.y
+			break
+			
+	# 2. HITUNG POSISI BERDASARKAN TINGGI MUSUH
+		# 2. HITUNG POSISI BERDASARKAN TINGGI MUSUH
+	var random_side := 1.0 if randf() > 0.5 else -1.0
+	
+	# Kita turunkan persentasenya:
+	# Samping (X): dari 0.3 jadi 0.2 (biar makin nempel ke badan)
+	# Atas (Y): dari 0.8 jadi 0.4 (turun drastis biar ga melayang)
+	var pos_x = (enemy_height * 0.2) * random_side
+	var pos_y = (enemy_height * 0.2) - (enemy_height * 0.5) # Sama dengan -0.3
+	
+	dmg_num.position = Vector3(pos_x, pos_y, 0)
+	
+	# 3. NETRALISIR SCALE MUSUH
+	# Jika musuh diperbesar 2x, teksnya akan mengecil 0.5x agar ukurannya tetap normal di layar
+		# 3. NETRALISIR SCALE MUSUH
+	# Jika musuh diperbesar 2x, teksnya akan mengecil 0.5x agar ukurannya tetap normal di layar
+	var enemy_scale := enemy_node.global_transform.basis.get_scale()
+	dmg_num.scale = Vector3.ONE / enemy_scale
 
 
 # ---------------- HP & DEATH ----------------
