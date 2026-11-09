@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://s4wycc0qgf8x"]
+
+[ext_resource type="Texture2D" uid="uid://c7saw1qqkfcob" path="res://assets/NPC/fd7f9611-9983-4f76-bdf9-ceb18b684874_removalai_preview.png" id="1_gf1j8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydcbx"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hl334"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8a8t"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqxfo"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0mb3"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(0, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yi6ro"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(150, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrrcx"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(300, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iho2l"]
+atlas = ExtResource("1_gf1j8")
+region = Rect2(450, 150, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htemk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydcbx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hl334")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8a8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqxfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0mb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yi6ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrrcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iho2l")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mavgt"]
+height = 1.8925781
+
+[node name="NPC" type="CharacterBody3D" unique_id=1976931407]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=359829229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66025585, 0)
+sprite_frames = SubResource("SpriteFrames_htemk")
+animation = &"idle"
+frame_progress = 0.11657467
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1098130949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42285156, -0.45201695)
+shape = SubResource("CapsuleShape3D_mavgt")

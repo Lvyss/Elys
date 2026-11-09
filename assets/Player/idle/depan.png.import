@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dejuundrxbim6"
-path="res://.godot/imported/depan.png-c99e1d4404dafe257bef202d2aac0a12.ctex"
+path="res://.godot/imported/depan.png-43816b37478b92f17ca4e0418a2676ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Player/Idle/depan.png"
-dest_files=["res://.godot/imported/depan.png-c99e1d4404dafe257bef202d2aac0a12.ctex"]
+source_file="res://assets/Player/idle/depan.png"
+dest_files=["res://.godot/imported/depan.png-43816b37478b92f17ca4e0418a2676ac.ctex"]
 
 [params]
 

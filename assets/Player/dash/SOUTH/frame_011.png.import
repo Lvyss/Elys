@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://crqd7mbt80m13"
-path.s3tc="res://.godot/imported/frame_011.png-31f0dbe234bbc93d0d8efedce3de4c2e.s3tc.ctex"
+path.s3tc="res://.godot/imported/frame_011.png-119a58c61cbbbf0053eabfec7c0c80c1.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/Dash/South/frame_011.png"
-dest_files=["res://.godot/imported/frame_011.png-31f0dbe234bbc93d0d8efedce3de4c2e.s3tc.ctex"]
+source_file="res://assets/Player/dash/SOUTH/frame_011.png"
+dest_files=["res://.godot/imported/frame_011.png-119a58c61cbbbf0053eabfec7c0c80c1.s3tc.ctex"]
 
 [params]
 

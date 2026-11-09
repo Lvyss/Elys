@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://xgspbhukli2t"
-path.s3tc="res://.godot/imported/frame_005.png-3578ab6a4de178eb83a0382d35245dd5.s3tc.ctex"
+path.s3tc="res://.godot/imported/frame_005.png-69b4f0eb38728bd1d97bbf6af6813f05.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/Death/East/frame_005.png"
-dest_files=["res://.godot/imported/frame_005.png-3578ab6a4de178eb83a0382d35245dd5.s3tc.ctex"]
+source_file="res://assets/Player/death/EAST/frame_005.png"
+dest_files=["res://.godot/imported/frame_005.png-69b4f0eb38728bd1d97bbf6af6813f05.s3tc.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c7e6vaoynde0s"]
+[gd_scene format=3 uid="uid://dlo6fmwe1ls78"]
 
 [ext_resource type="Script" uid="uid://cyp6445lqlpef" path="res://scripts/player.gd" id="1_ru62r"]
 [ext_resource type="Texture2D" uid="uid://du501x4y6qvm7" path="res://assets/Player/Attack/east/frame_000.png" id="2_q0um3"]

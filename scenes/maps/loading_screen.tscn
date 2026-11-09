@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://byvqk57ms1frx"]
+
+[ext_resource type="Script" uid="uid://bo1k7trceniar" path="res://scripts/loading_screen.gd" id="1_xf3m6"]
+[ext_resource type="Texture2D" uid="uid://s3fgiayqxagy" path="res://assets/Screen/LOADING SCREEN.png" id="2_0qohx"]
+[ext_resource type="FontFile" uid="uid://c0nj1t80qvw35" path="res://assets/Screen/Butler-Free-Med.otf" id="3_7ibnd"]
+
+[node name="Loading Screen" type="Control" unique_id=1474470370]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_xf3m6")
+seconds_per_dot = 1.0
+max_dots = 4
+
+[node name="Background" type="TextureRect" parent="." unique_id=786154931]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 28.850002
+anchor_bottom = 16.150002
+offset_right = -0.00012207031
+offset_bottom = -6.1035156e-05
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0qohx")
+expand_mode = 1
+
+[node name="LoadingText" type="Label" parent="." unique_id=2024845681]
+layout_mode = 0
+offset_left = 399.0
+offset_top = 450.0
+offset_right = 748.0
+offset_bottom = 515.0
+theme_override_fonts/font = ExtResource("3_7ibnd")
+theme_override_font_sizes/font_size = 40
+text = "LOADING....."
+horizontal_alignment = 1
+vertical_alignment = 1
