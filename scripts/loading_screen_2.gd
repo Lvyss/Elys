@@ -2,8 +2,8 @@
 extends Control
 
 @export var next_scene_path: String = "res://scenes/maps/map_a.tscn"
-@export var seconds_per_dot: float = 4.0
-@export var max_dots: int = 5
+@export var seconds_per_dot: float = 1.0
+@export var max_dots: int = 3
 
 @onready var loading_text: Label = $LoadingText
 

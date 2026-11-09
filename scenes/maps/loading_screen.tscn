@@ -10,8 +10,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_xf3m6")
-seconds_per_dot = 1.0
-max_dots = 4
 
 [node name="Background" type="TextureRect" parent="." unique_id=786154931]
 layout_mode = 1
@@ -27,12 +25,11 @@ expand_mode = 1
 
 [node name="LoadingText" type="Label" parent="." unique_id=2024845681]
 layout_mode = 0
-offset_left = 399.0
-offset_top = 450.0
-offset_right = 748.0
-offset_bottom = 515.0
+offset_left = 548.0
+offset_top = 449.0
+offset_right = 656.0
+offset_bottom = 514.0
 theme_override_fonts/font = ExtResource("3_7ibnd")
-theme_override_font_sizes/font_size = 40
-text = "LOADING....."
-horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+text = "Loading....."
 vertical_alignment = 1

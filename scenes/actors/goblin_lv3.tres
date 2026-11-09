@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GoblinStats" format=3 uid="uid://ctyyvrbym2ep4"]
 
-[ext_resource type="Script" uid="uid://dwd0xge4beaxe" path="res://goblin_stats.gd" id="1_0lvj0"]
+[ext_resource type="Script" uid="uid://dwd0xge4beaxe" path="res://scripts/goblin_stats.gd" id="1_0lvj0"]
 [ext_resource type="SpriteFrames" uid="uid://ptxtkx18kcbf" path="res://scenes/actors/goblin_frames3.tres" id="2_0lvj0"]
 
 [resource]

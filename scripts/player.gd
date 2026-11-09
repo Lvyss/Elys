@@ -33,12 +33,13 @@ const ANIM_LOOP := {
 @export var max_hp := 100
 
 @onready var sprite: AnimatedSprite3D = $Sprite
+@onready var shadow_sprite: AnimatedSprite3D = $ShadowSprite
 
 var hp := 100
 var invuln_timer := 0.0
 
-# Arah hadap disimpan sebagai vektor DUNIA, nama animasi dihitung dari kamera
-var facing_world := Vector3.FORWARD
+# hapus: var facing_world := Vector3.FORWARD
+var facing_local := Vector2(0, 1)   # arah hadap relatif layar (0,1 = menghadap kamera / "down")
 
 var is_dashing := false
 var is_attacking := false
@@ -59,6 +60,8 @@ func _ready() -> void:
 	hp = max_hp
 	sprite.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 	sprite.animation_finished.connect(_on_animation_finished)
+	shadow_sprite.sprite_frames = sprite.sprite_frames
+	shadow_sprite.billboard = sprite.billboard
 
 	# Atur loop dari tabel
 	for anim in sprite.sprite_frames.get_animation_names():
@@ -67,7 +70,6 @@ func _ready() -> void:
 			sprite.sprite_frames.set_animation_loop(anim, ANIM_LOOP[key])
 
 	# Awalnya menghadap ke arah kamera (animasi "down")
-	facing_world = -_cam_axes()[1]
 	_update_animation(Vector2.ZERO, false)
 
 
@@ -141,8 +143,8 @@ func _physics_process(delta: float) -> void:
 	var is_running := Input.is_action_pressed("sprint") and input != Vector2.ZERO
 	var current_speed := RUN_SPEED if is_running else SPEED
 
-	if dir.length() > 0.1:
-		facing_world = dir.normalized()
+	if input.length() > 0.1:
+		facing_local = input.normalized()
 
 	velocity.x = dir.x * current_speed
 	velocity.z = dir.z * current_speed
@@ -193,18 +195,14 @@ func _screen_to_world(input: Vector2) -> Vector3:
 
 # Arah hadap dunia -> nama arah animasi (right/left/up/down) menurut kamera SAAT INI
 func _dir_name() -> String:
-	var axes := _cam_axes()
-	var r: float = facing_world.dot(axes[0])
-	var f: float = facing_world.dot(axes[1])
-	if absf(r) > absf(f):
-		return "right" if r > 0.0 else "left"
-	return "up" if f > 0.0 else "down"
-
+	if absf(facing_local.x) > absf(facing_local.y):
+		return "right" if facing_local.x > 0.0 else "left"
+	return "down" if facing_local.y > 0.0 else "up"
 
 # ---------------- DASH ----------------
 func _start_dash(input_dir: Vector2) -> void:
 	dash_direction = _screen_to_world(input_dir).normalized()
-	facing_world = dash_direction
+	facing_local = input_dir.normalized()
 	is_dashing = true
 	dash_timer = DASH_DURATION
 	action_dir_name = _dir_name()
@@ -231,7 +229,8 @@ func _start_attack() -> void:
 	is_attacking = true
 	anim_lock = true
 	attack_cooldown_timer = ATTACK_COOLDOWN
-	attack_direction = facing_world
+	attack_direction = _screen_to_world(facing_local).normalized()
+	sprite.no_depth_test = true
 	sprite.play(anim)
 	get_tree().create_timer(ATTACK_HIT_DELAY).timeout.connect(_do_hit)
 
@@ -269,6 +268,7 @@ func _die() -> void:
 	velocity.x = 0.0
 	velocity.z = 0.0
 	sprite.modulate.a = 1.0
+	sprite.no_depth_test = false
 	action_dir_name = _dir_name()
 	var anim := "death_" + action_dir_name
 	if sprite.sprite_frames.has_animation(anim):
@@ -324,3 +324,12 @@ func _on_animation_finished() -> void:
 	if String(sprite.animation).begins_with("attack_"):
 		anim_lock = false
 		is_attacking = false
+		sprite.no_depth_test = false
+
+func _process(_delta: float) -> void:
+	# Samakan animasi, frame, dan offset dengan sprite utama
+	if shadow_sprite.animation != sprite.animation:
+		shadow_sprite.animation = sprite.animation
+	shadow_sprite.frame = sprite.frame
+	shadow_sprite.offset = sprite.offset
+	shadow_sprite.flip_h = sprite.flip_h
