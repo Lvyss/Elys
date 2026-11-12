@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cp32xuvwwtl2h"]
+
+[ext_resource type="Texture2D" uid="uid://c06fuldvoh3ov" path="res://assets/icons/items/gulungan_petunjuk.png" id="1_2jdqv"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_3s6j1"]
+
+[resource]
+script = ExtResource("1_3s6j1")
+id = &"gulungan_petunjuk"
+display_name = "Gulungan Petunjuk"
+description = "Menghilangkan 1 pilihan salah di teka-teki rune."
+icon = ExtResource("1_2jdqv")
+type = 1

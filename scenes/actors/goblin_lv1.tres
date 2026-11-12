@@ -8,4 +8,5 @@ script = ExtResource("1_1kh7m")
 sprite_frames = ExtResource("2_d08yu")
 detect_range = 2.0
 lose_range = 2.0
+drop_item_id = &"taring_goblin"
 metadata/_custom_type_script = "uid://dwd0xge4beaxe"

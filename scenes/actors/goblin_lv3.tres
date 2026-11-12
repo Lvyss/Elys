@@ -12,4 +12,6 @@ damage = 15
 chase_speed = 3.5
 detect_range = 5.0
 lose_range = 5.0
+xp_reward = 60
+drop_item_id = &"kristal_kabut"
 metadata/_custom_type_script = "uid://dwd0xge4beaxe"

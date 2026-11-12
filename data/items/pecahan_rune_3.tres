@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bw50wcloswbxp"]
+
+[ext_resource type="Texture2D" uid="uid://qgyfjyqb20da" path="res://assets/icons/items/pecahan_rune_3.png" id="1_euw4w"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_nk0gy"]
+
+[resource]
+script = ExtResource("1_nk0gy")
+id = &"pecahan_rune_3"
+display_name = "Pecahan Rune III"
+description = "Pecahan ketiga, bersimbol ◒."
+icon = ExtResource("1_euw4w")
+type = 2

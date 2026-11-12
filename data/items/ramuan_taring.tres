@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://81q8lu77dtwx"]
+
+[ext_resource type="Texture2D" uid="uid://cwjpjijr2rbh3" path="res://assets/icons/items/ramuan_taring.png" id="1_8b5ke"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_eq68a"]
+
+[resource]
+script = ExtResource("1_eq68a")
+id = &"ramuan_taring"
+display_name = "Ramuan Taring"
+description = "Ramuan hasil tukar. Memulihkan 40 HP. Tombol Q."
+icon = ExtResource("1_8b5ke")
+type = 1
+heal_amount = 40

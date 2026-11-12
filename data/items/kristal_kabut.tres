@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bvgsky1w0xdi7"]
+
+[ext_resource type="Texture2D" uid="uid://dlu4piw1rlr4u" path="res://assets/icons/items/kristal_kabut.png" id="1_4lnhm"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_l0fc4"]
+
+[resource]
+script = ExtResource("1_l0fc4")
+id = &"kristal_kabut"
+display_name = "Kristal Kabut"
+description = "Kristal berkabut dari Goblin Raja. Jual atau tukar jadi Berkat Kabut."
+icon = ExtResource("1_4lnhm")
+sell_price = 40

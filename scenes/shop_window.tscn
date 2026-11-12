@@ -1,0 +1,238 @@
+[gd_scene format=3 uid="uid://drxbjym2jgpc2"]
+
+[ext_resource type="Texture2D" uid="uid://bb3sc2mp33cum" path="res://assets/UI/stat_window.png" id="1_63qyf"]
+[ext_resource type="Script" uid="uid://djo1ot02hssce" path="res://scripts/shop_window.gd" id="1_njjde"]
+[ext_resource type="Texture2D" uid="uid://c7saw1qqkfcob" path="res://assets/NPC/fd7f9611-9983-4f76-bdf9-ceb18b684874_removalai_preview.png" id="2_j30nf"]
+[ext_resource type="Texture2D" uid="uid://66ptrfhodts0" path="res://assets/icons/stats/icon_koin.png" id="4_heene"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njjde"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heene"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3s8wk"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ip683"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx8iw"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(0, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_031bt"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(150, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2waww"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(300, 150, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_puwoc"]
+atlas = ExtResource("2_j30nf")
+region = Rect2(450, 150, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n085r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njjde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heene")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3s8wk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ip683")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx8iw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_031bt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2waww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_puwoc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3s8wk"]
+
+[node name="ShopWindow" type="CanvasLayer" unique_id=733939796]
+script = ExtResource("1_njjde")
+
+[node name="Root" type="Control" parent="." unique_id=375244742]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Window" type="Control" parent="Root" unique_id=198049483]
+anchors_preset = 0
+offset_left = -310.5
+offset_top = -443.0
+offset_right = 1462.5
+offset_bottom = 1091.0
+scale = Vector2(0.338, 0.338)
+pivot_offset = Vector2(886.5, 767)
+
+[node name="Background" type="TextureRect" parent="Root/Window" unique_id=1378967909]
+texture_filter = 2
+layout_mode = 0
+offset_right = 1773.0
+offset_bottom = 1534.0
+mouse_filter = 2
+texture = ExtResource("1_63qyf")
+expand_mode = 1
+
+[node name="Portrait" type="AnimatedSprite2D" parent="Root/Window" unique_id=926807013]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(356, 485)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_n085r")
+frame_progress = 0.8836273
+
+[node name="NameLabel" type="Label" parent="Root/Window" unique_id=1824835083]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 235.0
+offset_top = 200.0
+offset_right = 480.0
+offset_bottom = 248.0
+theme_override_colors/font_color = Color(0.9098039, 0.8627451, 0.7529412, 1)
+theme_override_font_sizes/font_size = 36
+text = "ORRIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialogLabel" type="Label" parent="Root/Window" unique_id=1307571800]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 95.0
+offset_top = 730.0
+offset_right = 620.0
+offset_bottom = 900.0
+theme_override_colors/font_color = Color(0.23137255, 0.16470589, 0.11764706, 1)
+theme_override_font_sizes/font_size = 38
+autowrap_mode = 3
+
+[node name="BtnSell" type="Button" parent="Root/Window" unique_id=1019134399]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 90.0
+offset_top = 930.0
+offset_right = 615.0
+offset_bottom = 1030.0
+theme_override_font_sizes/font_size = 52
+toggle_mode = true
+text = "Jual"
+
+[node name="BtnTrade" type="Button" parent="Root/Window" unique_id=1613915155]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 90.0
+offset_top = 1050.0
+offset_right = 615.0
+offset_bottom = 1150.0
+theme_override_font_sizes/font_size = 52
+toggle_mode = true
+text = "Tukar"
+
+[node name="BtnBuy" type="Button" parent="Root/Window" unique_id=2001696155]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 90.0
+offset_top = 1170.0
+offset_right = 615.0
+offset_bottom = 1270.0
+theme_override_font_sizes/font_size = 52
+toggle_mode = true
+text = "beli"
+
+[node name="CoinIcon" type="TextureRect" parent="Root/Window" unique_id=2120429873]
+texture_filter = 1
+layout_mode = 0
+offset_left = 95.0
+offset_top = 1310.0
+offset_right = 223.0
+offset_bottom = 1438.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_heene")
+
+[node name="CoinLabel" type="Label" parent="Root/Window" unique_id=440228617]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 190.0
+offset_top = 1310.0
+offset_right = 620.0
+offset_bottom = 1390.0
+theme_override_colors/font_color = Color(0.21176471, 0.16078432, 0.13333334, 1)
+theme_override_font_sizes/font_size = 44
+vertical_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Root/Window" unique_id=1059090566]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 700.0
+offset_top = 197.0
+offset_right = 1600.0
+offset_bottom = 258.0
+scale = Vector2(1.058, 1)
+theme_override_colors/font_color = Color(0.16862746, 0.1254902, 0.101960786, 1)
+theme_override_font_sizes/font_size = 44
+text = "TOKO ORRIN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Root/Window" unique_id=231984420]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 730.0
+offset_top = 335.00003
+offset_right = 1630.0
+offset_bottom = 1080.0
+theme_override_font_sizes/font_size = 52
+fixed_icon_size = Vector2i(88, 88)
+
+[node name="DescLabel" type="Label" parent="Root/Window" unique_id=2011755837]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 735.0
+offset_top = 1145.0
+offset_right = 1415.0
+offset_bottom = 1375.0
+theme_override_font_sizes/font_size = 44
+autowrap_mode = 3
+
+[node name="ActionBtn" type="Button" parent="Root/Window" unique_id=1674922629]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1440.0
+offset_top = 1215.0
+offset_right = 1630.0
+offset_bottom = 1315.0
+theme_override_font_sizes/font_size = 48
+
+[node name="CloseBtn" type="Button" parent="Root/Window" unique_id=839980639]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1623.0
+offset_top = 192.0
+offset_right = 1693.0
+offset_bottom = 262.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3s8wk")

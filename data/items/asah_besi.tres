@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dcoycoxwttnoa"]
+
+[ext_resource type="Texture2D" uid="uid://boj3gx6ibpy2v" path="res://assets/icons/items/booster_asah_besi.png" id="1_w4d45"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="2_qs2k6"]
+
+[resource]
+script = ExtResource("2_qs2k6")
+boost_id = "asah_besi"
+id = &"asah_besi"
+display_name = "Asah Besi"
+description = "Tempa bilah senjatamu. Pakai untuk +5 Damage permanen (maks 2 kali)."
+icon = ExtResource("1_w4d45")
+type = 3

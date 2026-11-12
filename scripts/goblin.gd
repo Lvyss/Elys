@@ -247,6 +247,14 @@ func _die() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	remove_from_group("enemy")
+	
+
+	# XP dan drop item diambil dari kartu stat (GoblinStats)
+	GameState.add_xp(stats.xp_reward)
+	print(name, " mati, Hero dapat ", stats.xp_reward, " XP")
+	_drop_loot()
+
+	# Animasi mati, lalu mengecil dan hilang
 	var anim := "death_" + facing
 	if sprite.sprite_frames.has_animation(anim):
 		_play(anim, true)
@@ -255,6 +263,21 @@ func _die() -> void:
 	tw.tween_property(sprite, "scale", Vector3.ZERO, 0.4)
 	await tw.finished
 	queue_free()
+
+
+func _drop_loot() -> void:
+	if stats.drop_item_id == &"":
+		return
+	if randf() > stats.drop_chance:
+		return
+
+	var pickup := ItemPickup.new()
+	pickup.item_id = stats.drop_item_id
+	# Ditaruh di parent goblin, bukan anak goblin, supaya tidak ikut
+	# queue_free() dan tidak ikut membesar di boss
+	get_parent().add_child(pickup)
+	pickup.global_position = global_position + Vector3(
+		randf_range(-0.3, 0.3), 0.1, randf_range(-0.3, 0.3))
 
 
 # ---------------- GERAK & ANIMASI ----------------

@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://cpmcp66thdf7v"]
+
+[ext_resource type="Texture2D" uid="uid://boski1wcvibvr" path="res://assets/UI/hp_fill.png" id="1_5ysmq"]
+[ext_resource type="Script" uid="uid://ciqndpgly7mfc" path="res://scripts/hud.gd" id="1_047uy"]
+[ext_resource type="Texture2D" uid="uid://dd2ehborrd0yg" path="res://assets/UI/stat.png" id="1_ahhtf"]
+[ext_resource type="Texture2D" uid="uid://cwq77q7lcxjpq" path="res://assets/UI/xp_fill.png" id="2_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://df74pjxt64i5" path="res://assets/UI/dash.png" id="4_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://ddfe834oan152" path="res://assets/UI/profil.png" id="5_uo2fv"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1469928115]
+script = ExtResource("1_047uy")
+
+[node name="Root" type="Control" parent="." unique_id=1924560048]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Bar" type="Control" parent="Root" unique_id=538884835]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HPBar" type="TextureProgressBar" parent="Root/Bar" unique_id=509248952]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 545.0
+offset_right = 4347.0
+offset_bottom = 2705.0
+scale = Vector2(0.03675021, 0.03675021)
+mouse_filter = 2
+value = 100.0
+texture_progress = ExtResource("1_5ysmq")
+
+[node name="XPBar" type="TextureProgressBar" parent="Root/Bar" unique_id=406585508]
+layout_mode = 0
+offset_left = 506.99994
+offset_top = 544.99994
+offset_right = 4347.0
+offset_bottom = 2705.0
+scale = Vector2(0.037894383, 0.037894383)
+mouse_filter = 2
+value = 100.0
+texture_progress = ExtResource("2_6fi6k")
+
+[node name="Frame" type="TextureRect" parent="Root/Bar" unique_id=1971923085]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 441.0
+offset_right = 839.4912
+offset_bottom = 731.0
+mouse_filter = 2
+texture = ExtResource("1_ahhtf")
+expand_mode = 1
+
+[node name="DashSlot" type="Control" parent="Root/Bar" unique_id=103500416]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Root/Bar/DashSlot" unique_id=717889287]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 578.0
+offset_right = 560.49
+offset_bottom = 618.0
+scale = Vector2(0.52359444, 0.75100684)
+texture = ExtResource("4_6fi6k")
+expand_mode = 1
+
+[node name="CDOverlay" type="TextureProgressBar" parent="Root/Bar/DashSlot" unique_id=1639433260]
+layout_mode = 0
+offset_left = 497.0
+offset_top = 579.0
+offset_right = 1458.0
+offset_bottom = 1439.0
+scale = Vector2(0.033038586, 0.032507643)
+fill_mode = 4
+texture_progress = ExtResource("4_6fi6k")
+tint_progress = Color(0, 0, 0, 0.6901961)
+
+[node name="CDLabel" type="Label" parent="Root/Bar/DashSlot" unique_id=1491550260]
+visible = false
+layout_mode = 0
+offset_left = 503.00003
+offset_top = 586.99994
+offset_right = 543.0
+offset_bottom = 609.99994
+scale = Vector2(0.537313, 0.537313)
+theme_override_constants/outline_size = 4
+text = "0.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProfileSlot" type="TextureButton" parent="Root/Bar" unique_id=427494547]
+layout_mode = 0
+offset_left = 579.00006
+offset_top = 527.00006
+offset_right = 619.00006
+offset_bottom = 567.00006
+scale = Vector2(3.2922401, 3.3339756)
+texture_normal = ExtResource("5_uo2fv")
+texture_hover = ExtResource("5_uo2fv")
+ignore_texture_size = true
+stretch_mode = 5

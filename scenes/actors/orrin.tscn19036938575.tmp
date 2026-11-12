@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://s4wycc0qgf8x"]
 
+[ext_resource type="Script" uid="uid://ts6d532y6ft5" path="res://scripts/orrin.gd" id="1_6f147"]
 [ext_resource type="Texture2D" uid="uid://c7saw1qqkfcob" path="res://assets/NPC/fd7f9611-9983-4f76-bdf9-ceb18b684874_removalai_preview.png" id="1_gf1j8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ydcbx"]
@@ -69,8 +70,9 @@ animations = [{
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mavgt"]
 height = 1.8925781
 
-[node name="NPC" type="CharacterBody3D" unique_id=1976931407]
+[node name="Orrin" type="CharacterBody3D" unique_id=1976931407]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+script = ExtResource("1_6f147")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=359829229]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66025585, 0)
@@ -81,3 +83,11 @@ frame_progress = 0.11657467
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1098130949]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42285156, -0.45201695)
 shape = SubResource("CapsuleShape3D_mavgt")
+
+[node name="Prompt" type="Label3D" parent="." unique_id=611706537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.555, 0)
+visible = false
+pixel_size = 0.006
+billboard = 1
+no_depth_test = true
+text = "E: Bicara dengan Orrin"

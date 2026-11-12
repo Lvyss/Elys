@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c6s2whjfv1xkb"]
+
+[ext_resource type="Texture2D" uid="uid://dm1wlcql7l3ql" path="res://assets/icons/items/booster_berkat_kabut.png" id="1_0pdcq"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="2_12ai0"]
+
+[resource]
+script = ExtResource("2_12ai0")
+boost_id = "berkat_kabut"
+id = &"berkat_kabut"
+display_name = "Berkat Kabut"
+description = "Kabut menyelimuti tubuhmu. Pakai untuk +30 Max HP permanen (maks 3 kali)."
+icon = ExtResource("1_0pdcq")
+type = 3

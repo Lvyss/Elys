@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://leylqus6f105"]
+
+[ext_resource type="Texture2D" uid="uid://dc1l8y3c0ou8q" path="res://assets/icons/items/lempeng_besi.png" id="1_2uo0c"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_jee4a"]
+
+[resource]
+script = ExtResource("1_jee4a")
+id = &"lempeng_besi"
+display_name = "Lempeng Besi"
+description = "Pelat besi dari Goblin Elit. Jual atau tukar jadi Asah Besi (2 buah)."
+icon = ExtResource("1_2uo0c")
+sell_price = 25

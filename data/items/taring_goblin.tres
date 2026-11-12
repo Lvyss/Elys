@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dbg06m2ihshpq"]
+
+[ext_resource type="Texture2D" uid="uid://4e53ytt26ymj" path="res://assets/icons/items/taring_goblin.png" id="1_2k5mx"]
+[ext_resource type="Script" uid="uid://be813wymylk5l" path="res://scripts/item_data.gd" id="1_t6wdq"]
+
+[resource]
+script = ExtResource("1_t6wdq")
+id = &"taring_goblin"
+display_name = "Taring Goblin"
+description = "Taring tajam milik Goblin Prajurit. Jual atau tukar jadi Ramuan Taring (3 buah)."
+icon = ExtResource("1_2k5mx")
+sell_price = 12

@@ -20,3 +20,8 @@ extends Resource
 @export var windup_time := 0.4
 @export var attack_total := 0.8
 @export var can_stagger := true   # boss: matikan supaya tidak kena stun
+
+@export_group("Loot")
+@export var xp_reward := 10
+@export var drop_item_id: StringName = &""
+@export_range(0.0, 1.0) var drop_chance := 1.0

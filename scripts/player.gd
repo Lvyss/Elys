@@ -1,7 +1,6 @@
 # player.gd
 extends CharacterBody3D
 
-signal health_changed(hp: int, max_hp: int)
 signal died
 signal pause_requested
 
@@ -12,7 +11,6 @@ const DASH_DURATION := 0.2
 const DASH_COOLDOWN := 0.6
 const ATTACK_COOLDOWN := 0.5
 const ATTACK_RANGE := 1.3
-const ATTACK_DAMAGE := 10
 const ATTACK_HIT_DELAY := 0.15
 const JUMP_VELOCITY := 7.0
 const GRAVITY := 20.0
@@ -32,15 +30,11 @@ const ANIM_LOOP := {
 
 const DAMAGE_NUMBER_SCENE = preload("res://scenes/DamageNumber.tscn")
 
-@export var max_hp := 100
-
 @onready var sprite: AnimatedSprite3D = $Sprite
 @onready var shadow_sprite: AnimatedSprite3D = $ShadowSprite
 
-var hp := 100
 var invuln_timer := 0.0
 
-# hapus: var facing_world := Vector3.FORWARD
 var facing_local := Vector2(0, 1)   # arah hadap relatif layar (0,1 = menghadap kamera / "down")
 
 var is_dashing := false
@@ -59,7 +53,12 @@ var _just_captured := false # klik pertama untuk menangkap mouse tidak boleh jad
 func _ready() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 	floor_snap_length = 0.5
-	hp = max_hp
+	add_to_group("player")
+	
+	# Inisialisasi HP dari GameState
+	GameState.hp_current = GameState.hp_max
+	GameState.hp_changed.emit(GameState.hp_current, GameState.hp_max)
+	
 	sprite.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 	sprite.animation_finished.connect(_on_animation_finished)
 	shadow_sprite.sprite_frames = sprite.sprite_frames
@@ -82,6 +81,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		pause_requested.emit()
 		return
 
+	if event.is_action_pressed("use_potion"):
+		if not GameState.use_item(&"ramuan_taring"):
+			GameState.use_item(&"ramuan_hijau")
+		return
+		
 	# Klik saat kursor bebas = tangkap kursor lagi (wajib di versi web)
 	if event is InputEventMouseButton and event.pressed \
 			and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -103,7 +107,14 @@ func _physics_process(delta: float) -> void:
 		velocity.z = 0.0
 		move_and_slide()
 		return
-
+	
+	if GameState.ui_open:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		_update_animation(Vector2.ZERO, false)
+		return
+		
 	# --- MULAI DASH (klik kanan / Q + arah WASD) ---
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0.0 \
 			and not anim_lock and not is_dashing:
@@ -168,7 +179,11 @@ func _tick_timers(delta: float) -> void:
 	elif sprite.modulate.a != 1.0:
 		sprite.modulate.a = 1.0
 
-
+func get_dash_ratio() -> float:
+	if is_dashing:
+		return 1.0
+	return clampf(dash_cooldown_timer / DASH_COOLDOWN, 0.0, 1.0)
+	
 func _apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y = maxf(velocity.y - GRAVITY * delta, -MAX_FALL_SPEED)
@@ -248,10 +263,10 @@ func _do_hit() -> void:
 		var dist := to.length()
 		if dist <= ATTACK_RANGE and (dist < 0.01 or to.normalized().dot(attack_direction) > 0.3):
 			if e.has_method("take_damage"):
-				e.take_damage(ATTACK_DAMAGE)
+				e.take_damage(GameState.damage)
 				
 				# Kirim node 'e' (musuh), bukan cuma posisinya
-				_spawn_damage_number(e, ATTACK_DAMAGE)
+				_spawn_damage_number(e, GameState.damage)
 
 # Perhatikan parameter pertamanya sekarang 'enemy_node' bukan 'enemy_pos'
 func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
@@ -269,7 +284,6 @@ func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 			break
 			
 	# 2. HITUNG POSISI BERDASARKAN TINGGI MUSUH
-		# 2. HITUNG POSISI BERDASARKAN TINGGI MUSUH
 	var random_side := 1.0 if randf() > 0.5 else -1.0
 	
 	# Kita turunkan persentasenya:
@@ -282,8 +296,6 @@ func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 	
 	# 3. NETRALISIR SCALE MUSUH
 	# Jika musuh diperbesar 2x, teksnya akan mengecil 0.5x agar ukurannya tetap normal di layar
-		# 3. NETRALISIR SCALE MUSUH
-	# Jika musuh diperbesar 2x, teksnya akan mengecil 0.5x agar ukurannya tetap normal di layar
 	var enemy_scale := enemy_node.global_transform.basis.get_scale()
 	dmg_num.scale = Vector3.ONE / enemy_scale
 
@@ -292,10 +304,14 @@ func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 func take_damage(amount: int) -> void:
 	if is_dead or invuln_timer > 0.0:
 		return
-	hp = maxi(hp - amount, 0)
+		
 	invuln_timer = INVULN_TIME
-	health_changed.emit(hp, max_hp)
-	if hp <= 0:
+	
+	# Panggil GameState untuk kurangi HP
+	GameState.take_damage(amount)
+	
+	# Cek apakah HP sudah habis
+	if GameState.hp_current <= 0:
 		_die()
 
 

@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://clrxgp647663g"]
+
+[ext_resource type="Script" uid="uid://ddxv1ci32trca" path="res://scripts/status_window.gd" id="1_boql1"]
+[ext_resource type="Texture2D" uid="uid://bb3sc2mp33cum" path="res://assets/UI/stat_window.png" id="1_o0k3m"]
+[ext_resource type="Texture2D" uid="uid://bs0frbivyrkym" path="res://assets/Player/Idle/South/frame_000.png" id="2_boql1"]
+[ext_resource type="Texture2D" uid="uid://cwt7booxq45yf" path="res://assets/Player/Idle/South/frame_001.png" id="3_lcgiq"]
+[ext_resource type="Texture2D" uid="uid://d3fo35qhk8yiq" path="res://assets/Player/Idle/South/frame_002.png" id="4_b6xit"]
+[ext_resource type="Texture2D" uid="uid://0rbef8fdonqu" path="res://assets/Player/Idle/South/frame_003.png" id="5_8tudc"]
+[ext_resource type="Texture2D" uid="uid://dvt8gtstivsgk" path="res://assets/Player/Idle/South/frame_004.png" id="6_71ig3"]
+[ext_resource type="Texture2D" uid="uid://sapjfoyk16i" path="res://assets/Player/Idle/South/frame_005.png" id="7_w0m32"]
+[ext_resource type="Texture2D" uid="uid://b25023cgwuu6i" path="res://assets/Player/Idle/South/frame_006.png" id="8_m8jsd"]
+[ext_resource type="Texture2D" uid="uid://diqijg36ph1xb" path="res://assets/Player/Idle/South/frame_007.png" id="9_w84fg"]
+[ext_resource type="Texture2D" uid="uid://c2582i4r4di43" path="res://assets/Player/Idle/South/frame_008.png" id="10_8xr2m"]
+[ext_resource type="Texture2D" uid="uid://c1darp7iowl86" path="res://assets/Player/Idle/South/frame_009.png" id="11_cf15y"]
+[ext_resource type="Texture2D" uid="uid://b4rtloxs1h82y" path="res://assets/Player/Idle/South/frame_010.png" id="12_if0x3"]
+[ext_resource type="Texture2D" uid="uid://dxnxa33161p26" path="res://assets/Player/Idle/South/frame_011.png" id="13_5kf4s"]
+[ext_resource type="Texture2D" uid="uid://bkl84ywhqul3y" path="res://assets/Player/Idle/South/frame_012.png" id="14_ykbo7"]
+[ext_resource type="Texture2D" uid="uid://dssms422rx870" path="res://assets/Player/Idle/South/frame_013.png" id="15_j404q"]
+[ext_resource type="Texture2D" uid="uid://dkixms7jwteat" path="res://assets/Player/Idle/South/frame_014.png" id="16_l6k5d"]
+[ext_resource type="Texture2D" uid="uid://c7qygnvpxt5ym" path="res://assets/Player/Idle/South/frame_015.png" id="17_tw136"]
+[ext_resource type="Texture2D" uid="uid://c8fp5w7p36bqr" path="res://assets/Player/Idle/South/frame_016.png" id="18_tsv1n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a4roe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_boql1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lcgiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_b6xit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8tudc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_71ig3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_w0m32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_m8jsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_w84fg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_8xr2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cf15y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_if0x3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5kf4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ykbo7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j404q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_l6k5d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_tw136")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_tsv1n")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_boql1"]
+
+[node name="StatusWindow" type="CanvasLayer" unique_id=462573059]
+script = ExtResource("1_boql1")
+
+[node name="Root" type="Control" parent="." unique_id=236144771]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Window" type="Control" parent="Root" unique_id=75288668]
+anchors_preset = 0
+offset_left = -310.5
+offset_top = -443.0
+offset_right = 1462.5
+offset_bottom = 1091.0
+scale = Vector2(0.338, 0.338)
+pivot_offset = Vector2(886.5, 767)
+
+[node name="Background" type="TextureRect" parent="Root/Window" unique_id=91707224]
+texture_filter = 2
+layout_mode = 0
+offset_right = 1773.0
+offset_bottom = 1534.0
+mouse_filter = 2
+texture = ExtResource("1_o0k3m")
+expand_mode = 1
+
+[node name="Portrait" type="AnimatedSprite2D" parent="Root/Window" unique_id=1110200281]
+unique_name_in_owner = true
+texture_filter = 1
+position = Vector2(356, 506.725)
+scale = Vector2(3.91, 3.91)
+sprite_frames = SubResource("SpriteFrames_a4roe")
+frame_progress = 0.60952145
+
+[node name="StatsBox" type="VBoxContainer" parent="Root/Window" unique_id=414570400]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 100.0
+offset_top = 760.0
+offset_right = 630.0
+offset_bottom = 1110.0
+
+[node name="TitleLabel" type="Label" parent="Root/Window" unique_id=1330399940]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 699.9999
+offset_top = 197.0
+offset_right = 1599.9999
+offset_bottom = 258.0
+scale = Vector2(1.057, 1)
+theme_override_colors/font_color = Color(0.33333334, 0.28627452, 0.25490198, 1)
+theme_override_font_sizes/font_size = 44
+text = "INVENTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Root/Window" unique_id=2066666509]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 730.0
+offset_top = 335.0
+offset_right = 1630.0
+offset_bottom = 1080.0
+theme_override_font_sizes/font_size = 52
+fixed_icon_size = Vector2i(88, 88)
+
+[node name="DescLabel" type="Label" parent="Root/Window" unique_id=2001438917]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 735.0
+offset_top = 1145.0
+offset_right = 1415.0
+offset_bottom = 1375.0
+theme_override_font_sizes/font_size = 44
+autowrap_mode = 3
+
+[node name="UseBtn" type="Button" parent="Root/Window" unique_id=1616941317]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1440.0
+offset_top = 1215.0
+offset_right = 1630.0
+offset_bottom = 1315.0
+theme_override_font_sizes/font_size = 48
+text = "Pakai"
+
+[node name="CloseBtn" type="Button" parent="Root/Window" unique_id=797492856]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1623.0
+offset_top = 192.0
+offset_right = 1693.0
+offset_bottom = 262.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_boql1")
+
+[node name="BuffBox" type="VBoxContainer" parent="Root/Window" unique_id=512765166]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 100.0
+offset_top = 1140.0
+offset_right = 630.0
+offset_bottom = 1400.0

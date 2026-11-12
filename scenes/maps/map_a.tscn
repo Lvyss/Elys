@@ -55,11 +55,14 @@
 [ext_resource type="Script" uid="uid://buf8ee4o24syy" path="res://scripts/enemy_spawner.gd" id="53_wispr"]
 [ext_resource type="Resource" uid="uid://bvktpfnwoqgfw" path="res://scenes/actors/goblin_lv1.tres" id="55_86hoq"]
 [ext_resource type="Resource" uid="uid://gfks5kg0rfhr" path="res://scenes/actors/goblin_lv2.tres" id="56_5wbrk"]
-[ext_resource type="PackedScene" uid="uid://s4wycc0qgf8x" path="res://scenes/actors/npc.tscn" id="56_nkvse"]
+[ext_resource type="PackedScene" uid="uid://s4wycc0qgf8x" path="res://scenes/actors/orrin.tscn" id="56_nkvse"]
 [ext_resource type="Shader" uid="uid://bpbf6a4tvkek3" path="res://assets/Shader/outer_darkness.gdshader" id="57_86hoq"]
 [ext_resource type="Resource" uid="uid://ctyyvrbym2ep4" path="res://scenes/actors/goblin_lv3.tres" id="57_nkvse"]
 [ext_resource type="Script" uid="uid://cots43a3odsct" path="res://scripts/occlusion_fader.gd" id="58_5wbrk"]
 [ext_resource type="AudioStream" uid="uid://csn2fosqroyaf" path="res://assets/Sound/bgplay.mp3" id="59_nkvse"]
+[ext_resource type="PackedScene" uid="uid://cpmcp66thdf7v" path="res://scenes/hud.tscn" id="61_crn00"]
+[ext_resource type="PackedScene" uid="uid://drxbjym2jgpc2" path="res://scenes/shop_window.tscn" id="62_t6434"]
+[ext_resource type="PackedScene" uid="uid://clrxgp647663g" path="res://scenes/status_window.tscn" id="62_wd8eh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7shv6"]
 render_priority = 0
@@ -2730,9 +2733,6 @@ stats_lv1 = ExtResource("55_86hoq")
 stats_lv2 = ExtResource("56_5wbrk")
 stats_boss = ExtResource("57_nkvse")
 
-[node name="NPC" parent="." unique_id=1976931407 instance=ExtResource("56_nkvse")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 3.9746838, 0.6355457, -8.669676)
-
 [node name="OcclusionFader" type="Node3D" parent="." unique_id=1712883400 node_paths=PackedStringArray("roots")]
 script = ExtResource("58_5wbrk")
 roots = [NodePath("../Boundary")]
@@ -2745,12 +2745,14 @@ mesh = SubResource("QuadMesh_a4roe")
 stream = ExtResource("59_nkvse")
 autoplay = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1782484512]
+[node name="HUD" parent="." unique_id=1469928115 instance=ExtResource("61_crn00")]
 
-[node name="HealthLabel" type="Label" parent="CanvasLayer" unique_id=1217357798]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "HP: 100 / 100"
+[node name="StatusWindow" parent="." unique_id=462573059 instance=ExtResource("62_wd8eh")]
+
+[node name="ShopWindow" parent="." unique_id=733939796 instance=ExtResource("62_t6434")]
+
+[node name="Orrin" parent="." unique_id=1976931407 instance=ExtResource("56_nkvse")]
+transform = Transform3D(0.67330444, 0, -0.19147086, 0, 0.7, 0, 0.19147086, 0, 0.67330444, 5.742217, 0.6590188, -7.120942)
 
 [editable path="Landmarks/Cabin/Sketchfab_Scene"]
 [editable path="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene"]

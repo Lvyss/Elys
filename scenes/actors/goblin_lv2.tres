@@ -11,4 +11,7 @@ damage = 15
 chase_speed = 3.5
 detect_range = 3.0
 lose_range = 3.0
+xp_reward = 25
+drop_item_id = &"lempeng_besi"
+drop_chance = 0.8
 metadata/_custom_type_script = "uid://dwd0xge4beaxe"
