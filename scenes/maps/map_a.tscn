@@ -59,10 +59,26 @@
 [ext_resource type="Shader" uid="uid://bpbf6a4tvkek3" path="res://assets/Shader/outer_darkness.gdshader" id="57_86hoq"]
 [ext_resource type="Resource" uid="uid://ctyyvrbym2ep4" path="res://scenes/actors/goblin_lv3.tres" id="57_nkvse"]
 [ext_resource type="Script" uid="uid://cots43a3odsct" path="res://scripts/occlusion_fader.gd" id="58_5wbrk"]
+[ext_resource type="PackedScene" uid="uid://bj7vqeer72vv3" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/03_round_wooden_table_with_two_stools.glb" id="59_0p5s2"]
 [ext_resource type="AudioStream" uid="uid://csn2fosqroyaf" path="res://assets/Sound/bgplay.mp3" id="59_nkvse"]
+[ext_resource type="PackedScene" uid="uid://b5gf3kp643ilh" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/18_wooden_barrel_with_iron_bands.glb" id="60_m1hge"]
+[ext_resource type="PackedScene" uid="uid://ccj1mnub2d8hn" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/08_closed_treasure_chest.glb" id="61_7aeld"]
 [ext_resource type="PackedScene" uid="uid://cpmcp66thdf7v" path="res://scenes/hud.tscn" id="61_crn00"]
+[ext_resource type="PackedScene" uid="uid://clpp2y860qm0o" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_CandleHolder.glb" id="62_g2iks"]
 [ext_resource type="PackedScene" uid="uid://drxbjym2jgpc2" path="res://scenes/shop_window.tscn" id="62_t6434"]
 [ext_resource type="PackedScene" uid="uid://clrxgp647663g" path="res://scenes/status_window.tscn" id="62_wd8eh"]
+[ext_resource type="PackedScene" uid="uid://18ggcbkltijh" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_Cauldron.glb" id="63_jmekl"]
+[ext_resource type="PackedScene" uid="uid://cc5spx30c781y" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/01_blank_wooden_tavern_hanging_sign.glb" id="64_5kbhs"]
+[ext_resource type="PackedScene" uid="uid://bha751x2dtvbe" path="res://assets/3D/Furniture/table.fbx" id="65_uo4gf"]
+[ext_resource type="PackedScene" uid="uid://d3ystiwr5pc4t" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_Spellbook.glb" id="66_fny5q"]
+[ext_resource type="PackedScene" uid="uid://cqlttxaur8uix" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_Scroll.glb" id="67_15o7l"]
+[ext_resource type="PackedScene" uid="uid://dsggx4gx6e1lg" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_SmallBottle.glb" id="68_pfdue"]
+[ext_resource type="PackedScene" uid="uid://cotcsiea6vtvc" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_PotionBottle_Red.glb" id="69_n1o1s"]
+[ext_resource type="PackedScene" uid="uid://dndjm5ba0x7qs" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_PotionBottle_Green.glb" id="70_525m4"]
+[ext_resource type="PackedScene" uid="uid://pgus0eo3yay3" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/05_set_of_three_potion_bottles_in_different_colors.glb" id="71_07kdq"]
+[ext_resource type="PackedScene" uid="uid://bchyeir2aj5df" path="res://assets/3D/LowPolyFantasyVillage_CC0/LowPolyFantasyVillage/GLB/06_clay_pot_with_flowers.glb" id="72_3c2oi"]
+[ext_resource type="PackedScene" uid="uid://b6s0tw07wvqpo" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_MortarPestle.glb" id="73_5o57n"]
+[ext_resource type="PackedScene" uid="uid://cbbleamjgh6yv" path="res://assets/3D/Magic_Props/Magic_Props/GLB/SM_Magic_IngredientJar.glb" id="74_byfai"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7shv6"]
 render_priority = 0
@@ -872,37 +888,37 @@ script = ExtResource("9_7y82y")
 skip_keywords = PackedStringArray("Door", "Glass", "Knob", "Bolt")
 skip_nodes = PackedStringArray()
 
-[node name="AutoCol_Object_4" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_4" parent_id_path=PackedInt32Array(1809663713, 269196406) index="0" unique_id=152621963]
+[node name="AutoCol_Object_4" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_4" parent_id_path=PackedInt32Array(1809663713, 762572953) index="0" unique_id=152621963]
 
 [node name="@CollisionShape3D@24202" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_4/AutoCol_Object_4" unique_id=1369543215]
 shape = SubResource("ConcavePolygonShape3D_qfbl7")
 
-[node name="AutoCol_Object_5" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_5" parent_id_path=PackedInt32Array(1809663713, 1150729523) index="0" unique_id=1402182594]
+[node name="AutoCol_Object_5" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_5" parent_id_path=PackedInt32Array(1809663713, 59018968) index="0" unique_id=1402182594]
 
 [node name="@CollisionShape3D@24203" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_5/AutoCol_Object_5" unique_id=959642427]
 shape = SubResource("ConcavePolygonShape3D_swan3")
 
-[node name="AutoCol_Object_6" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_6" parent_id_path=PackedInt32Array(1809663713, 1274881986) index="0" unique_id=834002599]
+[node name="AutoCol_Object_6" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_6" parent_id_path=PackedInt32Array(1809663713, 250126166) index="0" unique_id=834002599]
 
 [node name="@CollisionShape3D@24204" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_6/AutoCol_Object_6" unique_id=828769780]
 shape = SubResource("ConcavePolygonShape3D_shakx")
 
-[node name="AutoCol_Object_7" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_7" parent_id_path=PackedInt32Array(1809663713, 243891753) index="0" unique_id=1715951064]
+[node name="AutoCol_Object_7" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_7" parent_id_path=PackedInt32Array(1809663713, 1822007821) index="0" unique_id=1715951064]
 
 [node name="@CollisionShape3D@24205" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_7/AutoCol_Object_7" unique_id=1665246473]
 shape = SubResource("ConcavePolygonShape3D_8ulyl")
 
-[node name="AutoCol_Object_8" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_8" parent_id_path=PackedInt32Array(1809663713, 1299339322) index="0" unique_id=1685123436]
+[node name="AutoCol_Object_8" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_8" parent_id_path=PackedInt32Array(1809663713, 241515981) index="0" unique_id=1685123436]
 
 [node name="@CollisionShape3D@24206" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_8/AutoCol_Object_8" unique_id=1341673281]
 shape = SubResource("ConcavePolygonShape3D_wispr")
 
-[node name="AutoCol_Object_9" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_9" parent_id_path=PackedInt32Array(1809663713, 54010812) index="0" unique_id=1897604600]
+[node name="AutoCol_Object_9" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_9" parent_id_path=PackedInt32Array(1809663713, 1782502854) index="0" unique_id=1897604600]
 
 [node name="@CollisionShape3D@24207" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_9/AutoCol_Object_9" unique_id=811293619]
 shape = SubResource("ConcavePolygonShape3D_wrblc")
 
-[node name="AutoCol_Object_10" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_10" parent_id_path=PackedInt32Array(1809663713, 1889141116) index="0" unique_id=735940404]
+[node name="AutoCol_Object_10" type="StaticBody3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_10" parent_id_path=PackedInt32Array(1809663713, 127574742) index="0" unique_id=735940404]
 
 [node name="@CollisionShape3D@24208" type="CollisionShape3D" parent="Landmarks/Cabin/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Cabin_5/Object_10/AutoCol_Object_10" unique_id=2068365256]
 shape = SubResource("ConcavePolygonShape3D_um0pl")
@@ -914,7 +930,7 @@ light_energy = 1.2
 omni_range = 3.0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Landmarks/Cabin" unique_id=400347737]
-transform = Transform3D(0.9602115, 0, -0.27927393, 0, 1, 0, 0.27927393, 0, 0.9602115, -0.1413126, 1.87569, 1.2676144)
+transform = Transform3D(0.9602115, 0, -0.27927393, 0, 1, 0, 0.27927393, 0, 0.9602115, -0.2567706, 1.87569, 0.09488344)
 light_color = Color(1, 0.72156864, 0.3019608, 1)
 light_energy = 1.2
 omni_range = 3.0
@@ -946,7 +962,7 @@ script = ExtResource("9_7y82y")
 skip_keywords = PackedStringArray("Door", "Glass", "Knob", "Bolt")
 skip_nodes = PackedStringArray()
 
-[node name="AutoCol_polySurface33_lambert4_0" type="StaticBody3D" parent="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene/Sketchfab_model/ee07134e311444f39c85da3858afb53f_fbx/RootNode/polySurface33/polySurface33_lambert4_0" parent_id_path=PackedInt32Array(657655607, 721510726) index="0" unique_id=2036217814]
+[node name="AutoCol_polySurface33_lambert4_0" type="StaticBody3D" parent="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene/Sketchfab_model/ee07134e311444f39c85da3858afb53f_fbx/RootNode/polySurface33/polySurface33_lambert4_0" parent_id_path=PackedInt32Array(657655607, 1647691397) index="0" unique_id=2036217814]
 
 [node name="@CollisionShape3D@91809" type="CollisionShape3D" parent="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene/Sketchfab_model/ee07134e311444f39c85da3858afb53f_fbx/RootNode/polySurface33/polySurface33_lambert4_0/AutoCol_polySurface33_lambert4_0" unique_id=338620651]
 shape = SubResource("ConcavePolygonShape3D_tn4ir")
@@ -959,12 +975,12 @@ script = ExtResource("9_7y82y")
 skip_keywords = PackedStringArray("Door", "Glass", "Knob", "Bolt")
 skip_nodes = PackedStringArray()
 
-[node name="AutoCol_Object_10" type="StaticBody3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_10" parent_id_path=PackedInt32Array(373454990, 579021617) index="0" unique_id=1622700889]
+[node name="AutoCol_Object_10" type="StaticBody3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_10" parent_id_path=PackedInt32Array(373454990, 1295696681) index="0" unique_id=1622700889]
 
 [node name="@CollisionShape3D@92064" type="CollisionShape3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_10/AutoCol_Object_10" unique_id=230818859]
 shape = SubResource("ConcavePolygonShape3D_2fg0c")
 
-[node name="AutoCol_Object_11" type="StaticBody3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_11" parent_id_path=PackedInt32Array(373454990, 1524605027) index="0" unique_id=1978507382]
+[node name="AutoCol_Object_11" type="StaticBody3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_11" parent_id_path=PackedInt32Array(373454990, 2139887914) index="0" unique_id=1978507382]
 
 [node name="@CollisionShape3D@92065" type="CollisionShape3D" parent="Landmarks/ChestPedestal/Chest/Sketchfab_Scene/Sketchfab_model/Chest_fbx/Object_2/RootNode/Armature/Object_5/Skeleton3D/Object_11/AutoCol_Object_11" unique_id=1757233985]
 shape = SubResource("ConcavePolygonShape3D_ymnar")
@@ -979,19 +995,19 @@ transform = Transform3D(-1.8478281, 0.30613074, 9.027748, -0.445476, 9.200403, -
 script = ExtResource("16_ymnar")
 skip_keywords = PackedStringArray("Rune", "Ring", "Circle", "Glow")
 
-[node name="ToMax_ToMax_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 552913837) index="0" unique_id=1044223700]
+[node name="ToMax_ToMax_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 657205148) index="0" unique_id=158305262]
 surface_material_override/0 = SubResource("StandardMaterial3D_f2ns6")
 
-[node name="ToMax_ToMax1_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 552913837) index="1" unique_id=1395322209]
+[node name="ToMax_ToMax1_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 657205148) index="1" unique_id=1905732234]
 surface_material_override/0 = SubResource("StandardMaterial3D_f8gbn")
 
-[node name="ToMax_ToMax2_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 552913837) index="2" unique_id=227987414]
+[node name="ToMax_ToMax2_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 657205148) index="2" unique_id=758118681]
 surface_material_override/0 = SubResource("StandardMaterial3D_h0bef")
 
-[node name="ToMax_ToMax3_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 552913837) index="3" unique_id=2110804471]
+[node name="ToMax_ToMax3_0" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/cf0f26451f36450b852c524f44627a44_fbx/RootNode/ToMax/Object_4" parent_id_path=PackedInt32Array(1202531583, 657205148) index="3" unique_id=908208720]
 surface_material_override/0 = SubResource("StandardMaterial3D_7ims8")
 
-[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(1202531583, 1979453703) index="1" unique_id=92089990]
+[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(1202531583, 1392081402) index="1" unique_id=92089990]
 
 [node name="SimpleCol" type="CollisionShape3D" parent="Landmarks/Altar/Stone1/Sketchfab_Scene/Sketchfab_model/SimpleCol" unique_id=1682907649]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7252903e-09, 2.2351742e-08, 0.12751159)
@@ -1005,22 +1021,22 @@ transform = Transform3D(3.5317843, -1.0748549e-09, 0.48551452, -0.13875262, 3.41
 script = ExtResource("16_ymnar")
 skip_keywords = PackedStringArray("Rune", "Ring", "Circle", "Glow")
 
-[node name="Og166_Og166_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 1892374293) index="0" unique_id=893821619]
+[node name="Og166_Og166_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 666783553) index="0" unique_id=310596884]
 surface_material_override/0 = SubResource("StandardMaterial3D_wispr")
 
-[node name="Og166_Og166_02" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 1892374293) index="1" unique_id=1573843508]
+[node name="Og166_Og166_02" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 666783553) index="1" unique_id=179040893]
 surface_material_override/0 = SubResource("StandardMaterial3D_wrblc")
 
-[node name="Og166_Og1661_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 1892374293) index="2" unique_id=1327120598]
+[node name="Og166_Og1661_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 666783553) index="2" unique_id=1791850757]
 surface_material_override/0 = SubResource("StandardMaterial3D_um0pl")
 
-[node name="Og166_Og1661_02" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 1892374293) index="3" unique_id=1802388206]
+[node name="Og166_Og1661_02" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 666783553) index="3" unique_id=909825332]
 surface_material_override/0 = SubResource("StandardMaterial3D_iqb7m")
 
-[node name="Og166_Base_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 1892374293) index="4" unique_id=404909386]
+[node name="Og166_Base_0" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/2ed08315e49144be83da3f40acdd957c_fbx/RootNode/Og166/Object_4" parent_id_path=PackedInt32Array(1871250090, 666783553) index="4" unique_id=978043337]
 surface_material_override/0 = SubResource("StandardMaterial3D_86hoq")
 
-[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(1871250090, 1008803322) index="1" unique_id=886859137]
+[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(1871250090, 116431991) index="1" unique_id=886859137]
 
 [node name="SimpleCol" type="CollisionShape3D" parent="Landmarks/Altar/Stone2/Sketchfab_Scene/Sketchfab_model/SimpleCol" unique_id=1110330979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4505806e-08, 0, 0.22551715)
@@ -1034,19 +1050,19 @@ transform = Transform3D(-2.0857246, 0.0606415, -6.161258, -0.13838239, 6.5025835
 script = ExtResource("16_ymnar")
 skip_keywords = PackedStringArray("Rune", "Ring", "Circle", "Glow")
 
-[node name="Og202_Og202_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 357120034) index="0" unique_id=1039644184]
+[node name="Og202_Og202_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 2004502231) index="0" unique_id=124222335]
 surface_material_override/0 = SubResource("StandardMaterial3D_qfbl7")
 
-[node name="Og202_Og2021_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 357120034) index="1" unique_id=1466575986]
+[node name="Og202_Og2021_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 2004502231) index="1" unique_id=62210019]
 surface_material_override/0 = SubResource("StandardMaterial3D_swan3")
 
-[node name="Og202_Og2022_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 357120034) index="2" unique_id=699437641]
+[node name="Og202_Og2022_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 2004502231) index="2" unique_id=2024873206]
 surface_material_override/0 = SubResource("StandardMaterial3D_shakx")
 
-[node name="Og202_Base_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 357120034) index="3" unique_id=155629312]
+[node name="Og202_Base_0" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/ec0b8e5defa7421b9eac3678a135a9af_fbx/RootNode/Og202/Object_4" parent_id_path=PackedInt32Array(2037576863, 2004502231) index="3" unique_id=1263760322]
 surface_material_override/0 = SubResource("StandardMaterial3D_8ulyl")
 
-[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(2037576863, 1783486817) index="1" unique_id=1905854976]
+[node name="SimpleCol" type="StaticBody3D" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model" parent_id_path=PackedInt32Array(2037576863, 1891293330) index="1" unique_id=1905854976]
 
 [node name="SimpleCol" type="CollisionShape3D" parent="Landmarks/Altar/Stone3/Sketchfab_Scene/Sketchfab_model/SimpleCol" unique_id=1398522303]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4901161e-08, 5.9604645e-08, 0.18911773)
@@ -2698,7 +2714,7 @@ visible = false
 [node name="stump_old2" parent="Props/Stump_01" unique_id=643201272 instance=ExtResource("12_rvlne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.29488164)
 
-[node name="stump_old" parent="Props/Stump_01/stump_old2" index="0" unique_id=1189771038]
+[node name="stump_old" parent="Props/Stump_01/stump_old2" index="0" unique_id=1157660705]
 material_override = ExtResource("13_53mqb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Stump_01" unique_id=1079219214]
@@ -2752,7 +2768,63 @@ autoplay = true
 [node name="ShopWindow" parent="." unique_id=733939796 instance=ExtResource("62_t6434")]
 
 [node name="Orrin" parent="." unique_id=1976931407 instance=ExtResource("56_nkvse")]
-transform = Transform3D(0.67330444, 0, -0.19147086, 0, 0.7, 0, 0.19147086, 0, 0.67330444, 5.742217, 0.6590188, -7.120942)
+transform = Transform3D(0.67330444, 0, -0.19147086, 0, 0.7, 0, 0.19147086, 0, 0.67330444, 3.9334798, 0.6590188, -8.695766)
+
+[node name="Decoration" type="Node3D" parent="." unique_id=311595154]
+
+[node name="Wooden Table" parent="Decoration" unique_id=1312048920 instance=ExtResource("59_0p5s2")]
+transform = Transform3D(0.16690345, 0, 0.47132075, 0, 0.5, 0, -0.47132075, 0, 0.16690345, 5.870811, 0.6456986, -6.481962)
+
+[node name="Wooden Table2" parent="Decoration" unique_id=1682669610 instance=ExtResource("59_0p5s2")]
+transform = Transform3D(0.4655279, 0, 0.18243839, 0, 0.5, 0, -0.18243839, 0, 0.4655279, 5.4904356, 0.66508806, -5.6000433)
+
+[node name="Wooden Barel" parent="Decoration" unique_id=715685107 instance=ExtResource("60_m1hge")]
+transform = Transform3D(0.41995972, 0, -0.27135554, 0, 0.5, 0, 0.27135554, 0, 0.41995972, 2.7327783, 0.70908666, -5.072431)
+
+[node name="Chest Treasure" parent="Decoration" unique_id=613843566 instance=ExtResource("61_7aeld")]
+transform = Transform3D(0.1804235, 0, -0.57223016, 0, 0.6, 0, 0.57223016, 0, 0.1804235, 6.1484694, 0.7474926, -7.7404532)
+
+[node name="Candle Holder" parent="Decoration" unique_id=1682717247 instance=ExtResource("62_g2iks")]
+transform = Transform3D(0.9378889, 0, 0.34693566, 0, 1, 0, -0.34693566, 0, 0.9378889, 5.9507008, 1.0993191, -6.469346)
+
+[node name="Candle Holder2" parent="Decoration" unique_id=894769370 instance=ExtResource("62_g2iks")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.593621, 1.113213, -5.489159)
+
+[node name="Cauldron" parent="Decoration" unique_id=281848843 instance=ExtResource("63_jmekl")]
+transform = Transform3D(-0.8335902, 0, 0.8632077, 0, 1.2, 0, -0.8632077, 0, -0.8335902, 5.770905, 0.6644546, -8.070052)
+
+[node name="Hanging Sign" parent="Decoration" unique_id=830699540 instance=ExtResource("64_5kbhs")]
+transform = Transform3D(0.47940987, 0, -0.14200768, 0, 0.5, 0, 0.14200768, 0, 0.47940987, 3.152772, 1.7768737, -4.4535813)
+
+[node name="White Table" parent="Decoration" unique_id=42066663 instance=ExtResource("65_uo4gf")]
+transform = Transform3D(-0.09659258, 0, 0.025881914, 0, 0.1, 0, -0.025881914, 0, -0.09659258, 4.191073, 0.64577043, -8.33598)
+
+[node name="Spell Book" parent="Decoration" unique_id=1197512320 instance=ExtResource("66_fny5q")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 4.3987036, 0.9877554, -8.521028)
+
+[node name="Paper" parent="Decoration" unique_id=424987329 instance=ExtResource("67_15o7l")]
+transform = Transform3D(-0.27786338, 0, -0.2877359, 0, 0.4, 0, 0.2877359, 0, -0.27786338, 5.4635596, 1.140186, -5.7205396)
+
+[node name="Small Bottle" parent="Decoration" unique_id=2014763301 instance=ExtResource("68_pfdue")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.5843353, 0.950434, -8.536396)
+
+[node name="Potion Bottle" parent="Decoration" unique_id=1997162310 instance=ExtResource("69_n1o1s")]
+transform = Transform3D(0.62645406, 0, -0.31233847, 0, 0.7, 0, 0.31233847, 0, 0.62645406, 4.527742, 0.9399556, -8.386555)
+
+[node name="Potion Bottle2" parent="Decoration" unique_id=650362125 instance=ExtResource("70_525m4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7031126, 0.93752414, -8.353243)
+
+[node name="Potion Bottle3" parent="Decoration" unique_id=2139165604 instance=ExtResource("71_07kdq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8457046, 1.103, -6.4076123)
+
+[node name="Flower Pot" parent="Decoration" unique_id=1827392655 instance=ExtResource("72_3c2oi")]
+transform = Transform3D(-0.07289419, 0, 0.39330196, 0, 0.4, 0, -0.39330196, 0, -0.07289419, 5.8387446, 1.0854121, -6.608601)
+
+[node name="Mortar Pestle" parent="Decoration" unique_id=1585537727 instance=ExtResource("73_5o57n")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 4.944601, 0.938, -8.387)
+
+[node name="Ingredient Jar" parent="Decoration" unique_id=1404079533 instance=ExtResource("74_byfai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.707264, 0.938, -8.519402)
 
 [editable path="Landmarks/Cabin/Sketchfab_Scene"]
 [editable path="Landmarks/ChestPedestal/Pedestal/Sketchfab_Scene"]
