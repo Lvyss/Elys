@@ -1,18 +1,36 @@
 extends CharacterBody3D
 
-enum State { IDLE, WANDER, CHASE, ATTACK, HURT, DEAD }
+enum State { IDLE, WANDER, CHASE, ATTACK, HURT, DEAD, DASH, RETREAT, BOSS_SLAM }
 enum AttackKind { STAND, WALK, LUNGE }
+signal died(goblin)
 
 @export var stats: GoblinStats
+
+const STAGGER_COOLDOWN := 1.5
+var stagger_cd := 0.0
 
 const GRAVITY := 20.0
 const ARRIVE_DISTANCE := 0.15
 const MAX_WALK_TIME := 4.0
 const WANDER_RADIUS := 3.0
+const SAFE_CENTER := Vector3(4.5, 0.0, -5.5)
+const SAFE_RADIUS := 4.5
 const HURT_TIME := 0.35
-const NON_LOOP := ["attack", "walk_attack", "run_attack", "hurt", "death"]
+const NON_LOOP := ["attack", "walk_attack", "run_attack", "hurt", "death", "dash", "slam"]
 
-# Offset per aksi (piksel). Isi dengan angka lamamu kalau ada.
+# --- MEKANIK KHUSUS ELIT ---
+const ELIT_DASH_SPEED := 12.0
+const ELIT_DASH_RANGE := 5.0     
+const ELIT_DASH_DURATION := 0.2  
+const ELIT_DASH_CD := 2.5        
+const ELIT_SAFE_DISTANCE := 4.5  
+
+# --- MEKANIK KHUSUS BOSS (RAJA) ---
+const BOSS_SLAM_RANGE := 4.0     # Jarak player agar boss mulai cast slam
+const BOSS_SLAM_CD := 5.0        # Cooldown skill slam
+const BOSS_CAST_TIME := 0.8      # Waktu charge / windup sebelum slam
+const BOSS_SLAM_RADIUS := 4.0    # Radius ledakan damage slam
+
 const ACTION_OFFSETS := {
 	"idle": Vector2(0, 0),
 	"walk": Vector2(0, 0),
@@ -22,6 +40,8 @@ const ACTION_OFFSETS := {
 	"run_attack": Vector2(0, 0),
 	"hurt": Vector2(0, 0),
 	"death": Vector2(0, 0),
+	"dash": Vector2(0, 0),
+	"slam": Vector2(0, 0),
 }
 
 @onready var sprite: AnimatedSprite3D = $Sprite
@@ -32,7 +52,7 @@ var attack_kind := AttackKind.STAND
 var hp := 0
 var home := Vector3.ZERO
 var target := Vector3.ZERO
-var facing := "down"            # down / left / up / right
+var facing := "down"
 var state_time := 0.0
 var idle_duration := 1.0
 var walk_time := 0.0
@@ -41,6 +61,15 @@ var hit_done := false
 var attack_dir := Vector3.ZERO
 var player: Node3D = null
 
+var dash_cd := 0.0
+var dash_dir := Vector3.ZERO
+var is_elite := false
+
+# Variabel Boss
+var is_boss := false
+var slam_cd := 0.0
+
+var retreat_dir := Vector3.ZERO
 
 func _ready() -> void:
 	if stats == null:
@@ -54,7 +83,9 @@ func _ready() -> void:
 	if stats.sprite_frames:
 		sprite.sprite_frames = stats.sprite_frames
 
-	# Ukuran (boss lebih besar). Posisi Y ikut dikali supaya kaki tetap di tanah.
+	is_elite = (stats.tier == 2)
+	is_boss = (stats.tier == 3)
+
 	var s := stats.size_scale
 	sprite.scale = Vector3.ONE * s
 	sprite.position.y *= s
@@ -62,19 +93,16 @@ func _ready() -> void:
 	col.position.y *= s
 	sprite.modulate = stats.tint
 
-	# Animasi non-loop
 	for anim in sprite.sprite_frames.get_animation_names():
 		if _action_of(anim) in NON_LOOP:
 			sprite.sprite_frames.set_animation_loop(anim, false)
 
 	_enter_idle()
 
-
 func _physics_process(delta: float) -> void:
 	if state == State.DEAD:
 		return
 	
-		# jatuh keluar peta -> balik ke titik awal
 	if global_position.y < -3.0:
 		global_position = home + Vector3(0, 0.5, 0)
 		velocity = Vector3.ZERO
@@ -86,13 +114,20 @@ func _physics_process(delta: float) -> void:
 
 	if attack_cd > 0.0:
 		attack_cd -= delta
+	if stagger_cd > 0.0:
+		stagger_cd -= delta
+	if dash_cd > 0.0:
+		dash_cd -= delta
+	if slam_cd > 0.0:
+		slam_cd -= delta
+		
 	state_time += delta
 
 	if player == null or not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player") as Node3D
 
 	var dist := INF
-	if player:
+	if player and not _player_is_safe():
 		var d := player.global_position - global_position
 		d.y = 0.0
 		dist = d.length()
@@ -122,20 +157,78 @@ func _physics_process(delta: float) -> void:
 		State.CHASE:
 			if dist > stats.lose_range:
 				_enter_idle()
-			elif attack_cd <= 0.0 and dist <= stats.attack_range * 3.0:
-				_enter_attack(dist)
-			elif dist <= stats.attack_range:
-				_move(Vector3.ZERO)      # tunggu cooldown
-				_face_player()
-				_play("idle_" + facing)
 			else:
-				var dir := _dir_to_player()
-				_set_facing(dir)
-				_move(dir * stats.chase_speed)
-				_play("run_" + facing)
+				if is_boss:
+					# --- LOGIKA BOSS ---
+					if slam_cd <= 0.0 and dist <= BOSS_SLAM_RANGE:
+						_enter_boss_slam() # Lompat & Hantam tanah
+					elif dist <= stats.attack_range and attack_cd <= 0.0:
+						_enter_attack(dist) # Pukul biasa
+					elif dist > stats.attack_range:
+						var dir := _dir_to_player()
+						_set_facing(dir)
+						_move(dir * stats.chase_speed)
+						_play("run_" + facing)
+					else:
+						_move(Vector3.ZERO)
+						_face_player()
+						_play("idle_" + facing)
+
+				elif is_elite:
+					# --- LOGIKA ELIT ---
+					if dash_cd <= 0.0:
+						if dist <= ELIT_DASH_RANGE and dist > 1.5:
+							_enter_dash()
+						elif dist > ELIT_DASH_RANGE:
+							var dir := _dir_to_player()
+							_set_facing(dir)
+							_move(dir * stats.wander_speed)
+							_play("walk_" + facing)
+						else:
+							_move(Vector3.ZERO)
+							_face_player()
+							_play("idle_" + facing)
+					else:
+						if dist < ELIT_SAFE_DISTANCE:
+							_enter_retreat()
+						else:
+							_move(Vector3.ZERO)
+							_face_player()
+							_play("idle_" + facing)
+				else:
+					# --- LOGIKA GOBLIN BIASA ---
+					if attack_cd <= 0.0 and dist <= stats.attack_range * 3.0:
+						_enter_attack(dist)
+					elif dist <= stats.attack_range:
+						_move(Vector3.ZERO)
+						_face_player()
+						_play("idle_" + facing)
+					else:
+						var dir := _dir_to_player()
+						_set_facing(dir)
+						_move(dir * stats.chase_speed)
+						_play("run_" + facing)
 
 		State.ATTACK:
 			_process_attack(dist)
+			
+		State.DASH:
+			_process_dash(dist)
+
+		State.BOSS_SLAM:
+			_process_boss_slam(dist)
+			
+		State.RETREAT:
+			if is_on_wall():
+				var side := Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
+				retreat_dir = (retreat_dir + side).normalized()
+
+			_move(retreat_dir * stats.wander_speed)
+			_set_facing(retreat_dir)
+			_play("walk_" + facing)
+			
+			if dist > ELIT_SAFE_DISTANCE + 1.0:
+				_enter_chase()
 
 		State.HURT:
 			_move(Vector3.ZERO)
@@ -143,13 +236,129 @@ func _physics_process(delta: float) -> void:
 				_enter_chase()
 
 
-# ---------------- STATE ----------------
+# ---------------- LOGIKA BOSS SLAM ----------------
+func _enter_boss_slam() -> void:
+	state = State.BOSS_SLAM
+	state_time = 0.0
+	hit_done = false
+	_face_player()
+	
+	# Pake animasi attack normal buat ancang-ancang
+	_play("attack_" + facing, true)
+	
+	# Simpan skala asli
+	var base_scale := Vector3.ONE * stats.size_scale
+	var base_pos := sprite.position
+	
+	# Bersihkan tween lama (kalau ada) biar gak tabrakan
+	var tw := create_tween()
+	
+	# 1. Warna berkedip merah menyala & badan membesar (0.8 detik)
+	tw.tween_property(sprite, "modulate", Color(1.0, 0.0, 0.0), BOSS_CAST_TIME * 0.5)
+	tw.parallel().tween_property(sprite, "scale", base_scale * 1.3, BOSS_CAST_TIME).set_trans(Tween.TRANS_ELASTIC)
+	tw.tween_property(sprite, "modulate", Color(1.0, 0.3, 0.3), BOSS_CAST_TIME * 0.5)
+	
+	# 2. Efek Getar (Goyang cepat bolak-balik selama 0.8 detik)
+	# Kita gunakan 10 putaran getar selama BOSS_CAST_TIME
+	for i in range(10):
+		tw.tween_property(sprite, "position", base_pos + Vector3(randf_range(-0.15, 0.15), randf_range(-0.15, 0.15), 0), 0.04)
+	
+	# 3. PASTIKAN DI AKHIR CAST, UKURAN DAN POSISI KEMBALI NORMAL
+	tw.tween_property(sprite, "position", base_pos, 0.05)
+	tw.parallel().tween_property(sprite, "scale", base_scale, 0.1).set_trans(Tween.TRANS_SINE)
+	
+func _shake_sprite(original_pos: Vector3, duration: float) -> void:
+	var elapsed := 0.0
+	while elapsed < duration:
+		# Geser posisi sprite secara acak (X dan Y)
+		sprite.position = original_pos + Vector3(randf_range(-0.1, 0.1), randf_range(-0.1, 0.1), 0)
+		await get_tree().process_frame
+		elapsed += get_process_delta_time()
+	
+	# Balikin ke posisi semula setelah selesai
+	sprite.position = original_pos
+	
+func _process_boss_slam(dist: float) -> void:
+	_move(Vector3.ZERO) # Boss diem gak gerak pas ngecas
+	
+	# Waktu Hantam Tanah!
+	if not hit_done and state_time >= BOSS_CAST_TIME:
+		hit_done = true
+		slam_cd = BOSS_SLAM_CD
+		attack_cd = stats.attack_cooldown
+		_do_slam_damage()
+		
+	# Selesai animasi, balik ngejar
+	if state_time >= BOSS_CAST_TIME + 0.5:
+		_enter_chase()
+
+func _do_slam_damage() -> void:
+	# Efek Visual saat Hantam: Berkedip PUTIH terang lalu balik normal!
+	var tw := create_tween()
+	tw.tween_property(sprite, "modulate", Color(2.0, 2.0, 2.0), 0.1)
+	tw.tween_property(sprite, "modulate", stats.tint, 0.3)
+	
+	if player == null:
+		return
+		
+	var d := player.global_position - global_position
+	d.y = 0.0
+	
+	# Jangkauan pukulan berat ini (sedikit lebih jauh dari serangan biasa)
+	var hit_radius := stats.attack_range + 1.0
+	
+	if d.length() <= hit_radius:
+		print("Player KENA HEAVY ATTACK!")
+		if player.has_method("take_damage"):
+			# DAMAGE SANGAT SAKIT! (3x lipat dari damage normal)
+			player.take_damage(int(stats.damage * 3.0)) 
+			
+# ---------------- STATE DASH ELIT ----------------
+func _enter_dash() -> void:
+	state = State.DASH
+	state_time = 0.0
+	hit_done = false
+	dash_dir = _dir_to_player()
+	_set_facing(dash_dir)
+	
+	_play("run_" + facing, true)
+	
+	var tw := create_tween()
+	tw.tween_property(sprite, "modulate", Color(1, 0.2, 0.2), 0.15)
+	tw.tween_property(sprite, "modulate", stats.tint, 0.1)
+
+func _process_dash(dist: float) -> void:
+	_move(dash_dir * ELIT_DASH_SPEED)
+	
+	if not hit_done and state_time >= 0.1:
+		if dist <= stats.attack_range + 0.8:
+			hit_done = true
+			if player and player.has_method("take_damage"):
+				player.take_damage(int(stats.damage * 1.5))
+				_play("attack_" + facing, true)
+				_move(Vector3.ZERO)
+
+	if state_time >= ELIT_DASH_DURATION:
+		dash_cd = ELIT_DASH_CD
+		attack_cd = stats.attack_cooldown
+		_enter_retreat()
+
+func _enter_retreat() -> void:
+	state = State.RETREAT
+	state_time = 0.0
+	
+	var dir_to_player := _dir_to_player()
+	var backward := -dir_to_player
+	var side := Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
+	
+	retreat_dir = (backward + side * 0.5).normalized()
+
+# ---------------- STATE NORMAL ----------------
 func _enter_idle() -> void:
 	state = State.IDLE
 	state_time = 0.0
 	idle_duration = randf_range(1.0, 3.0)
 	_play("idle_" + facing)
-
 
 func _enter_wander() -> void:
 	var angle := randf() * TAU
@@ -159,18 +368,17 @@ func _enter_wander() -> void:
 	state = State.WANDER
 	state_time = 0.0
 
-
 func _enter_chase() -> void:
+	if state != State.CHASE and state != State.DASH and state != State.RETREAT:
+		QuestManager.warn_danger(stats.tier)
 	state = State.CHASE
 	state_time = 0.0
-
 
 func _enter_attack(dist: float) -> void:
 	state = State.ATTACK
 	state_time = 0.0
 	hit_done = false
 
-	# Pilih jenis serangan berdasarkan jarak ke hero
 	if dist <= stats.attack_range:
 		attack_kind = AttackKind.STAND
 	elif dist <= stats.attack_range * 1.7:
@@ -186,11 +394,9 @@ func _enter_attack(dist: float) -> void:
 		AttackKind.WALK:  _play("walk_attack_" + facing, true)
 		AttackKind.LUNGE: _play("run_attack_" + facing, true)
 
-	# Kedip merah = peringatan sebelum mengayun
 	var tw := create_tween()
 	tw.tween_property(sprite, "modulate", Color(1, 0.35, 0.35), stats.windup_time * 0.5)
 	tw.tween_property(sprite, "modulate", stats.tint, stats.windup_time * 0.5)
-
 
 func _process_attack(dist: float) -> void:
 	match attack_kind:
@@ -209,7 +415,6 @@ func _process_attack(dist: float) -> void:
 		attack_cd = stats.attack_cooldown
 		_enter_chase()
 
-
 func _do_attack_hit(dist: float) -> void:
 	if player == null:
 		return
@@ -219,11 +424,15 @@ func _do_attack_hit(dist: float) -> void:
 		else:
 			print(name, " kena hero (hero belum punya take_damage)")
 
-
 # ---------------- DAMAGE ----------------
 func take_damage(amount: int) -> void:
 	if state == State.DEAD:
 		return
+	
+	if is_elite and state == State.DASH:
+		print(name, " kebal saat dash!")
+		return
+
 	hp -= amount
 	print(name, " HP: ", hp, "/", stats.max_hp)
 
@@ -235,11 +444,13 @@ func take_damage(amount: int) -> void:
 	tw.tween_property(sprite, "modulate", Color(1, 0.3, 0.3), 0.05)
 	tw.tween_property(sprite, "modulate", stats.tint, 0.15)
 
-	if stats.can_stagger:
+	if stats.can_stagger and state != State.ATTACK and state != State.BOSS_SLAM and stagger_cd <= 0.0:
+		stagger_cd = STAGGER_COOLDOWN
 		state = State.HURT
 		state_time = 0.0
 		_play("hurt_" + facing, true)
-
+	elif state == State.IDLE or state == State.WANDER:
+		_enter_chase()
 
 func _die() -> void:
 	state = State.DEAD
@@ -247,14 +458,13 @@ func _die() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	remove_from_group("enemy")
-	
 
-	# XP dan drop item diambil dari kartu stat (GoblinStats)
 	GameState.add_xp(stats.xp_reward)
 	print(name, " mati, Hero dapat ", stats.xp_reward, " XP")
 	_drop_loot()
+	QuestManager.report_kill(stats.tier)
+	died.emit(self)
 
-	# Animasi mati, lalu mengecil dan hilang
 	var anim := "death_" + facing
 	if sprite.sprite_frames.has_animation(anim):
 		_play(anim, true)
@@ -264,21 +474,32 @@ func _die() -> void:
 	await tw.finished
 	queue_free()
 
-
 func _drop_loot() -> void:
-	if stats.drop_item_id == &"":
-		return
-	if randf() > stats.drop_chance:
-		return
+	_roll_drop(stats.drop_item_id, stats.drop_chance)
+	_roll_drop(stats.bonus_item_id, stats.bonus_chance)
+	_roll_shard()
 
+func _roll_drop(id: StringName, chance: float) -> void:
+	if id == &"" or randf() > chance:
+		return
+	_make_pickup(id)
+
+func _roll_shard() -> void:
+	var id := stats.shard_id
+	if id == &"" or GameState.shards_dropped.has(id):
+		return
+	GameState.kills[id] = GameState.kills.get(id, 0) + 1
+	var pity: bool = stats.shard_pity > 0 and GameState.kills[id] >= stats.shard_pity
+	if pity or randf() < stats.shard_chance:
+		GameState.shards_dropped[id] = true
+		_make_pickup(id)
+
+func _make_pickup(id: StringName) -> void:
 	var pickup := ItemPickup.new()
-	pickup.item_id = stats.drop_item_id
-	# Ditaruh di parent goblin, bukan anak goblin, supaya tidak ikut
-	# queue_free() dan tidak ikut membesar di boss
+	pickup.item_id = id
 	get_parent().add_child(pickup)
 	pickup.global_position = global_position + Vector3(
 		randf_range(-0.3, 0.3), 0.1, randf_range(-0.3, 0.3))
-
 
 # ---------------- GERAK & ANIMASI ----------------
 func _move(horizontal: Vector3) -> void:
@@ -286,6 +507,12 @@ func _move(horizontal: Vector3) -> void:
 	velocity.z = horizontal.z
 	move_and_slide()
 
+func _player_is_safe() -> bool:
+	if player == null:
+		return false
+	var d := player.global_position - SAFE_CENTER
+	d.y = 0.0
+	return d.length() < SAFE_RADIUS
 
 func _dir_to_player() -> Vector3:
 	if player == null:
@@ -294,12 +521,9 @@ func _dir_to_player() -> Vector3:
 	d.y = 0.0
 	return d.normalized()
 
-
 func _face_player() -> void:
 	_set_facing(_dir_to_player())
 
-
-# Arah dunia -> arah layar (down/left/up/right) mengikuti kamera
 func _set_facing(dir_world: Vector3) -> void:
 	if dir_world.length() < 0.05:
 		return
@@ -320,7 +544,6 @@ func _set_facing(dir_world: Vector3) -> void:
 	else:
 		facing = "up" if sy > 0.0 else "down"
 
-
 func _play(anim: String, restart := false) -> void:
 	if not sprite.sprite_frames.has_animation(anim):
 		print("[GOBLIN ERROR] Animasi '", anim, "' tidak ada di SpriteFrames!")
@@ -329,8 +552,6 @@ func _play(anim: String, restart := false) -> void:
 		sprite.play(anim)
 	sprite.offset = ACTION_OFFSETS.get(_action_of(anim), Vector2.ZERO)
 
-
-# "walk_attack_left" -> "walk_attack"
 func _action_of(anim: String) -> String:
 	var i := anim.rfind("_")
 	return anim.substr(0, i) if i > 0 else anim

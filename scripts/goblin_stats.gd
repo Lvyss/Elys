@@ -25,3 +25,18 @@ extends Resource
 @export var xp_reward := 10
 @export var drop_item_id: StringName = &""
 @export_range(0.0, 1.0) var drop_chance := 1.0
+
+@export_group("Quest")
+@export_range(1, 3) var tier: int = 1   # 1 Prajurit, 2 Elit, 3 Raja
+
+@export_group("Loot Bonus")
+@export var bonus_item_id: StringName = &""
+@export_range(0.0, 1.0) var bonus_chance: float = 0.0
+
+@export_group("Rune")
+@export var shard_id: StringName = &""
+@export_range(0.0, 1.0) var shard_chance: float = 0.0
+@export var shard_pity: int = 0
+
+@export_group("Respawn")
+@export var respawn_time: float = 45.0
