@@ -17,7 +17,7 @@
 | Judul         | Elys                                                                            |
 | Genre         | Action-adventure mini + puzzle (berburu, menukar, memecahkan teka-teki)         |
 | Platform      | Web browser (desktop)                                                           |
-| Gaya visual   | HD-2D: dunia 3D low-poly bertekstur pixel, sprite 2D billboard, post-processing |
+| Gaya visual   | HD-2D: dunia 3D low-poly bertekstur pixel, sprite 2D billboard, post-pr`ocessing |
 | Target pemain | Mahasiswa dan pemain casual usia 15-25                                          |
 | Durasi main   | 12-18 menit (3 level)                                                           |
 | Kontrol       | Keyboard dan mouse                                                              |

@@ -1,0 +1,236 @@
+{
+  "version": "1.1.0",
+  "creation_date": "2026-11-03",
+  "project": "Runewood UI",
+  "asset_count": 17,
+  "assets": [
+    {
+      "file": "assets/backpack-icon-clean-v01.png",
+      "purpose": "backpack icon",
+      "dimensions": [
+        1286,
+        1286
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "backpack-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "ce214617127e700a19da58e0695c139a32f5d3bf90fd7d983856102823eef60a"
+    },
+    {
+      "file": "assets/close-icon-clean-v01.png",
+      "purpose": "close icon",
+      "dimensions": [
+        1310,
+        1262
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "close-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "7e6d0589f290b32dd55297914cc46aee28f482d7727d2a1940168c1cf69c31f1"
+    },
+    {
+      "file": "assets/coin-icon-clean-v01.png",
+      "purpose": "coin icon",
+      "dimensions": [
+        1294,
+        1278
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "coin-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "b6165476369bf3b35780e05e2f0f8659b8ad7e532f87038886582d5b10789dd3"
+    },
+    {
+      "file": "assets/dialog-panel-clean-v01.png",
+      "purpose": "dialog panel",
+      "dimensions": [
+        1806,
+        919
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "dialog-panel-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "94c2d9f436c0a763d3cf9ef110b04968b4e9eaf91c229985c71b6127358a71ff"
+    },
+    {
+      "file": "assets/health-fill-clean-v01.png",
+      "purpose": "health fill",
+      "dimensions": [
+        2204,
+        756
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "health-fill-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "5532b19663fa54a5ffc2bfd093a05b4528fe7ff7490988d708119a004bfda1a7"
+    },
+    {
+      "file": "assets/health-icon-clean-v01.png",
+      "purpose": "health icon",
+      "dimensions": [
+        1344,
+        1231
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "health-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "547a28b661fb3c20a47710ae88aaebd7a4490b2c4643e1a4fceb20ba6efb7cd0"
+    },
+    {
+      "file": "assets/health-track-clean-v01.png",
+      "purpose": "health track",
+      "dimensions": [
+        2204,
+        756
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "health-track-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "25246676d2fbe04f64efccb4dd0c630688eeef3f63b7b65dac1f9d1835ffe714"
+    },
+    {
+      "file": "assets/inventory-slot-clean-v01.png",
+      "purpose": "inventory slot",
+      "dimensions": [
+        1286,
+        1286
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "inventory-slot-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "dfbf95c5aafb35031b1fb48cdf5fe071696530430bb6a6b6230c49cce54df6ec"
+    },
+    {
+      "file": "assets/menu-panel-clean-v01.png",
+      "purpose": "menu panel",
+      "dimensions": [
+        1480,
+        1118
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "menu-panel-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "f9c5e749f2c4b1e03956eb7a63db6044f9596411250d0b40d2ea3029a481c680"
+    },
+    {
+      "file": "assets/potion-icon-clean-v01.png",
+      "purpose": "potion icon",
+      "dimensions": [
+        1286,
+        1286
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "potion-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "cdaae65f3f2069a43e62e3ca9481aa0684aee6e74c824f2752716a0f50c4b7cc"
+    },
+    {
+      "file": "assets/settings-icon-clean-v01.png",
+      "purpose": "settings icon",
+      "dimensions": [
+        1294,
+        1278
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "settings-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "aa5028d0643004215057ae9942b7501d8e22c411a20ad09bfbbb41dd3129d8c0"
+    },
+    {
+      "file": "assets/shield-icon-clean-v01.png",
+      "purpose": "shield icon",
+      "dimensions": [
+        1293,
+        1279
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "shield-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "a00704e0440a2b0673381c799670ee301d38a4af45789d5fb96392175a66be25"
+    },
+    {
+      "file": "assets/square-normal-v01.png",
+      "purpose": "square normal",
+      "dimensions": [
+        1286,
+        1286
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "square-button-normal-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "8540315b1f3b39d6922673a27cd5b46952a0f89b1c6d0b5a470a09a0ce2a666b"
+    },
+    {
+      "file": "assets/square-pressed-v01.png",
+      "purpose": "square pressed",
+      "dimensions": [
+        1286,
+        1286
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "square-button-pressed-original-v02.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin; aligned pressed face composited onto normal-state frame",
+      "sha256": "84aa4457e599d5a34b296d0c517ba779f7b27c1774691136af5fb01053ddfc01",
+      "additional_original": "square-button-normal-original-v01.png"
+    },
+    {
+      "file": "assets/sword-icon-clean-v01.png",
+      "purpose": "sword icon",
+      "dimensions": [
+        1319,
+        1254
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "sword-icon-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "40560b1fc94b7ee980c80956c6ff44be249f66554ebd99d01b8a450d0bdfd30c"
+    },
+    {
+      "file": "assets/wide-normal-v01.png",
+      "purpose": "wide normal",
+      "dimensions": [
+        2204,
+        756
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "button-normal-original-v01.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin",
+      "sha256": "8947ba25f1d89e9d7ddf88c4df0ecbb83149dd9965addc65948e30a0e9f2133c"
+    },
+    {
+      "file": "assets/wide-pressed-v01.png",
+      "purpose": "wide pressed",
+      "dimensions": [
+        2204,
+        756
+      ],
+      "transparency": "RGBA with transparent exterior",
+      "source": "ChatGPT in Chrome, Agent Assets",
+      "source_original": "button-pressed-original-v02.png",
+      "processing": "RGBA pixels with alpha <= 5 cleared; 16px transparent margin; aligned pressed face composited onto normal-state frame",
+      "sha256": "db9a4227f0c784d8d0b09d3794a31a167fa417fd416f222d27cfa47694338841",
+      "additional_original": "button-normal-original-v01.png"
+    }
+  ],
+  "added": {
+    "game_256": "all 17 PNGs, longest side 256 px",
+    "game_128": "all 17 PNGs, longest side 128 px",
+    "date": "2026-11-08"
+  }
+}
