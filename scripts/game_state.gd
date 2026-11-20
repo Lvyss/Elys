@@ -20,6 +20,8 @@ var xp: int = 0
 var level: int = 1
 var damage: int = 10
 
+var kills: Dictionary = {}
+var shards_dropped: Dictionary = {}
 # ============================================================
 # PENGATURAN LEVEL
 # ============================================================

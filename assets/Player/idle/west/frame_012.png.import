@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bo6nts0vth3hy"
-path.s3tc="res://.godot/imported/frame_012.png-e29ecd73a519eacd7548ec901717b8cb.s3tc.ctex"
+path.s3tc="res://.godot/imported/frame_012.png-d358d3c8a08f5663c38440c73ae498e0.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/idle/west/frame_012.png"
-dest_files=["res://.godot/imported/frame_012.png-e29ecd73a519eacd7548ec901717b8cb.s3tc.ctex"]
+source_file="res://assets/Player/Idle/West/frame_012.png"
+dest_files=["res://.godot/imported/frame_012.png-d358d3c8a08f5663c38440c73ae498e0.s3tc.ctex"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bssv35b3bawnt"
-path.s3tc="res://.godot/imported/frame_002.png-231c4e5b1180c123034372b19a68a90c.s3tc.ctex"
+path.s3tc="res://.godot/imported/frame_002.png-e90a53326769096d769262ecd84b7d1a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/Player/Walking/north/frame_002.png"
-dest_files=["res://.godot/imported/frame_002.png-231c4e5b1180c123034372b19a68a90c.s3tc.ctex"]
+source_file="res://assets/Player/Walking/North/frame_002.png"
+dest_files=["res://.godot/imported/frame_002.png-e90a53326769096d769262ecd84b7d1a.s3tc.ctex"]
 
 [params]
 

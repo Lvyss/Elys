@@ -4,8 +4,8 @@ extends Camera3D
 @export var mouse_sensitivity := 0.003
 @export var min_pitch_deg := -35.0   # negatif = kamera di bawah hero, mendongak
 @export var max_pitch_deg := 70.0    # paling tinggi (hampir dari atas)
-@export var min_distance := 4.0
-@export var max_distance := 16.0
+@export var min_distance := 3.0
+@export var max_distance := 7.0
 @export var zoom_step := 0.8
 @export var look_height := 1.0       # titik yang dilihat (setinggi dada hero)
 @export var ground_height := 0.0     # tinggi tanah
@@ -28,6 +28,12 @@ var current_distance := 10.0  # jarak sebenarnya setelah dibatasi
 var focus := Vector3.ZERO
 var _shape := SphereShape3D.new()
 
+# --- VARIABEL SCREEN SHAKE ---
+var shake_power := 0.0
+var shake_timer := 0.0
+var shake_time := 0.0
+var shake_speed := 50.0
+
 
 func _ready() -> void:
 	_shape.radius = cam_radius
@@ -38,7 +44,11 @@ func _ready() -> void:
 	# Baca sudut awal dari posisi kamera di editor
 	var offset := global_position - focus
 	distance = offset.length()
+	
+	# Paksa jarak awal kamera agar tidak melebihi max_distance atau kurang dari min_distance
+	distance = clampf(distance, min_distance, max_distance)
 	current_distance = distance
+	
 	yaw = atan2(offset.x, offset.z)
 	pitch = asin(offset.y / distance)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -64,6 +74,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	# Update efek getar kamera (pakai delta * Engine.time_scale biar sinkron saat hit-stop)
+	_process_shake(delta)
+
 	if target == null:
 		return
 	var goal := target.global_position + Vector3(0, look_height, 0)
@@ -116,3 +129,33 @@ func _limit_by_obstacles(dir: Vector3, wanted: float) -> float:
 		return wanted
 	var safe_fraction: float = result[0]
 	return clampf(wanted * safe_fraction, minf(min_occlusion_distance, wanted), wanted)
+
+
+# ==========================================
+# FUNGSI SCREEN SHAKE (GETAR KAMERA SMOOTH)
+# ==========================================
+
+# Panggil dari script lain: camera.shake(amount, duration, speed)
+func shake(amount: float, duration: float, speed: float = 50.0) -> void:
+	shake_power = amount
+	shake_timer = duration
+	shake_speed = speed
+	shake_time = 0.0
+
+func _process_shake(delta: float) -> void:
+	# Gunakan unscaled delta agar getaran tetap jalan meskipun waktu di-pause (Hit Stop)
+	var unscaled_delta := delta / Engine.time_scale if Engine.time_scale > 0.0 else delta
+	
+	if shake_timer > 0.0:
+		shake_timer -= unscaled_delta
+		shake_time += unscaled_delta * shake_speed
+		
+		# Kurangi kekuatan getar secara perlahan seiring waktu (Fade out)
+		var fade_out := shake_timer / 0.5 
+		var current_power := shake_power * clampf(fade_out, 0.0, 1.0)
+		
+		h_offset = sin(shake_time) * current_power
+		v_offset = cos(shake_time * 1.3) * current_power
+	else:
+		h_offset = lerpf(h_offset, 0.0, 15.0 * delta)
+		v_offset = lerpf(v_offset, 0.0, 15.0 * delta)

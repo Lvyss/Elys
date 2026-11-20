@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cx2mnnfn413ws"
-path="res://.godot/imported/Dark Rogue Idle Animation Sprite Sheet.png-f85f4a866482963549f410fe31a86d11.ctex"
+path="res://.godot/imported/Dark Rogue Idle Animation Sprite Sheet.png-016a118e1aab90c524cd3d7a5e7db5c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Player/idle/south/Dark Rogue Idle Animation Sprite Sheet.png"
-dest_files=["res://.godot/imported/Dark Rogue Idle Animation Sprite Sheet.png-f85f4a866482963549f410fe31a86d11.ctex"]
+source_file="res://assets/Player/Idle/South/Dark Rogue Idle Animation Sprite Sheet.png"
+dest_files=["res://.godot/imported/Dark Rogue Idle Animation Sprite Sheet.png-016a118e1aab90c524cd3d7a5e7db5c5.ctex"]
 
 [params]
 

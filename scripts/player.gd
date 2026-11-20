@@ -49,6 +49,9 @@ var attack_direction := Vector3.FORWARD
 var action_dir_name := ""   # arah animasi yang dikunci saat attack/dash/death
 var _just_captured := false # klik pertama untuk menangkap mouse tidak boleh jadi attack
 
+# --- VARIABEL BARU UNTUK STUN ---
+var is_stunned := false
+var stun_timer := 0.0
 
 func _ready() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
@@ -107,6 +110,16 @@ func _physics_process(delta: float) -> void:
 		velocity.z = 0.0
 		move_and_slide()
 		return
+		
+	# --- JIKA PLAYER TERSTUN ---
+	if is_stunned:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
+		
+		# Efek getar / kelap-kelip tanda stun
+		sprite.modulate = Color(0.5, 0.5, 1.0) if int(stun_timer * 15.0) % 2 == 0 else Color.WHITE
+		return # Hentikan semua kontrol di sini (gak bisa gerak/loncat/nyerang)
 	
 	if GameState.ui_open:
 		velocity.x = 0.0
@@ -172,11 +185,19 @@ func _tick_timers(delta: float) -> void:
 	if attack_cooldown_timer > 0.0:
 		attack_cooldown_timer -= delta
 
+	# Timer Stun
+	if is_stunned:
+		stun_timer -= delta
+		if stun_timer <= 0.0:
+			is_stunned = false
+			sprite.modulate = Color.WHITE # Balikin warna normal
+			print("Player bangun dari stun!")
+
 	# Kebal + kedip setelah kena damage
 	if invuln_timer > 0.0:
 		invuln_timer -= delta
 		sprite.modulate.a = 0.45 if int(invuln_timer * 20.0) % 2 == 0 else 1.0
-	elif sprite.modulate.a != 1.0:
+	elif sprite.modulate.a != 1.0 and not is_stunned:
 		sprite.modulate.a = 1.0
 
 func get_dash_ratio() -> float:
@@ -191,8 +212,19 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y = 0.0
 
 
+# ---------------- FUNGSI STUN DARI BOSS ----------------
+func stun(duration: float) -> void:
+	if is_dead or is_stunned: return
+	
+	is_stunned = true
+	stun_timer = duration
+	is_dashing = false
+	anim_lock = false
+	print("PLAYER TERSTUN!")
+	_update_animation(Vector2.ZERO, false)
+
+
 # ---------------- KAMERA ----------------
-# Mengembalikan [right, forward] kamera yang sudah diratakan ke bidang XZ
 func _cam_axes() -> Array:
 	var cam := get_viewport().get_camera_3d()
 	if cam == null:
@@ -204,13 +236,11 @@ func _cam_axes() -> Array:
 	return [right.normalized(), forward.normalized()]
 
 
-# Arah input layar -> arah dunia mengikuti kamera
 func _screen_to_world(input: Vector2) -> Vector3:
 	var axes := _cam_axes()
 	return axes[0] * input.x + axes[1] * -input.y
 
 
-# Arah hadap dunia -> nama arah animasi (right/left/up/down) menurut kamera SAAT INI
 func _dir_name() -> String:
 	if absf(facing_local.x) > absf(facing_local.y):
 		return "right" if facing_local.x > 0.0 else "left"
@@ -229,7 +259,6 @@ func _start_dash(input_dir: Vector2) -> void:
 		push_warning("Animasi '%s' tidak ada di SpriteFrames" % anim)
 		return
 
-	# Percepat animasi supaya selesai tepat di DASH_DURATION
 	var frames := sprite.sprite_frames.get_frame_count(anim)
 	var fps := sprite.sprite_frames.get_animation_speed(anim)
 	var natural_len := frames / maxf(fps, 0.01)
@@ -252,50 +281,54 @@ func _start_attack() -> void:
 	get_tree().create_timer(ATTACK_HIT_DELAY).timeout.connect(_do_hit)
 
 
+# --- LOGIKA HIT (DAMAGE, GETAR, HIT STOP) ---
 func _do_hit() -> void:
 	if is_dead:
 		return
+		
+	var hit_something := false
+	
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if not (e is Node3D):
 			continue
 		var to: Vector3 = e.global_position - global_position
 		to.y = 0.0
 		var dist := to.length()
+		
 		if dist <= ATTACK_RANGE and (dist < 0.01 or to.normalized().dot(attack_direction) > 0.3):
 			if e.has_method("take_damage"):
 				e.take_damage(GameState.damage)
-				
-				# Kirim node 'e' (musuh), bukan cuma posisinya
 				_spawn_damage_number(e, GameState.damage)
+				hit_something = true
+				
+	# --- EFEK NGE-HIT MUSUH ---
+	# --- EFEK NGE-HIT MUSUH ---
+	if hit_something:
+		# 1. Getar Kamera (Tajam & Cepat)
+		var cam = get_viewport().get_camera_3d()
+		if cam and cam.has_method("shake"):
+			cam.shake(0.06, 0.15, 80.0) 
+			
 
-# Perhatikan parameter pertamanya sekarang 'enemy_node' bukan 'enemy_pos'
+
 func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 	var dmg_num = DAMAGE_NUMBER_SCENE.instantiate()
 	dmg_num.text = str(damage_amount)
 	
 	enemy_node.add_child(dmg_num)
 	
-	# 1. DETEKSI TINGGI MUSUH OTOMATIS
-	var enemy_height := 1.0 # Nilai default jika musuh tidak punya Mesh3D
+	var enemy_height := 1.0
 	for child in enemy_node.get_children():
 		if child is MeshInstance3D:
-			# Ambil ukuran tinggi (Y) dari bentuk 3D musuh
 			enemy_height = child.get_aabb().size.y
 			break
 			
-	# 2. HITUNG POSISI BERDASARKAN TINGGI MUSUH
 	var random_side := 1.0 if randf() > 0.5 else -1.0
-	
-	# Kita turunkan persentasenya:
-	# Samping (X): dari 0.3 jadi 0.2 (biar makin nempel ke badan)
-	# Atas (Y): dari 0.8 jadi 0.4 (turun drastis biar ga melayang)
 	var pos_x = (enemy_height * 0.2) * random_side
-	var pos_y = (enemy_height * 0.2) - (enemy_height * 0.5) # Sama dengan -0.3
+	var pos_y = (enemy_height * 0.2) - (enemy_height * 0.5)
 	
 	dmg_num.position = Vector3(pos_x, pos_y, 0)
 	
-	# 3. NETRALISIR SCALE MUSUH
-	# Jika musuh diperbesar 2x, teksnya akan mengecil 0.5x agar ukurannya tetap normal di layar
 	var enemy_scale := enemy_node.global_transform.basis.get_scale()
 	dmg_num.scale = Vector3.ONE / enemy_scale
 
@@ -307,10 +340,14 @@ func take_damage(amount: int) -> void:
 		
 	invuln_timer = INVULN_TIME
 	
-	# Panggil GameState untuk kurangi HP
 	GameState.take_damage(amount)
 	
-	# Cek apakah HP sudah habis
+	# --- EFEK KENA HIT MUSUH ---
+	# Getar Kamera (Lebih parah, agak lambat, goyang kasar)
+	var cam = get_viewport().get_camera_3d()
+	if cam and cam.has_method("shake"):
+		cam.shake(0.2, 0.3, 40.0) # (Kekuatan, Durasi, Kecepatan)
+	
 	if GameState.hp_current <= 0:
 		_die()
 
@@ -327,7 +364,7 @@ func _die() -> void:
 	action_dir_name = _dir_name()
 	var anim := "death_" + action_dir_name
 	if sprite.sprite_frames.has_animation(anim):
-		sprite.play(anim)   # non-loop: berhenti di frame terakhir
+		sprite.play(anim)
 	died.emit()
 
 
@@ -335,7 +372,6 @@ func _die() -> void:
 func _update_animation(input: Vector2, is_running: bool) -> void:
 	var dir_name := _dir_name()
 
-	# Di udara: jump saat naik, saat turun tahan di frame terakhir jump
 	if not is_on_floor():
 		var air := "jump_" + dir_name
 		if not sprite.sprite_frames.has_animation(air):
@@ -354,7 +390,6 @@ func _update_animation(input: Vector2, is_running: bool) -> void:
 	_play(action + dir_name)
 
 
-# restart_if_stopped = false untuk animasi non-loop (jump) supaya tidak diulang
 func _play(anim: String, restart_if_stopped := true) -> void:
 	if not sprite.sprite_frames.has_animation(anim):
 		return
@@ -364,7 +399,6 @@ func _play(anim: String, restart_if_stopped := true) -> void:
 			sprite.play(anim)
 		return
 
-	# Ganti arah (mis. kamera diputar) tanpa mengulang animasi dari frame 0
 	var f := sprite.frame
 	var p := sprite.frame_progress
 	var same_kind := old.get_slice("_", 0) == anim.get_slice("_", 0) \
@@ -382,7 +416,6 @@ func _on_animation_finished() -> void:
 		sprite.no_depth_test = false
 
 func _process(_delta: float) -> void:
-	# Samakan animasi, frame, dan offset dengan sprite utama
 	if shadow_sprite.animation != sprite.animation:
 		shadow_sprite.animation = sprite.animation
 	shadow_sprite.frame = sprite.frame

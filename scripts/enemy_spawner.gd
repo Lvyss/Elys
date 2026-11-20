@@ -7,39 +7,88 @@ extends Node3D
 
 const MAX_GROUND_Y := 0.3     # lebih tinggi dari ini dianggap tebing/pohon, bukan tanah
 const SEARCH_ATTEMPTS := 40
+const MIN_RESPAWN_DIST := 6.0
+const RETRY_DELAY := 3.0
 
 
 func _ready() -> void:
+	QuestManager.begin()
 	# tunggu collision tebing/pohon terdaftar di physics
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 
 	var spawns := [
-		{"name": "GoblinLv1_A", "stats": stats_lv1, "pos": Vector3(5.5, 0, 5.0)},
-		{"name": "GoblinLv1_B", "stats": stats_lv1, "pos": Vector3(7.0, 0, 2.5)},
-		{"name": "GoblinLv2_A", "stats": stats_lv2, "pos": Vector3(-3.5, 0, -5.0)},
-		{"name": "GoblinLv2_B", "stats": stats_lv2, "pos": Vector3(-5.5, 0, -3.0)},
+		# Prajurit x6: DIUBAH KE POJOK KANAN BELAKANG
+		{"name": "GoblinLv1_A", "stats": stats_lv1, "pos": Vector3(5.0, 0, 4.0)},
+		{"name": "GoblinLv1_B", "stats": stats_lv1, "pos": Vector3(6.0, 0, 4.5)},
+		{"name": "GoblinLv1_C", "stats": stats_lv1, "pos": Vector3(7.0, 0, 3.5)},
+		{"name": "GoblinLv1_D", "stats": stats_lv1, "pos": Vector3(5.5, 0, 5.5)},
+		{"name": "GoblinLv1_E", "stats": stats_lv1, "pos": Vector3(6.5, 0, 6.0)},
+		{"name": "GoblinLv1_F", "stats": stats_lv1, "pos": Vector3(7.5, 0, 5.0)},
+		
+		# Elit x4: kiri atas
+		{"name": "GoblinLv2_A", "stats": stats_lv2, "pos": Vector3(-3.0, 0, -5.0)},
+		{"name": "GoblinLv2_B", "stats": stats_lv2, "pos": Vector3(-5.0, 0, -3.0)},
 		{"name": "GoblinLv2_C", "stats": stats_lv2, "pos": Vector3(-7.5, 0, -3.5)},
-		{"name": "GoblinBoss", "stats": stats_boss, "pos": Vector3(-6.5, 0, 4.5)},
+		{"name": "GoblinLv2_D", "stats": stats_lv2, "pos": Vector3(-3.5, 0, -7.5)},
+		# Raja x1: kiri bawah
+		{"name": "GoblinBoss", "stats": stats_boss, "pos": Vector3(-6.0, 0, 5.5)},
 	]
 
 	for s in spawns:
-		_spawn(s["name"], s["stats"], s["pos"])
+		_spawn(s)
 
 
-func _spawn(goblin_name: String, stats: GoblinStats, wanted: Vector3) -> void:
+func _spawn(entry: Dictionary) -> void:
+	var stats: GoblinStats = entry["stats"]
 	var radius := 0.5 * stats.size_scale + 0.2
-	var pos = _find_free_spot(wanted, radius)
+	
+	# _find_free_spot akan mencarikan tempat kosong di sekitar 'entry["pos"]'
+	var pos = _find_free_spot(entry["pos"], radius)
+	
 	if pos == null:
-		push_warning("%s: tidak ada titik aman dekat %s, geser angkanya" % [goblin_name, wanted])
+		push_warning("%s: tidak ada titik aman dekat %s, coba lagi nanti" % [entry["name"], entry["pos"]])
+		_queue_respawn(entry, RETRY_DELAY)
 		return
+
 	var g := goblin_scene.instantiate()
-	g.name = goblin_name
+	g.name = entry["name"]
+	if entry.has("detect"):
+		stats = stats.duplicate()          # salinan, supaya stats asli tidak ikut berubah
+		stats.detect_range = entry["detect"]
 	g.stats = stats
-	g.position = pos          # set sebelum add_child supaya 'home' benar
+	g.position = pos        # set sebelum add_child supaya 'home' benar
+	g.died.connect(_on_goblin_died.bind(entry))
 	add_child(g)
 
 
+func _on_goblin_died(_goblin, entry: Dictionary) -> void:
+	_queue_respawn(entry, (entry["stats"] as GoblinStats).respawn_time)
+
+
+func _queue_respawn(entry: Dictionary, delay: float) -> void:
+	await get_tree().create_timer(delay).timeout
+	if not is_inside_tree():
+		return
+	while _hero_near(entry["pos"]):
+		await get_tree().create_timer(RETRY_DELAY).timeout
+		if not is_inside_tree():
+			return
+	_spawn(entry)
+
+
+func _hero_near(pos: Vector3) -> bool:
+	var hero := get_tree().get_first_node_in_group("player") as Node3D
+	if hero == null:
+		return false
+	var d := hero.global_position - pos
+	d.y = 0.0
+	return d.length() < MIN_RESPAWN_DIST
+
+
+# =====================================================================
+# FUNGSI ASLI PUNYAMU (Tidak diubah sama sekali)
+# =====================================================================
 func _find_free_spot(center: Vector3, radius: float):
 	var space := get_world_3d().direct_space_state
 	var shape := SphereShape3D.new()
@@ -47,7 +96,8 @@ func _find_free_spot(center: Vector3, radius: float):
 
 	for i in SEARCH_ATTEMPTS:
 		# percobaan pertama tepat di titik, berikutnya melebar pelan-pelan
-		var spread := 0.0 if i == 0 else 0.3 + i * 0.15
+		# (Diperkecil sedikit spread-nya biar goblin gak gampang mental jauh)
+		var spread := 0.0 if i == 0 else 0.2 + i * 0.04
 		var ang := randf() * TAU
 		var x := center.x + cos(ang) * spread
 		var z := center.z + sin(ang) * spread

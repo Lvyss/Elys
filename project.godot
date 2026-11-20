@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SceneTransition="*uid://cmn2olpi3m5uf"
 GameState="*uid://ba5sghryaghyw"
+QuestManager="*uid://dk287einjcrqv"
 
 [display]
 
