@@ -22,6 +22,7 @@ var damage: int = 10
 
 var kills: Dictionary = {}
 var shards_dropped: Dictionary = {}
+
 # ============================================================
 # PENGATURAN LEVEL
 # ============================================================
@@ -59,6 +60,17 @@ func boost_total(boost_id: String) -> int:
 # STATE UI
 # ============================================================
 var ui_open: bool = false   # true saat window status/toko terbuka (hero berhenti)
+
+# ============================================================
+# FLAGS (PENANDA STATE DUNIA / PUZZLE)
+# ============================================================
+var _flags: Dictionary = {}
+
+func get_flag(id: StringName) -> bool:
+	return _flags.get(id, false)
+
+func set_flag(id: StringName, v: bool = true) -> void:
+	_flags[id] = v
 
 # ============================================================
 # READY

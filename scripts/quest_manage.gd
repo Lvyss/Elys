@@ -3,6 +3,11 @@ extends Node
 
 signal quest_changed
 signal quest_completed(index: int)
+signal rune_puzzle_solved
+
+var placed: Array[bool] = [false, false, false]    # pecahan sudah dipasang
+var answered: Array[bool] = [false, false, false]  # pertanyaannya sudah dijawab
+var solved := false
 
 const QUESTS := [
 	{"title": "Jalan Berkabut", "desc": "Goblin hijau berkeliaran di depan gubuk. Hati-hati saat mendekat, mereka akan mengejarmu.",
@@ -28,6 +33,11 @@ var current := 0
 var progress := 0
 var all_done := false
 var started := false
+
+# --- STATE FINISHING ---
+var collecting_runes := false
+var runes_solved := false
+var chest_opened := false
 
 var _ui: Control
 var _tracker: PanelContainer
@@ -61,25 +71,27 @@ func _ready() -> void:
 	_build_toast()
 	_refresh()
 
+	# Hubungkan sinyal dari altar (saat 3 rune selesai dijawab)
+	rune_puzzle_solved.connect(_on_rune_solved)
+
 
 func _process(_delta: float) -> void:
-	# sembunyikan saat status window / toko terbuka
+	# Sembunyikan saat status window / toko terbuka
 	_ui.visible = started and not GameState.ui_open
 
 
 # ---------------- API ----------------
-# Dipanggil saat peta mulai (lihat enemy_spawner._ready)
 func begin() -> void:
 	started = true
 	_refresh()
-	if all_done:
+	if all_done or chest_opened:
 		return
 	var q: Dictionary = QUESTS[current]
 	_show_toast("QUEST BARU" if progress == 0 else "QUEST", q["title"], q["desc"])
 
 
 func report_kill(tier: int) -> void:
-	if all_done:
+	if all_done or chest_opened:
 		return
 	var q: Dictionary = QUESTS[current]
 	if tier != q["tier"]:
@@ -92,7 +104,7 @@ func report_kill(tier: int) -> void:
 
 
 func warn_danger(tier: int) -> void:
-	if all_done or not started:
+	if all_done or not started or chest_opened:
 		return
 	var q: Dictionary = QUESTS[current]
 	if tier <= int(q["tier"]):
@@ -117,24 +129,63 @@ func _complete() -> void:
 	progress = 0
 	if current >= QUESTS.size():
 		all_done = true
+		collecting_runes = true
 		_show_toast("TUGAS PENJAGA SELESAI", "Hutan Aman",
-			"Kumpulkan pecahan rune, lalu bawa ke altar.")
+			"Kumpulkan 3 pecahan rune, lalu bawa ke altar kuno.")
 	else:
 		var n: Dictionary = QUESTS[current]
 		_show_toast("QUEST BARU", n["title"], n["desc"])
 	_refresh()
 
 
+# Dipanggil dari Altar saat ketiga teka-teki rune berhasil dijawab
+func _on_rune_solved() -> void:
+	collecting_runes = false
+	runes_solved = true
+	_refresh()
+
+
+# Dipanggil dari Peti saat peti berhasil dibuka
+func open_chest() -> void:
+	chest_opened = true
+	_refresh()
+
+
 func _refresh() -> void:
 	if _tr_title == null:
 		return
-	if all_done:
-		_tr_title.text = "Tugas Selesai"
-		_tr_desc.text = "Kumpulkan pecahan rune dan bawa ke altar."
-		_tr_obj.text = ""
-		_tr_count.text = ""
+	
+	# PRIORITAS 1: Game Tamat / Peti Kebuka
+	if chest_opened:
+		_tr_title.text = "Petualangan Selesai"
+		_tr_desc.text = "Kau telah mengalahkan Sang Raja Goblin, memecahkan teka-teki Rune Kuno, dan membuka Peti Harta Karun. Hutan kini aman."
+		_tr_obj.text = "Kemenangan!"
+		_tr_count.text = "✔"
 		_tr_bar.max_value = 1
 		_tr_bar.value = 1
+	
+	# PRIORITAS 2: Rune udah beres, tinggal buka peti
+	elif runes_solved:
+		_tr_title.text = "Harta Karun Terkunci"
+		_tr_desc.text = "Cahaya dari altar telah membuka jalan. Bawa Kunci Rune dan buka Peti Kuno!"
+		_tr_obj.text = "Buka Peti"
+		_tr_count.text = "0 / 1"
+		_tr_bar.max_value = 1
+		_tr_bar.value = 0
+	
+	# PRIORITAS 3: Lagi ngumpulin / jawab teka-teki rune
+	elif collecting_runes:
+		_tr_title.text = "Teka-Teki Rune"
+		_tr_desc.text = "Cahaya altar memanggil. Susun pecahan rune dan jawab teka-tekinya."
+		_tr_obj.text = "Kumpulkan Pecahan Rune"
+		var total_runes = 0
+		for p in placed:
+			if p: total_runes += 1
+		_tr_count.text = "%d / 3" % total_runes
+		_tr_bar.max_value = 3
+		_tr_bar.value = total_runes
+	
+	# PRIORITAS 4: Misi tembak-tembakan goblin
 	else:
 		var q: Dictionary = QUESTS[current]
 		_tr_title.text = "%d. %s" % [current + 1, q["title"]]
@@ -143,6 +194,7 @@ func _refresh() -> void:
 		_tr_count.text = "%d / %d" % [progress, q["need"]]
 		_tr_bar.max_value = q["need"]
 		_tr_bar.value = progress
+		
 	quest_changed.emit()
 
 
@@ -165,7 +217,6 @@ func _label(size: int, color: Color, wrap := false) -> Label:
 	return l
 
 
-# Panel bergaya status window: header krem, badan cokelat gelap, garis emas
 func _make_panel(width: float, vpad := 10, sep := 6) -> Dictionary:
 	var root := PanelContainer.new()
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -211,7 +262,6 @@ func _build_tracker() -> void:
 	var p := _make_panel(TRACKER_WIDTH)
 	_tracker = p["root"]
 	_ui.add_child(_tracker)
-	# pojok kanan atas
 	_tracker.anchor_left = 1.0
 	_tracker.anchor_right = 1.0
 	_tracker.offset_left = -(TRACKER_WIDTH + 16.0)
@@ -248,7 +298,7 @@ func _build_tracker() -> void:
 func _build_toast() -> void:
 	var p := _make_panel(TOAST_WIDTH, 3, 2)
 	_toast = p["root"]
-	_toast.size_flags_vertical = Control.SIZE_SHRINK_BEGIN # <--- TAMBAHKAN INI
+	_toast.size_flags_vertical = Control.SIZE_SHRINK_BEGIN 
 	_toast.visible = false
 	_ui.add_child(_toast)
 
@@ -302,3 +352,17 @@ func _run_queue() -> void:
 		await tout.finished
 		_toast.visible = false
 	_busy = false
+
+
+# ---------------- UI: TOMBOL STYLE ----------------
+func _style_btn(b: Button) -> void:
+	b.add_theme_stylebox_override("normal", _box(Color("#352b26"), BROWN_MID, 2, 5))
+	b.add_theme_stylebox_override("hover", _box(Color("#40342c"), GOLD, 2, 5))
+	b.add_theme_stylebox_override("pressed", _box(Color(0.83, 0.69, 0.22, 0.25), GOLD, 2, 5))
+	b.add_theme_stylebox_override("disabled", _box(Color("#1a1614"), Color("#332a25"), 1, 5))
+	b.add_theme_color_override("font_color", TEXT_LIGHT)
+	b.add_theme_color_override("font_hover_color", GOLD)
+	b.add_theme_color_override("font_pressed_color", GOLD)
+	b.add_theme_color_override("font_disabled_color", Color("#5a5048"))
+	b.add_theme_font_size_override("font_size", 15)
+	b.focus_mode = Control.FOCUS_NONE

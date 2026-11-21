@@ -10,6 +10,7 @@ func _run() -> void:
 	var P := ItemData.Type.CONSUMABLE
 	var Q := ItemData.Type.QUEST
 	var B := ItemData.Type.BOOSTER
+	
 	# [id, nama, deskripsi, tipe, harga jual, heal, boost_id, file ikon ("" = sama dengan id)]
 	var items := [
 		["taring_goblin", "Taring Goblin", "Taring tajam milik Goblin Prajurit. Jual atau tukar jadi Ramuan Taring (3 buah).", C, 12, 0, "", ""],
@@ -23,7 +24,11 @@ func _run() -> void:
 		["pecahan_rune_3", "Pecahan Rune III", "Pecahan ketiga, bersimbol ◒.", Q, 0, 0, "", ""],
 		["asah_besi", "Asah Besi", "Tempa bilah senjatamu. Pakai untuk +5 Damage permanen (maks 2 kali).", B, 0, 0, "asah_besi", "booster_asah_besi"],
 		["berkat_kabut", "Berkat Kabut", "Kabut menyelimuti tubuhmu. Pakai untuk +30 Max HP permanen (maks 3 kali).", B, 0, 0, "berkat_kabut", "booster_berkat_kabut"],
+		
+		# --- INI DIA ITEM KUNCI YANG HILANG ---
+		["kunci_peti", "Kunci Peti Kuno", "Kunci berukir rune. Membuka Peti Kuno di area altar.", Q, 0, 0, "", ""],
 	]
+	
 	for d in items:
 		var it := ItemData.new()
 		it.id = d[0]
@@ -33,12 +38,16 @@ func _run() -> void:
 		it.sell_price = d[4]
 		it.heal_amount = d[5]
 		it.boost_id = d[6]
+		
 		var icon_file: String = d[7] if d[7] != "" else d[0]
 		var path: String = ICON_DIR + icon_file + ".png"
+		
 		if ResourceLoader.exists(path):
 			it.icon = load(path)
 		else:
 			push_warning("Ikon tidak ada: " + path)
+			
 		ResourceSaver.save(it, OUT_DIR + d[0] + ".tres")
+		
 	EditorInterface.get_resource_filesystem().scan()
-	print("Selesai: ", items.size(), " item dibuat")
+	print("Selesai: ", items.size(), " item berhasil dibuat ulang, termasuk Kunci Peti!")

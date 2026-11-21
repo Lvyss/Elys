@@ -49,19 +49,23 @@ var attack_direction := Vector3.FORWARD
 var action_dir_name := ""   # arah animasi yang dikunci saat attack/dash/death
 var _just_captured := false # klik pertama untuk menangkap mouse tidak boleh jadi attack
 
-# --- VARIABEL BARU UNTUK STUN ---
+# --- STUN ---
 var is_stunned := false
 var stun_timer := 0.0
+
+# --- MENU KEMATIAN ---
+var _death_menu_shown := false
+
 
 func _ready() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 	floor_snap_length = 0.5
 	add_to_group("player")
-	
+
 	# Inisialisasi HP dari GameState
 	GameState.hp_current = GameState.hp_max
 	GameState.hp_changed.emit(GameState.hp_current, GameState.hp_max)
-	
+
 	sprite.billboard = BaseMaterial3D.BILLBOARD_FIXED_Y
 	sprite.animation_finished.connect(_on_animation_finished)
 	shadow_sprite.sprite_frames = sprite.sprite_frames
@@ -79,6 +83,10 @@ func _ready() -> void:
 
 # ---------------- INPUT NON-GERAK ----------------
 func _unhandled_input(event: InputEvent) -> void:
+	# Saat mati, jangan terima pause / potion / tangkap mouse
+	if is_dead:
+		return
+
 	if event.is_action_pressed("pause"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		pause_requested.emit()
@@ -88,7 +96,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not GameState.use_item(&"ramuan_taring"):
 			GameState.use_item(&"ramuan_hijau")
 		return
-		
+
 	# Klik saat kursor bebas = tangkap kursor lagi (wajib di versi web)
 	if event is InputEventMouseButton and event.pressed \
 			and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -110,24 +118,24 @@ func _physics_process(delta: float) -> void:
 		velocity.z = 0.0
 		move_and_slide()
 		return
-		
+
 	# --- JIKA PLAYER TERSTUN ---
 	if is_stunned:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()
-		
-		# Efek getar / kelap-kelip tanda stun
+
+		# Efek kelap-kelip tanda stun
 		sprite.modulate = Color(0.5, 0.5, 1.0) if int(stun_timer * 15.0) % 2 == 0 else Color.WHITE
-		return # Hentikan semua kontrol di sini (gak bisa gerak/loncat/nyerang)
-	
+		return
+
 	if GameState.ui_open:
 		velocity.x = 0.0
 		velocity.z = 0.0
 		move_and_slide()
 		_update_animation(Vector2.ZERO, false)
 		return
-		
+
 	# --- MULAI DASH (klik kanan / Q + arah WASD) ---
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0.0 \
 			and not anim_lock and not is_dashing:
@@ -190,7 +198,7 @@ func _tick_timers(delta: float) -> void:
 		stun_timer -= delta
 		if stun_timer <= 0.0:
 			is_stunned = false
-			sprite.modulate = Color.WHITE # Balikin warna normal
+			sprite.modulate = Color.WHITE
 			print("Player bangun dari stun!")
 
 	# Kebal + kedip setelah kena damage
@@ -200,11 +208,13 @@ func _tick_timers(delta: float) -> void:
 	elif sprite.modulate.a != 1.0 and not is_stunned:
 		sprite.modulate.a = 1.0
 
+
 func get_dash_ratio() -> float:
 	if is_dashing:
 		return 1.0
 	return clampf(dash_cooldown_timer / DASH_COOLDOWN, 0.0, 1.0)
-	
+
+
 func _apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y = maxf(velocity.y - GRAVITY * delta, -MAX_FALL_SPEED)
@@ -214,8 +224,9 @@ func _apply_gravity(delta: float) -> void:
 
 # ---------------- FUNGSI STUN DARI BOSS ----------------
 func stun(duration: float) -> void:
-	if is_dead or is_stunned: return
-	
+	if is_dead or is_stunned:
+		return
+
 	is_stunned = true
 	stun_timer = duration
 	is_dashing = false
@@ -245,6 +256,7 @@ func _dir_name() -> String:
 	if absf(facing_local.x) > absf(facing_local.y):
 		return "right" if facing_local.x > 0.0 else "left"
 	return "down" if facing_local.y > 0.0 else "up"
+
 
 # ---------------- DASH ----------------
 func _start_dash(input_dir: Vector2) -> void:
@@ -281,54 +293,51 @@ func _start_attack() -> void:
 	get_tree().create_timer(ATTACK_HIT_DELAY).timeout.connect(_do_hit)
 
 
-# --- LOGIKA HIT (DAMAGE, GETAR, HIT STOP) ---
+# --- LOGIKA HIT (DAMAGE, GETAR) ---
 func _do_hit() -> void:
 	if is_dead:
 		return
-		
+
 	var hit_something := false
-	
+
 	for e in get_tree().get_nodes_in_group("enemy"):
 		if not (e is Node3D):
 			continue
 		var to: Vector3 = e.global_position - global_position
 		to.y = 0.0
 		var dist := to.length()
-		
+
 		if dist <= ATTACK_RANGE and (dist < 0.01 or to.normalized().dot(attack_direction) > 0.3):
 			if e.has_method("take_damage"):
 				e.take_damage(GameState.damage)
 				_spawn_damage_number(e, GameState.damage)
 				hit_something = true
-				
-	# --- EFEK NGE-HIT MUSUH ---
+
 	# --- EFEK NGE-HIT MUSUH ---
 	if hit_something:
-		# 1. Getar Kamera (Tajam & Cepat)
 		var cam = get_viewport().get_camera_3d()
 		if cam and cam.has_method("shake"):
-			cam.shake(0.06, 0.15, 80.0) 
-			
+			cam.shake(0.06, 0.15, 80.0)
 
 
 func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 	var dmg_num = DAMAGE_NUMBER_SCENE.instantiate()
 	dmg_num.text = str(damage_amount)
-	
+
 	enemy_node.add_child(dmg_num)
-	
+
 	var enemy_height := 1.0
 	for child in enemy_node.get_children():
 		if child is MeshInstance3D:
 			enemy_height = child.get_aabb().size.y
 			break
-			
+
 	var random_side := 1.0 if randf() > 0.5 else -1.0
 	var pos_x = (enemy_height * 0.2) * random_side
 	var pos_y = (enemy_height * 0.2) - (enemy_height * 0.5)
-	
+
 	dmg_num.position = Vector3(pos_x, pos_y, 0)
-	
+
 	var enemy_scale := enemy_node.global_transform.basis.get_scale()
 	dmg_num.scale = Vector3.ONE / enemy_scale
 
@@ -337,17 +346,16 @@ func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 func take_damage(amount: int) -> void:
 	if is_dead or invuln_timer > 0.0:
 		return
-		
+
 	invuln_timer = INVULN_TIME
-	
+
 	GameState.take_damage(amount)
-	
+
 	# --- EFEK KENA HIT MUSUH ---
-	# Getar Kamera (Lebih parah, agak lambat, goyang kasar)
 	var cam = get_viewport().get_camera_3d()
 	if cam and cam.has_method("shake"):
 		cam.shake(0.2, 0.3, 40.0) # (Kekuatan, Durasi, Kecepatan)
-	
+
 	if GameState.hp_current <= 0:
 		_die()
 
@@ -366,6 +374,120 @@ func _die() -> void:
 	if sprite.sprite_frames.has_animation(anim):
 		sprite.play(anim)
 	died.emit()
+	_show_death_menu()
+
+
+# ---------------- MENU KEMATIAN ----------------
+func _show_death_menu() -> void:
+	if _death_menu_shown:
+		return
+	_death_menu_shown = true
+
+	# beri waktu animasi mati main dulu
+	await get_tree().create_timer(1.2).timeout
+
+	GameState.ui_open = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	var layer := CanvasLayer.new()
+	layer.layer = 40
+	add_child(layer)
+
+	# latar gelap kemerahan
+	var dim := ColorRect.new()
+	dim.color = Color(0.2, 0.0, 0.0, 0.0)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(dim)
+	create_tween().tween_property(dim, "color:a", 0.75, 1.0)
+
+	var center := CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(center)
+
+	# panel sama persis dengan popup quest
+	var p: Dictionary = QuestManager._make_panel(420.0, 20, 12)
+	var panel: PanelContainer = p["root"]
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	center.add_child(panel)
+
+	(p["header"] as Label).text = "PETUALANGAN TERHENTI"
+	var body: VBoxContainer = p["body"]
+
+	var title := QuestManager._label(28, Color("#e0675a"))
+	title.text = "KAMU GUGUR"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	var desc := QuestManager._label(13, QuestManager.TEXT_LIGHT, true)
+	desc.text = "Kabut menelan langkahmu. Tapi hutan ini belum selesai denganmu."
+	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	var line := ColorRect.new()
+	line.custom_minimum_size.y = 2
+	line.color = QuestManager.BROWN_MID
+
+	var btn_retry := Button.new()
+	btn_retry.text = "Ulangi Petualangan"
+	btn_retry.custom_minimum_size.y = 42
+	QuestManager._style_btn(btn_retry)
+	btn_retry.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	btn_retry.pressed.connect(_on_retry_pressed)
+
+	var btn_exit := Button.new()
+	btn_exit.text = "Keluar"
+	btn_exit.custom_minimum_size.y = 42
+	QuestManager._style_btn(btn_exit)
+	btn_exit.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	btn_exit.pressed.connect(_on_exit_pressed)
+
+	body.add_child(title)
+	body.add_child(desc)
+	body.add_child(line)
+	body.add_child(btn_retry)
+	body.add_child(btn_exit)
+
+	# animasi muncul
+	panel.modulate.a = 0.0
+	panel.scale = Vector2(0.6, 0.6)
+	await get_tree().process_frame
+	panel.pivot_offset = panel.size * 0.5
+	var tw := create_tween().set_parallel(true)
+	tw.tween_property(panel, "scale", Vector2.ONE, 0.5)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(panel, "modulate:a", 1.0, 0.4)
+
+
+func _on_retry_pressed() -> void:
+	_reset_run_state()
+	GameState.ui_open = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().reload_current_scene()
+
+
+func _on_exit_pressed() -> void:
+	GameState.ui_open = false
+	get_tree().quit()
+
+
+# Autoload tidak ikut ter-reset saat scene dimuat ulang, jadi dibersihkan manual
+func _reset_run_state() -> void:
+	var q := QuestManager
+	q.current = 0
+	q.progress = 0
+	q.all_done = false
+	q.started = false
+	q.collecting_runes = false
+	q.runes_solved = false
+	q.chest_opened = false
+	q.solved = false
+	q.placed = [false, false, false]
+	q.answered = [false, false, false]
+	q._queue.clear()
+	q._refresh()
+
+	# kalau GameState kamu punya fungsi reset (inventori, flag, koin, dll), dipanggil di sini
+	if GameState.has_method("reset_run"):
+		GameState.reset_run()
 
 
 # ---------------- ANIMASI ----------------
@@ -414,6 +536,7 @@ func _on_animation_finished() -> void:
 		anim_lock = false
 		is_attacking = false
 		sprite.no_depth_test = false
+
 
 func _process(_delta: float) -> void:
 	if shadow_sprite.animation != sprite.animation:
