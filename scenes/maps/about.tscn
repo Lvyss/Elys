@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bya2mybp8ejol"]
+
+[ext_resource type="Script" uid="uid://cx1ygg3gtnn7a" path="res://scripts/about.gd" id="1_dpn3y"]
+[ext_resource type="Texture2D" uid="uid://bjrvhdljncj1e" path="res://assets/Screen/Bg Abt.jpeg" id="1_hau1y"]
+[ext_resource type="Texture2D" uid="uid://bv0qbmvo41vrc" path="res://assets/Screen/How To Play.png" id="2_dpn3y"]
+[ext_resource type="Texture2D" uid="uid://cs88j3vp1lfof" path="res://assets/Screen/Credit.png" id="3_qqufc"]
+[ext_resource type="Texture2D" uid="uid://bb3rkq23c5twl" path="res://assets/Screen/Button Back.png" id="4_axd6d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_htemk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_14cdr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4lci"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj0hq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugcl7"]
+
+[node name="About" type="Control" unique_id=1230869062]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_dpn3y")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2125115834]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 28.800001
+anchor_bottom = 16.2
+offset_left = -5.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hau1y")
+expand_mode = 1
+
+[node name="HowToPlay" type="Button" parent="." unique_id=236930478]
+layout_mode = 0
+offset_left = 219.0
+offset_top = 60.0
+offset_right = 664.0
+offset_bottom = 708.0
+scale = Vector2(0.8, 0.8)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q4lci")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+icon = ExtResource("2_dpn3y")
+
+[node name="Credit" type="Button" parent="." unique_id=2094147789]
+layout_mode = 0
+offset_left = 644.0
+offset_top = 55.0
+offset_right = 1089.0
+offset_bottom = 703.0
+scale = Vector2(0.8, 0.8)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q4lci")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+icon = ExtResource("3_qqufc")
+
+[node name="Back" type="Button" parent="." unique_id=1302428733]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -66.0
+offset_right = 309.0
+offset_bottom = 485.0
+scale = Vector2(0.6, 0.6)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q4lci")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+icon = ExtResource("4_axd6d")

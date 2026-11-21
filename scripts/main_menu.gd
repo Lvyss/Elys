@@ -1,16 +1,17 @@
+
 extends Control
 
 @onready var start_button: Button = $Start
 @onready var about_button: Button = $About
 @onready var quit_button: Button = $Quit
-@onready var bgm: AudioStreamPlayer = $BGM # Tambahan untuk lagu
+@onready var bgm: AudioStreamPlayer = $BGM
 
 const HOVER_COLOR := Color(1.25, 1.25, 1.25)
 const PULSE_FACTOR := 0.94
 const PRESS_FACTOR := 0.88
 const PULSE_TIME := 0.3
-
 const HIT_MARGIN := Vector2(0.13, 0.27)
+const ABOUT_SCENE := "res://scenes/maps/about.tscn"
 
 var _buttons: Array[Button] = []
 var _scale_tweens: Dictionary = {}
@@ -26,6 +27,7 @@ func _ready() -> void:
 	quit_button.pressed.connect(_on_quit_pressed)
 
 	_buttons = [start_button, about_button, quit_button]
+
 	for btn in _buttons:
 		_base_scale[btn] = btn.scale
 
@@ -34,13 +36,13 @@ func _ready() -> void:
 
 		btn.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		btn.focus_mode = Control.FOCUS_NONE
-		
-	# Pastikan lagu berputar (jaga-jaga jika Autoplay tidak aktif)
+
+	# Memastikan musik berputar
 	if not bgm.playing:
 		bgm.play()
 
 
-# --- DETEKSI HOVER (hitbox kecil) ---
+# --- DETEKSI HOVER ---
 
 func _is_over(btn: Button) -> bool:
 	var p := btn.get_local_mouse_position()
@@ -51,7 +53,9 @@ func _is_over(btn: Button) -> bool:
 func _process(_delta: float) -> void:
 	if _locked:
 		return
+
 	var now: Button = null
+
 	for btn in _buttons:
 		if _is_over(btn):
 			now = btn
@@ -59,18 +63,24 @@ func _process(_delta: float) -> void:
 
 	if now == _hovered:
 		return
+
 	if _hovered:
 		_on_button_unhover(_hovered)
+
 	if now:
 		_on_button_hover(now)
+
 	_hovered = now
+
 	Input.set_default_cursor_shape(
-		Input.CURSOR_POINTING_HAND if now else Input.CURSOR_ARROW)
+		Input.CURSOR_POINTING_HAND if now else Input.CURSOR_ARROW
+	)
 
 
 func _input(event: InputEvent) -> void:
 	if _locked or _hovered == null:
 		return
+
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		_hovered.pressed.emit()
 		get_viewport().set_input_as_handled()
@@ -81,6 +91,7 @@ func _input(event: InputEvent) -> void:
 func _new_tween(store: Dictionary, btn: Control) -> Tween:
 	if store.has(btn) and store[btn] and store[btn].is_valid():
 		store[btn].kill()
+
 	var t := create_tween()
 	store[btn] = t
 	return t
@@ -96,8 +107,14 @@ func _on_button_hover(btn: Button) -> void:
 
 	var s := _new_tween(_scale_tweens, btn)
 	s.set_loops()
-	s.tween_property(btn, "scale", base * PULSE_FACTOR, PULSE_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	s.tween_property(btn, "scale", base, PULSE_TIME).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	s.tween_property(
+		btn, "scale", base * PULSE_FACTOR, PULSE_TIME
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	s.tween_property(
+		btn, "scale", base, PULSE_TIME
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 
 func _on_button_unhover(btn: Button) -> void:
@@ -105,7 +122,9 @@ func _on_button_unhover(btn: Button) -> void:
 	c.tween_property(btn, "modulate", Color.WHITE, 0.12)
 
 	var s := _new_tween(_scale_tweens, btn)
-	s.tween_property(btn, "scale", _base_scale[btn], 0.12).set_trans(Tween.TRANS_SINE)
+	s.tween_property(
+		btn, "scale", _base_scale[btn], 0.12
+	).set_trans(Tween.TRANS_SINE)
 
 
 # --- EFEK KLIK ---
@@ -118,16 +137,24 @@ func _play_click(btn: Button) -> Tween:
 	c.tween_property(btn, "modulate", HOVER_COLOR, 0.15)
 
 	var s := _new_tween(_scale_tweens, btn)
-	s.tween_property(btn, "scale", base * PRESS_FACTOR, 0.06).set_trans(Tween.TRANS_SINE)
-	s.tween_property(btn, "scale", base, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	s.tween_property(
+		btn, "scale", base * PRESS_FACTOR, 0.06
+	).set_trans(Tween.TRANS_SINE)
+
+	s.tween_property(
+		btn, "scale", base, 0.15
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
 	return s
 
 
-# --- FUNGSI FADE OUT MUSIK ---
+# --- FADE OUT MUSIK ---
+
 func _fade_out_music(duration: float = 1.0) -> void:
 	var tween = create_tween()
-	# Memudarkan volume dari volume awal ke -80db (sunyi)
 	tween.tween_property(bgm, "volume_db", -80.0, duration)
+
 	await tween.finished
 	bgm.stop()
 
@@ -135,25 +162,40 @@ func _fade_out_music(duration: float = 1.0) -> void:
 # --- AKSI TOMBOL ---
 
 func _on_start_pressed() -> void:
+	if _locked:
+		return
+
 	_locked = true
 	_play_click(start_button)
-	
-	# 1. Mulai pudarkan lagu selama 5 detik (TANPA await)
+
+	# Fade out musik selama 5 detik
 	var music_tween = create_tween()
 	music_tween.tween_property(bgm, "volume_db", -80.0, 5.0)
-	
-	# 2. Langsung panggil pindah scene!
-	# Layar akan mulai menghitam (0.8 detik), lalu pindah.
-	# Lagu akan terus memudar di background selama proses ini.
-	await SceneTransition.change_scene("res://scenes/maps/loading_screen2.tscn")
+
+	# Pindah ke loading screen
+	await SceneTransition.change_scene(
+        "res://scenes/maps/loading_screen2.tscn"
+	)
+
 
 func _on_about_pressed() -> void:
+	if _locked:
+		return
+
+	_locked = true
 	_play_click(about_button)
-	print("About ditekan!")
+
+	# Pindah ke About Scene menggunakan transisi
+	await SceneTransition.change_scene(ABOUT_SCENE)
 
 
 func _on_quit_pressed() -> void:
+	if _locked:
+		return
+
 	_locked = true
 	_play_click(quit_button)
-	await _fade_out_music(5.0) # Musik mati mulus sebelum game keluar
+
+	await _fade_out_music(5.0)
+
 	get_tree().quit()
