@@ -1,7 +1,9 @@
 [gd_resource type="Resource" script_class="GoblinStats" format=3 uid="uid://bvktpfnwoqgfw"]
 
 [ext_resource type="Script" uid="uid://dwd0xge4beaxe" path="res://scripts/goblin_stats.gd" id="1_1kh7m"]
+[ext_resource type="AudioStream" uid="uid://dfimrbeh71pwh" path="res://assets/Sound/gh-died.mp3" id="1_byd8j"]
 [ext_resource type="SpriteFrames" uid="uid://bidvj8aflo4jf" path="res://scenes/actors/goblin_frames1.tres" id="2_d08yu"]
+[ext_resource type="AudioStream" uid="uid://dr5io8vbj4d2v" path="res://assets/Sound/gh-hurt.mp3" id="2_t3srx"]
 
 [resource]
 script = ExtResource("1_1kh7m")
@@ -14,4 +16,6 @@ shard_id = &"pecahan_rune_1"
 shard_chance = 0.15
 shard_pity = 5
 respawn_time = 25.0
+hurt_sound = ExtResource("2_t3srx")
+death_sound = ExtResource("1_byd8j")
 metadata/_custom_type_script = "uid://dwd0xge4beaxe"

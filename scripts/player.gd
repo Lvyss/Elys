@@ -1,4 +1,4 @@
-# player.gd
+
 extends CharacterBody3D
 
 signal died
@@ -32,6 +32,12 @@ const DAMAGE_NUMBER_SCENE = preload("res://scenes/DamageNumber.tscn")
 
 @onready var sprite: AnimatedSprite3D = $Sprite
 @onready var shadow_sprite: AnimatedSprite3D = $ShadowSprite
+
+# --- SOUND EFFECTS ---
+@onready var walk_sfx: AudioStreamPlayer = $WalkSFX
+@onready var attack_sfx: AudioStreamPlayer = $AttackSFX
+@onready var hurt_sfx: AudioStreamPlayer = $HurtSFX
+@onready var death_sfx: AudioStreamPlayer = $DeathSFX
 
 var invuln_timer := 0.0
 
@@ -284,12 +290,17 @@ func _start_attack() -> void:
 	if not sprite.sprite_frames.has_animation(anim):
 		push_warning("Animasi '%s' tidak ada di SpriteFrames" % anim)
 		return
+
 	is_attacking = true
 	anim_lock = true
 	attack_cooldown_timer = ATTACK_COOLDOWN
 	attack_direction = _screen_to_world(facing_local).normalized()
 	sprite.no_depth_test = true
 	sprite.play(anim)
+
+	# SOUND: ayunan pedang
+	attack_sfx.play()
+
 	get_tree().create_timer(ATTACK_HIT_DELAY).timeout.connect(_do_hit)
 
 
@@ -356,8 +367,11 @@ func take_damage(amount: int) -> void:
 	if cam and cam.has_method("shake"):
 		cam.shake(0.2, 0.3, 40.0) # (Kekuatan, Durasi, Kecepatan)
 
+	# SOUND: damage atau kematian
 	if GameState.hp_current <= 0:
 		_die()
+	else:
+		hurt_sfx.play()
 
 
 func _die() -> void:
@@ -365,14 +379,26 @@ func _die() -> void:
 	is_dashing = false
 	is_attacking = false
 	anim_lock = false
+
 	velocity.x = 0.0
 	velocity.z = 0.0
+
+	# Hentikan sound yang tidak boleh berlanjut
+	walk_sfx.stop()
+	attack_sfx.stop()
+	hurt_sfx.stop()
+
+	# SOUND: player mati
+	death_sfx.play()
+
 	sprite.modulate.a = 1.0
 	sprite.no_depth_test = false
 	action_dir_name = _dir_name()
+
 	var anim := "death_" + action_dir_name
 	if sprite.sprite_frames.has_animation(anim):
 		sprite.play(anim)
+
 	died.emit()
 	_show_death_menu()
 
@@ -515,6 +541,7 @@ func _update_animation(input: Vector2, is_running: bool) -> void:
 func _play(anim: String, restart_if_stopped := true) -> void:
 	if not sprite.sprite_frames.has_animation(anim):
 		return
+
 	var old := String(sprite.animation)
 	if old == anim:
 		if restart_if_stopped and not sprite.is_playing():
@@ -526,6 +553,7 @@ func _play(anim: String, restart_if_stopped := true) -> void:
 	var same_kind := old.get_slice("_", 0) == anim.get_slice("_", 0) \
 			and sprite.sprite_frames.has_animation(old) \
 			and sprite.sprite_frames.get_frame_count(old) == sprite.sprite_frames.get_frame_count(anim)
+
 	sprite.play(anim)
 	if same_kind:
 		sprite.set_frame_and_progress(f, p)
@@ -538,9 +566,31 @@ func _on_animation_finished() -> void:
 		sprite.no_depth_test = false
 
 
+# ---------------- SOUND EFFECTS ----------------
+func _update_walk_sound() -> void:
+	var is_moving := Vector2(velocity.x, velocity.z).length() > 0.1
+
+	var can_play_walk := is_moving \
+			and is_on_floor() \
+			and not is_dead \
+			and not is_stunned \
+			and not is_dashing \
+			and not anim_lock \
+			and not GameState.ui_open
+
+	if can_play_walk:
+		if not walk_sfx.playing:
+			walk_sfx.play()
+	else:
+		if walk_sfx.playing:
+			walk_sfx.stop()
+
+
 func _process(_delta: float) -> void:
 	if shadow_sprite.animation != sprite.animation:
 		shadow_sprite.animation = sprite.animation
 	shadow_sprite.frame = sprite.frame
 	shadow_sprite.offset = sprite.offset
 	shadow_sprite.flip_h = sprite.flip_h
+
+	_update_walk_sound()

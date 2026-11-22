@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d10xh12w8m5pn"
+path="res://.godot/imported/goblin death.mp3-52da4c9f49fe2ac1be7cc390ad997f68.mp3str"
+
+[deps]
+
+source_file="res://assets/Sound/goblin death.mp3"
+dest_files=["res://.godot/imported/goblin death.mp3-52da4c9f49fe2ac1be7cc390ad997f68.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

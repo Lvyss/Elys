@@ -1,3 +1,4 @@
+
 extends Node3D
 ## Pasang di node Altar. Stone1, Stone2, Stone3 harus anak langsung.
 
@@ -5,8 +6,8 @@ const SHARDS: Array[StringName] = [&"pecahan_rune_1", &"pecahan_rune_2", &"pecah
 const RUNE_NAMES := ["I", "II", "III"]
 const INTERACT_RANGE := 3.5
 const WRONG_DAMAGE := 100
-const DIM_GLOW := 0.9      # terpasang, belum dijawab
-const FULL_GLOW := 1.7     # sudah dijawab
+const DIM_GLOW := 0.9
+const FULL_GLOW := 1.7
 
 # Warna tiap batu: cyan, emas, ungu
 const GLOW_COLORS: Array[Color] = [
@@ -76,6 +77,11 @@ var _btns: Array[Button] = []
 var _btn_hint: Button
 var _shader: Shader
 
+# ---------------- SOUND EFFECTS 3D ----------------
+@onready var correct_sfx: AudioStreamPlayer3D = $CorrectSFX
+@onready var wrong_sfx: AudioStreamPlayer3D = $WrongSFX
+@onready var rune_sfx: AudioStreamPlayer3D = $RuneSFX
+
 
 func _ready() -> void:
 	_shader = Shader.new()
@@ -86,10 +92,11 @@ func _ready() -> void:
 		if s == null:
 			push_error("Altar: Stone%d tidak ditemukan" % (i + 1))
 			return
+
 		_stones.append(s)
 		_center += s.global_position
 
-		# lampu dibuat mati (energi 0), jadi altar polos tanpa efek
+		# Lampu dibuat mati (energi 0), jadi altar polos tanpa efek.
 		var l := OmniLight3D.new()
 		l.light_color = GLOW_COLORS[i]
 		l.omni_range = 3.5
@@ -101,6 +108,11 @@ func _ready() -> void:
 
 	_center /= 3.0
 
+	# Tempatkan sumber suara di tengah altar.
+	correct_sfx.position = Vector3.ZERO
+	wrong_sfx.position = Vector3.ZERO
+	rune_sfx.position = Vector3.ZERO
+
 	_prompt = Label3D.new()
 	_prompt.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	_prompt.no_depth_test = true
@@ -110,7 +122,7 @@ func _ready() -> void:
 	add_child(_prompt)
 	_prompt.global_position = _center + Vector3(0, 2.4, 0)
 
-	# pulihkan keadaan kalau scene dimuat ulang
+	# Pulihkan keadaan kalau scene dimuat ulang.
 	for i in 3:
 		if QuestManager.placed[i]:
 			_set_glow(FULL_GLOW if QuestManager.answered[i] else DIM_GLOW, i)
@@ -119,25 +131,32 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _stones.is_empty():
 		return
+
 	if _hero == null or not is_instance_valid(_hero):
 		_hero = get_tree().get_first_node_in_group("player") as Node3D
+
 	_near = false
+
 	if _hero:
 		var d := _hero.global_position - _center
 		d.y = 0.0
 		_near = d.length() < INTERACT_RANGE
 
 	_prompt.visible = _near and not GameState.ui_open and not QuestManager.solved and not _busy
+
 	if _prompt.visible:
 		_prompt.text = _prompt_text()
 
 
 func _prompt_text() -> String:
 	var p := _pending()
+
 	if p >= 0:
 		return "E: Baca teka-teki Rune %s" % RUNE_NAMES[p]
+
 	if _carry_count() > 0:
 		return "E: Letakkan pecahan rune"
+
 	return "Rune terpasang %d/3" % _placed_count()
 
 
@@ -176,24 +195,27 @@ func _input(event: InputEvent) -> void:
 		if event.keycode == KEY_F1:
 			print("CHEAT: Dapet Kunci!")
 			GameState.add_item(&"kunci_peti", 1)
+
 		elif event.keycode == KEY_F2:
 			print("CHEAT: Paksa Peti Kebuka!")
-			# Ganti "Peti" dengan nama node petimu di scene (misal "Sketchfab_Scene")
-			var peti = get_tree().current_scene.get_node_or_null("Peti") 
+			var peti = get_tree().current_scene.get_node_or_null("Peti")
 			if peti and peti.has_method("_try_open"):
 				peti._try_open()
-	# --------------------------------
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("interact"):
 		return
+
 	if not _near or GameState.ui_open or QuestManager.solved or _busy:
 		return
+
 	var p := _pending()
+
 	if p >= 0:
 		get_viewport().set_input_as_handled()
 		_open_puzzle(p)
+
 	elif _carry_count() > 0:
 		get_viewport().set_input_as_handled()
 		_place_next()
@@ -207,7 +229,9 @@ func _place_next() -> void:
 			GameState.remove_item(SHARDS[i])
 			QuestManager.placed[i] = true
 			_light_up(i, 3.2, DIM_GLOW)
+
 			await get_tree().create_timer(1.0).timeout
+
 			_busy = false
 			_open_puzzle(i)
 			return
@@ -221,8 +245,10 @@ func _ensure_mat(i: int) -> ShaderMaterial:
 		m.set_shader_parameter("glow_color", GLOW_COLORS[i])
 		m.set_shader_parameter("intensity", 0.0)
 		_mats[i] = m
+
 		for mesh in _stones[i].find_children("*", "MeshInstance3D", true, false):
 			(mesh as MeshInstance3D).material_overlay = m
+
 	return _mats[i]
 
 
@@ -240,15 +266,19 @@ func _light_up(i: int, peak: float, rest: float) -> void:
 # ---------------- POPUP ----------------
 func _open_puzzle(i: int) -> void:
 	_cur = i
+
 	if _layer == null:
 		_build_ui()
+
 	if _orders[i].is_empty():
 		_orders[i] = [0, 1, 2, 3]
 		_orders[i].shuffle()
+
 	_fill_ui()
 	_layer.visible = true
 	GameState.ui_open = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 	await get_tree().process_frame
 	_panel.pivot_offset = _panel.size * 0.5
 
@@ -256,6 +286,7 @@ func _open_puzzle(i: int) -> void:
 func _close() -> void:
 	if _layer:
 		_layer.visible = false
+
 	GameState.ui_open = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -280,6 +311,7 @@ func _build_ui() -> void:
 	_panel = p["root"]
 	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	center.add_child(_panel)
+
 	_hdr = p["header"]
 	var body: VBoxContainer = p["body"]
 
@@ -296,7 +328,7 @@ func _build_ui() -> void:
 	_lbl_tanya = QuestManager._label(16, QuestManager.GOLD, true)
 	body.add_child(_lbl_tanya)
 
-	# ---- kotak info damage (senada tema, ada aksen merah lembut) ----
+	# Kotak info damage.
 	_warn_panel = PanelContainer.new()
 	var ws := StyleBoxFlat.new()
 	ws.bg_color = Color(0.5, 0.12, 0.10, 0.22)
@@ -308,6 +340,7 @@ func _build_ui() -> void:
 	ws.content_margin_top = 6
 	ws.content_margin_bottom = 6
 	_warn_panel.add_theme_stylebox_override("panel", ws)
+
 	_lbl_warn = QuestManager._label(13, Color("#ffb3a7"))
 	_warn_panel.add_child(_lbl_warn)
 	body.add_child(_warn_panel)
@@ -322,17 +355,21 @@ func _build_ui() -> void:
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 10)
+
 	_btn_hint = Button.new()
 	_btn_hint.custom_minimum_size.y = 34
 	_style_btn(_btn_hint, true)
 	_btn_hint.pressed.connect(_use_hint)
+
 	var spacer := Control.new()
 	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
 	var close := Button.new()
 	close.text = "Tutup  (Esc)"
 	close.custom_minimum_size.y = 34
 	_style_btn(close, true)
 	close.pressed.connect(_close)
+
 	row.add_child(_btn_hint)
 	row.add_child(spacer)
 	row.add_child(close)
@@ -342,10 +379,12 @@ func _build_ui() -> void:
 func _style_btn(b: Button, compact := false) -> void:
 	var q := QuestManager
 	var r := 5
+
 	b.add_theme_stylebox_override("normal", _mk_btn_box(Color("#352b26"), q.BROWN_MID, 2, r, compact))
 	b.add_theme_stylebox_override("hover", _mk_btn_box(Color("#40342c"), q.GOLD, 2, r, compact))
 	b.add_theme_stylebox_override("pressed", _mk_btn_box(Color(0.83, 0.69, 0.22, 0.25), q.GOLD, 2, r, compact))
 	b.add_theme_stylebox_override("disabled", _mk_btn_box(Color("#1a1614"), Color("#332a25"), 1, r, compact))
+
 	b.add_theme_color_override("font_color", q.TEXT_LIGHT)
 	b.add_theme_color_override("font_hover_color", q.GOLD)
 	b.add_theme_color_override("font_pressed_color", q.GOLD)
@@ -370,6 +409,7 @@ func _mk_btn_box(bg: Color, border: Color, bw: int, radius: int, compact: bool) 
 
 func _fill_ui() -> void:
 	var q: Dictionary = QUESTIONS[_cur]
+
 	_hdr.text = "TEKA-TEKI RUNE %s" % RUNE_NAMES[_cur]
 	_lbl_latar.text = q["latar"]
 	_lbl_isi.text = q["isi"]
@@ -391,18 +431,23 @@ func _fill_ui() -> void:
 
 func _hint_candidates() -> Array:
 	var c := []
+
 	for k in 4:
 		if _orders[_cur][k] != 0 and not _wrongs[_cur].has(k):
 			c.append(k)
-	if c.size() <= 1:      # sisakan minimal satu pilihan salah
+
+	if c.size() <= 1:
 		return []
+
 	return c
 
 
 func _use_hint() -> void:
 	var c := _hint_candidates()
+
 	if c.is_empty() or GameState.get_count(&"gulungan_petunjuk") <= 0:
 		return
+
 	GameState.remove_item(&"gulungan_petunjuk")
 	_wrongs[_cur].append(c.pick_random())
 	_fill_ui()
@@ -412,25 +457,34 @@ func _use_hint() -> void:
 func _answer(k: int) -> void:
 	if _locked or QuestManager.answered[_cur]:
 		return
+
 	if _orders[_cur][k] == 0:
 		_correct()
 		return
 
+	# SOUND 3D: jawaban salah.
+	if wrong_sfx.stream != null:
+		wrong_sfx.play()
+
 	_wrongs[_cur].append(k)
 	_fill_ui()
 	_shake_panel()
+
 	var i := _cur
 	var tw := create_tween()
 	tw.tween_method(_set_glow.bind(i), DIM_GLOW, 0.1, 0.1)
 	tw.tween_method(_set_glow.bind(i), 0.1, DIM_GLOW, 0.4)
+
 	if _hero and _hero.has_method("take_damage"):
 		_hero.take_damage(WRONG_DAMAGE)
+
 	if _hero and _hero.get("is_dead") == true:
 		_close()
 
 
 func _shake_panel() -> void:
 	var tw := create_tween()
+
 	for a in [2.0, -2.0, 1.5, -1.5, 0.0]:
 		tw.tween_property(_panel, "rotation_degrees", a, 0.05)
 
@@ -438,42 +492,65 @@ func _shake_panel() -> void:
 func _correct() -> void:
 	_locked = true
 	var i := _cur
+
 	QuestManager.answered[i] = true
 	_fill_ui()
+
+	# SOUND 3D: jawaban benar.
+	if correct_sfx.stream != null:
+		correct_sfx.play()
+
+	# SOUND 3D: rune berhasil menyala.
+	if rune_sfx.stream != null:
+		rune_sfx.play()
+
 	_light_up(i, 4.0, FULL_GLOW)
+
 	await get_tree().create_timer(1.1).timeout
+
 	_close()
 	_locked = false
 
 	var count := 0
+
 	for a in QuestManager.answered:
 		if a:
 			count += 1
 
 	if count >= 3:
 		QuestManager.solved = true
-		QuestManager._show_toast("SEMUA RUNE MENYALA", "Rune Menempa",
-			"Cahaya mengalir dari altar. Sesuatu sedang ditempa...")
+
+		QuestManager._show_toast(
+			"SEMUA RUNE MENYALA",
+			"Rune Menempa",
+			"Cahaya mengalir dari altar. Sesuatu sedang ditempa..."
+		)
+
 		for k in 3:
 			_light_up(k, 4.5, FULL_GLOW)
 
-		# Spawn kunci yang muncul dramatis di tengah altar
+		# Spawn kunci yang muncul dramatis di tengah altar.
 		_spawn_rune_key()
 
 		QuestManager.rune_puzzle_solved.emit()
+
 	else:
-		QuestManager._show_toast("RUNE %s MENYALA" % RUNE_NAMES[i], "Jawaban Benar",
-			"Letakkan pecahan berikutnya di altar.")
+		QuestManager._show_toast(
+			"RUNE %s MENYALA" % RUNE_NAMES[i],
+			"Jawaban Benar",
+			"Letakkan pecahan berikutnya di altar."
+		)
 
 
 func _spawn_rune_key() -> void:
-	# Cegah dobel spawn kalau scene reload setelah solved
+	# Cegah dobel spawn kalau scene reload setelah solved.
 	if GameState.get_flag(&"rune_key_taken"):
 		return
+
 	if has_node("RuneKeyReward"):
 		return
 
 	var k := preload("res://scripts/RuneKeyReward.gd").new()
 	k.name = "RuneKeyReward"
 	add_child(k)
-	k.global_position = _center + Vector3(0, 0.0, 0)  # pusat altar
+	k.global_position = _center + Vector3(0, 0.0, 0)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://qa4ecoh4ev0l"
+path="res://.godot/imported/victory fanfare.mp3-b97f85c3366568c5fd313e4983b6d678.mp3str"
+
+[deps]
+
+source_file="res://assets/Sound/victory fanfare.mp3"
+dest_files=["res://.godot/imported/victory fanfare.mp3-b97f85c3366568c5fd313e4983b6d678.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
