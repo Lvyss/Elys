@@ -8,6 +8,8 @@ signal rune_puzzle_solved
 var placed: Array[bool] = [false, false, false]    # pecahan sudah dipasang
 var answered: Array[bool] = [false, false, false]  # pertanyaannya sudah dijawab
 var solved := false
+const FOG_WARN_COOLDOWN := 8.0
+var _last_fog_warn := -999.0
 
 const QUESTS := [
 	{"title": "Jalan Berkabut", "desc": "Goblin hijau berkeliaran di depan gubuk. Hati-hati saat mendekat, mereka akan mengejarmu.",
@@ -76,8 +78,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	# Sembunyikan saat status window / toko terbuka
-	_ui.visible = started and not GameState.ui_open
+	_ui.visible = not GameState.ui_open
+	_tracker.visible = started
 
 
 # ---------------- API ----------------
@@ -116,7 +118,14 @@ func warn_danger(tier: int) -> void:
 	_show_toast("PERINGATAN", "Terlalu Berbahaya",
 		"Goblin ini jauh lebih kuat darimu. Selesaikan quest \"%s\" dulu." % q["title"])
 
-
+func warn_fog() -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	if now - _last_fog_warn < FOG_WARN_COOLDOWN:
+		return
+	_last_fog_warn = now
+	_show_toast("PERINGATAN", "Kabut Maut",
+		"Kabut di luar area menelan siapa pun yang masuk. Berbalik sekarang atau kau akan gugur!")
+		
 # ---------------- LOGIKA ----------------
 func _complete() -> void:
 	var q: Dictionary = QUESTS[current]

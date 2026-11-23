@@ -12,13 +12,19 @@ signal boosts_changed            # opsional: update window status
 signal damage_changed(new_damage: int)
 
 # ============================================================
+# NILAI AWAL (dipakai juga saat reset)
+# ============================================================
+const BASE_HP_MAX := 100
+const BASE_DAMAGE := 10
+
+# ============================================================
 # ATRIBUT (GDD)
 # ============================================================
-var hp_max: int = 100
-var hp_current: int = 100
+var hp_max: int = BASE_HP_MAX
+var hp_current: int = BASE_HP_MAX
 var xp: int = 0
 var level: int = 1
-var damage: int = 10
+var damage: int = BASE_DAMAGE
 
 var kills: Dictionary = {}
 var shards_dropped: Dictionary = {}
@@ -55,7 +61,7 @@ const BOOST_INFO := {
 # Terpakai + masih tersimpan di inventory (dipakai toko untuk membatasi tukar)
 func boost_total(boost_id: String) -> int:
 	return boosts.get(boost_id, 0) + get_count(StringName(boost_id))
-	
+
 # ============================================================
 # STATE UI
 # ============================================================
@@ -80,6 +86,43 @@ func _ready() -> void:
 	hp_changed.emit(hp_current, hp_max)
 	xp_changed.emit(xp, XP_PER_LEVEL, level)
 	coins_changed.emit(coins)
+
+# ============================================================
+# RESET (dipanggil saat "Ulangi Petualangan")
+# ============================================================
+func reset_run() -> void:
+	# Atribut
+	hp_max = BASE_HP_MAX
+	hp_current = hp_max
+	xp = 0
+	level = 1
+	damage = BASE_DAMAGE
+
+	# Progres
+	kills.clear()
+	shards_dropped.clear()
+	# Kalau ada flag yang harus bertahan antar-run, jangan di-clear semua.
+	# Contoh: simpan dulu nilainya, clear, lalu set ulang.
+	_flags.clear()
+
+	# Inventory & koin
+	coins = 0
+	inventory.clear()
+
+	# Booster permanen
+	for id in boosts.keys():
+		boosts[id] = 0
+
+	# State UI
+	ui_open = false
+
+	# Kabari semua UI yang mendengarkan
+	hp_changed.emit(hp_current, hp_max)
+	xp_changed.emit(xp, XP_PER_LEVEL, level)
+	coins_changed.emit(coins)
+	inventory_changed.emit()
+	boosts_changed.emit()
+	damage_changed.emit(damage)
 
 # ============================================================
 # HP & COMBAT

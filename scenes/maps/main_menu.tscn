@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://db8hmvwxotac3"]
 
-[ext_resource type="Script" uid="uid://clo62h4j62ahk" path="res://scripts/main_menu.gd" id="1_b4i3a"]
+[ext_resource type="Script" uid="uid://do48e1or7dhpr" path="res://scenes/maps/main_menu.gd" id="1_0sxhj"]
 [ext_resource type="Texture2D" uid="uid://cvd6nff743etr" path="res://assets/Screen/Homescreen.png" id="1_jrpmg"]
 [ext_resource type="Texture2D" uid="uid://b15jkmkvykghg" path="res://assets/Screen/BUTTON START.png" id="2_b4i3a"]
 [ext_resource type="Texture2D" uid="uid://qe4v3h4tgrvl" path="res://assets/Screen/BUTTON ABOUT.png" id="3_5c1gu"]
@@ -43,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_b4i3a")
+script = ExtResource("1_0sxhj")
 
 [node name="Background" type="TextureRect" parent="." unique_id=2122046235]
 layout_mode = 1
@@ -108,6 +108,7 @@ icon = ExtResource("4_ddjto")
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=715132820]
 stream = ExtResource("6_awsrp")
+volume_db = -0.515
 autoplay = true
 
 [node name="SFXClick" type="AudioStreamPlayer" parent="." unique_id=1526094650]

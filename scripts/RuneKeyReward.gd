@@ -27,7 +27,7 @@ func _ready() -> void:
 	_sprite = Sprite3D.new()
 	_sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED # Selalu menghadap kamera
 	_sprite.no_depth_test = true # Biar gak nembus objek lain
-	_sprite.pixel_size = 0.005 # Ukuran pixel art (sesuaikan jika terlalu besar/kecil)
+	_sprite.pixel_size = 0.001 # Ukuran pixel art (sesuaikan jika terlalu besar/kecil)
 	_sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST # Bikin pixel art tajam
 	
 	if item_data and item_data.icon:
@@ -56,7 +56,7 @@ func _ready() -> void:
 	# --- 3. Prompt Interaksi ---
 	_prompt = Label3D.new()
 	_prompt.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	_prompt.no_depth_test = true
+	_prompt.no_depth_test = false
 	_prompt.pixel_size = 0.006
 	_prompt.outline_size = 12
 	_prompt.text = "E: Ambil Kunci"

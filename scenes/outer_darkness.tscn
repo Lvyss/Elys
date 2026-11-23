@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b8ktuaribrajn"]
 
 [ext_resource type="Shader" uid="uid://bpbf6a4tvkek3" path="res://assets/Shader/outer_darkness.gdshader" id="1_hup1r"]
+[ext_resource type="Script" uid="uid://bytgqq7fr2ad7" path="res://scenes/outer_darkness.gd" id="2_8doyq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wbrk"]
 render_priority = 0
@@ -26,3 +27,4 @@ size = Vector2(2, 2)
 [node name="OuterDarkness" type="MeshInstance3D" unique_id=646692091]
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_a4roe")
+script = ExtResource("2_8doyq")

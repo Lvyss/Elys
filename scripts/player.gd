@@ -1,5 +1,5 @@
-
 extends CharacterBody3D
+
 
 signal died
 signal pause_requested
@@ -29,6 +29,9 @@ const ANIM_LOOP := {
 }
 
 const DAMAGE_NUMBER_SCENE = preload("res://scenes/DamageNumber.tscn")
+
+# --- MENU JEDA ---
+const MAIN_MENU_SCENE := "res://scenes/maps/main_menu.tscn"   # Pastikan path ini benar!
 
 @onready var sprite: AnimatedSprite3D = $Sprite
 @onready var shadow_sprite: AnimatedSprite3D = $ShadowSprite
@@ -62,6 +65,10 @@ var stun_timer := 0.0
 # --- MENU KEMATIAN ---
 var _death_menu_shown := false
 
+# --- MENU JEDA ---
+var _pause_menu: PauseMenu
+var _was_captured := false
+
 
 func _ready() -> void:
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
@@ -94,8 +101,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("pause"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		pause_requested.emit()
+		_open_pause_menu()
+		get_viewport().set_input_as_handled()
 		return
 
 	if event.is_action_pressed("use_potion"):
@@ -115,6 +122,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	var skip_attack := _just_captured
 	_just_captured = false
+
+	# Versi web: ESC dari browser melepas kursor tanpa mengirim event tombol,
+	# jadi kursor yang tiba-tiba bebas dianggap permintaan pause.
+	var captured := Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
+	if _was_captured and not captured:
+		_open_pause_menu()
+	_was_captured = captured
 
 	_tick_timers(delta)
 	_apply_gravity(delta)
@@ -354,8 +368,8 @@ func _spawn_damage_number(enemy_node: Node3D, damage_amount: int) -> void:
 
 
 # ---------------- HP & DEATH ----------------
-func take_damage(amount: int) -> void:
-	if is_dead or invuln_timer > 0.0:
+func take_damage(amount: int, ignore_invuln := false) -> void:
+	if is_dead or (invuln_timer > 0.0 and not ignore_invuln):
 		return
 
 	invuln_timer = INVULN_TIME
@@ -401,6 +415,43 @@ func _die() -> void:
 
 	died.emit()
 	_show_death_menu()
+
+
+# ---------------- MENU JEDA ----------------
+func _open_pause_menu() -> void:
+	# jangan muncul kalau sudah terbuka, player mati, atau window lain (toko, dll) sedang aktif
+	if _pause_menu != null or is_dead or _death_menu_shown or GameState.ui_open:
+		return
+
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	pause_requested.emit()
+	GameState.ui_open = true
+	walk_sfx.stop()
+
+	_pause_menu = PauseMenu.new()
+	_pause_menu.resumed.connect(_on_pause_resumed)
+	_pause_menu.main_menu_requested.connect(_on_pause_main_menu)
+	add_child(_pause_menu)
+
+
+func _on_pause_resumed() -> void:
+	_pause_menu = null
+	GameState.ui_open = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_just_captured = true   # klik tombol tadi tidak boleh jadi serangan
+
+
+func _on_pause_main_menu() -> void:
+	_pause_menu = null
+	if not ResourceLoader.exists(MAIN_MENU_SCENE):
+		push_error("Scene menu utama tidak ditemukan: " + MAIN_MENU_SCENE)
+		_on_pause_resumed()
+		return
+
+	_reset_run_state()   # autoload tidak ikut ter-reset, jadi bersihkan dulu
+	GameState.ui_open = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 
 
 # ---------------- MENU KEMATIAN ----------------
@@ -508,12 +559,13 @@ func _reset_run_state() -> void:
 	q.solved = false
 	q.placed = [false, false, false]
 	q.answered = [false, false, false]
+	q._last_warn = -999.0
+	q._last_fog_warn = -999.0
 	q._queue.clear()
 	q._refresh()
 
-	# kalau GameState kamu punya fungsi reset (inventori, flag, koin, dll), dipanggil di sini
-	if GameState.has_method("reset_run"):
-		GameState.reset_run()
+	# Reset semua data GameState (inventory, booster, level, koin, dll)
+	GameState.reset_run()
 
 
 # ---------------- ANIMASI ----------------
