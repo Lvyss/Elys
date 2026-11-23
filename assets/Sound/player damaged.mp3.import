@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://4ycikt1ix6tf"
+path="res://.godot/imported/player damaged.mp3-149249d523a038ea0b40453d3862c367.mp3str"
+
+[deps]
+
+source_file="res://assets/Sound/player damaged.mp3"
+dest_files=["res://.godot/imported/player damaged.mp3-149249d523a038ea0b40453d3862c367.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

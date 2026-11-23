@@ -1,3 +1,4 @@
+
 class_name GoblinStats
 extends Resource
 
@@ -19,7 +20,7 @@ extends Resource
 @export var attack_cooldown := 1.0
 @export var windup_time := 0.4
 @export var attack_total := 0.8
-@export var can_stagger := true   # boss: matikan supaya tidak kena stun
+@export var can_stagger := true
 
 @export_group("Loot")
 @export var xp_reward := 10
@@ -27,7 +28,7 @@ extends Resource
 @export_range(0.0, 1.0) var drop_chance := 1.0
 
 @export_group("Quest")
-@export_range(1, 3) var tier: int = 1   # 1 Prajurit, 2 Elit, 3 Raja
+@export_range(1, 3) var tier: int = 1
 
 @export_group("Loot Bonus")
 @export var bonus_item_id: StringName = &""
@@ -40,3 +41,8 @@ extends Resource
 
 @export_group("Respawn")
 @export var respawn_time: float = 45.0
+
+# --- SOUND EFFECTS ---
+@export_group("Sound Effects")
+@export var hurt_sound: AudioStream
+@export var death_sound: AudioStream

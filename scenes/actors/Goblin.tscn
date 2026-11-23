@@ -28,3 +28,7 @@ animation = &"idle_down"
 
 [node name="IdleTimer" type="Timer" parent="." unique_id=112720898]
 one_shot = true
+
+[node name="HurtSFX" type="AudioStreamPlayer" parent="." unique_id=675358734]
+
+[node name="DeathSFX" type="AudioStreamPlayer" parent="." unique_id=1784487908]

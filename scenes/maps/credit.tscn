@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dc20g1jku00gk"]
+
+[ext_resource type="Script" uid="uid://brlbprxo2hbaw" path="res://scripts/credit.gd" id="1_itlqo"]
+[ext_resource type="Texture2D" uid="uid://cyiqst7w4bra2" path="res://assets/Screen/Who's Behind the Magic Screen.png" id="2_itlqo"]
+[ext_resource type="Texture2D" uid="uid://bb3rkq23c5twl" path="res://assets/Screen/Button Back.png" id="3_2umpa"]
+[ext_resource type="AudioStream" uid="uid://cfjvi21k3oejc" path="res://assets/Sound/menu.mp3" id="4_2umpa"]
+[ext_resource type="AudioStream" uid="uid://4dj5okthyldp" path="res://assets/Sound/click button.mp3" id="5_ifg0y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_htemk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_14cdr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q4lci"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj0hq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugcl7"]
+
+[node name="Credit" type="Control" unique_id=1230869062]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_itlqo")
+about_scene_path = "uid://bya2mybp8ejol"
+
+[node name="Background" type="TextureRect" parent="." unique_id=2125115834]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.075
+anchor_right = 28.900002
+anchor_bottom = 19.375
+offset_left = -5.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_itlqo")
+expand_mode = 1
+
+[node name="Back" type="Button" parent="." unique_id=1302428733]
+layout_mode = 0
+offset_left = -19.999998
+offset_top = -159.0
+offset_right = 433.0
+offset_bottom = 497.0
+scale = Vector2(0.7, 0.7)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q4lci")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+icon = ExtResource("3_2umpa")
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1088185777]
+stream = ExtResource("4_2umpa")
+autoplay = true
+
+[node name="SFXClick" type="AudioStreamPlayer" parent="." unique_id=1658415072]
+stream = ExtResource("5_ifg0y")

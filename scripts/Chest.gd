@@ -1,3 +1,4 @@
+
 extends Node3D
 ## Pasang di node Peti (Sketchfab_Scene).
 
@@ -17,9 +18,17 @@ var _anim: AnimationPlayer
 var _particles: GPUParticles3D
 var _light_burst: OmniLight3D
 
+# SOUND EFFECTS 3D
+@onready var chest_open_sfx: AudioStreamPlayer3D = $ChestOpenSFX
+@onready var victory_sfx: AudioStreamPlayer3D = $VictorySFX
+
 
 func _ready() -> void:
 	_anim = _find_anim()
+
+	# Tempatkan sumber suara di posisi peti.
+	chest_open_sfx.position = Vector3.ZERO
+	victory_sfx.position = Vector3.ZERO
 
 	# --- SETUP UI & EFEK ---
 	_prompt = Label3D.new()
@@ -49,12 +58,15 @@ func _ready() -> void:
 # ---------------- ANIMASI ----------------
 func _find_anim() -> AnimationPlayer:
 	var a := find_child("AnimationPlayer", true, false) as AnimationPlayer
+
 	if a == null and get_parent():
 		a = get_parent().find_child("AnimationPlayer", true, false) as AnimationPlayer
+
 	if a == null:
 		push_warning("Peti: AnimationPlayer tidak ketemu")
 	else:
-		print("Peti anim: ", a.get_animation_list())  # cek nama animasinya
+		print("Peti anim: ", a.get_animation_list())
+
 	return a
 
 
@@ -73,16 +85,23 @@ func _close_anim_name() -> String:
 func _pose_chest(open: bool) -> void:
 	if _anim == null:
 		return
+
 	_anim.autoplay = ""
 	_anim.stop()
-	# kalau sudah dibuka: tahan di akhir A_Open; kalau belum: tahan di akhir A_Close
+
+	# Kalau sudah dibuka: tahan di akhir A_Open.
+	# Kalau belum: tahan di akhir A_Close.
 	var anim_name := _open_anim_name() if open else _close_anim_name()
+
 	if anim_name == "":
 		return
+
 	await get_tree().process_frame
+
 	_anim.play(anim_name, -1, 0.0)
 	_anim.seek(_anim.get_animation(anim_name).length, true)
 	_anim.pause()
+
 
 # ---------------- PARTIKEL ----------------
 func _setup_particles() -> void:
@@ -103,6 +122,7 @@ func _setup_particles() -> void:
 	mat.color = Color(1.0, 0.9, 0.5)
 
 	_particles.process_material = mat
+
 	var mesh := BoxMesh.new()
 	mesh.size = Vector3(0.05, 0.05, 0.05)
 	_particles.draw_pass_1 = mesh
@@ -115,13 +135,16 @@ func _setup_particles() -> void:
 func _process(_delta: float) -> void:
 	if _hero == null or not is_instance_valid(_hero):
 		_hero = get_tree().get_first_node_in_group("player") as Node3D
+
 	_near = false
+
 	if _hero and not _opened:
 		var d := _hero.global_position - global_position
 		d.y = 0.0
 		_near = d.length() < interact_range
 
 	_prompt.visible = _near and not GameState.ui_open and not _opened
+
 	if _prompt.visible:
 		_prompt.text = "E: Buka Peti" if GameState.get_count(required_key) > 0 else "Peti Terkunci"
 
@@ -129,15 +152,21 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("interact"):
 		return
+
 	if not _near or GameState.ui_open or _opened:
 		return
+
 	get_viewport().set_input_as_handled()
 	_try_open()
 
 
 func _try_open() -> void:
 	if GameState.get_count(required_key) <= 0:
-		QuestManager._show_toast("PETI TERKUNCI", "Butuh Kunci", "Selesaikan teka-teki Rune di altar.")
+		QuestManager._show_toast(
+			"PETI TERKUNCI",
+			"Butuh Kunci",
+			"Selesaikan teka-teki Rune di altar."
+		)
 		return
 
 	GameState.remove_item(required_key)
@@ -148,30 +177,39 @@ func _try_open() -> void:
 	_play_open_effect()
 
 
+# ---------------- EFEK PETI TERBUKA ----------------
 func _play_open_effect() -> void:
-	# 1. Animasi buka
+	# 1. SOUND 3D: suara peti terbuka.
+	if chest_open_sfx.stream != null:
+		chest_open_sfx.play()
+
+	# 2. Animasi buka.
 	if _anim:
 		var anim_name := _open_anim_name()
+
 		if anim_name != "":
 			_anim.play(anim_name, -1, 1.0)
 
-	# 2. Efek sinar terang
+	# 3. Efek sinar terang.
 	var tw_light := create_tween()
 	tw_light.tween_property(_light_burst, "light_energy", 8.0, 0.3)
 	tw_light.parallel().tween_property(_light_burst, "omni_range", 6.0, 0.5)
 	tw_light.tween_property(_light_burst, "light_energy", 2.0, 1.5)
 
-	# 3. Partikel bintang
+	# 4. Partikel bintang.
 	_particles.emitting = true
 
-	# 4. Hadiah
+	# 5. Tunggu sebelum hadiah diberikan.
 	await get_tree().create_timer(0.5).timeout
+
 	_give_rewards()
 
 
+# ---------------- HADIAH ----------------
 func _give_rewards() -> void:
 	for id in reward_items:
 		GameState.add_item(id, 1)
+
 	GameState.add_coins(reward_coins)
 	GameState.add_xp(reward_xp)
 
@@ -179,11 +217,18 @@ func _give_rewards() -> void:
 
 	GameState.ui_open = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 	await get_tree().create_timer(1.5).timeout
+
 	_show_end_game_popup()
 
 
+# ---------------- LAYAR KEMENANGAN ----------------
 func _show_end_game_popup() -> void:
+	# SOUND 3D: victory fanfare saat permainan selesai.
+	if victory_sfx.stream != null:
+		victory_sfx.play()
+
 	var layer := CanvasLayer.new()
 	layer.layer = 30
 	add_child(layer)
@@ -205,9 +250,21 @@ func _show_end_game_popup() -> void:
 
 	panel.scale = Vector2(0.5, 0.5)
 	panel.modulate.a = 0.0
+
 	var tw_pop := create_tween().set_parallel(true)
-	tw_pop.tween_property(panel, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw_pop.tween_property(panel, "modulate:a", 1.0, 0.5)
+	tw_pop.tween_property(
+		panel,
+		"scale",
+		Vector2.ONE,
+		0.5
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	tw_pop.tween_property(
+		panel,
+		"modulate:a",
+		1.0,
+		0.5
+	)
 
 	var hdr: Label = p["header"]
 	hdr.text = "PETUALANGAN SELESAI"
@@ -226,6 +283,7 @@ func _show_end_game_popup() -> void:
 	btn_close.text = "Kembali ke Menu"
 	btn_close.custom_minimum_size.y = 40
 	QuestManager._style_btn(btn_close)
+
 	btn_close.pressed.connect(func():
 		GameState.ui_open = false
 		get_tree().quit()
